@@ -3,8 +3,8 @@ const jwt = require('jsonwebtoken');
 
 exports.signup = async (req, res) => {
     try{
-        const { name, email, password, role }= req.body;
-        const user = new User({ name,email,password, role});
+        const { name,username, email,role,faculty, department, password ,registrationNumber }= req.body;
+        const user = new User({ name,username, email,role, faculty, department, password ,registrationNumber});
         await user.save();
         res.status(201).json({message: 'User registered successfully'});
     } catch (error){
@@ -20,8 +20,7 @@ exports.signin = async (req,res) => {
             return res.status(401).json({mwssage: 'Invalid email or password'});
         }
         const token = jwt.sign({userId: user._id, role: user.role},process.env.JWT_SECRET, { expiresIn: '1h'});
-        res.json({ token, user: { id: user._id, name: user.name, email: user.email, role: user.role}}
-        );
+        res.json({ token, user: { id: user._id, name: user.name, username: user.username, email: user.email, role: user.role, faculty: user.faculty, department: user.department, registrationNumber: user.registrationNumber}});
     }catch( error) {
         res.status(400).json({message: error.message});
     }
