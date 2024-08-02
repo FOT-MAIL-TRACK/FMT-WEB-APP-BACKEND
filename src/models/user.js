@@ -8,6 +8,13 @@ const userSchema = new mongoose.Schema({
         required: true,
         trim: true
     },
+    username: {
+        type:String,
+        required: true,
+        unique: true,
+        match: /^USJP_.+$/,
+        trim: true
+    },
     email:{
         type: String,
         required: true,
@@ -22,18 +29,54 @@ const userSchema = new mongoose.Schema({
             message: props => '${props.value} is not a valid email address!'
         }
     },
+    role:{
+        type: String,
+        required: "true",
+        enum: ['Lecturer','Dean','Department Head','PostalDepartmentMA','FacultyMA','DepartmentMA','Admin','Technical Officer', 'Demonstrator']
+        //default: 'Lecturer'
+    },
+    faculty: {
+        type: String,
+        enum: ['Faculty of Technology','Faculty of Human Sciences'],
+        required: true
+    },
+    department: {
+        type: String,
+        enum: ['Biosystems Technology',
+               'Information & Communication Technology',
+               'Civil and Environmental Technology',
+               'Materials and Mechanical Technology',
+               'Science for Technology'
+        ],
+        required: function(){
+            return this.faculty === 'Faculty of Technology';
+        }
+    },
     password: {
         type: String,
         required: true
     },
-    role:{
+    registrationNumber: {
         type: String,
-        required: "true",
-        enum: ['Lecturer','Dean','Department Head']
-        //default: 'Lecturer'
+        unique: true,
+        required: true
     }
+    
 
 });
+
+
+//presave hook to generate a unique registration number
+userSchema.pre('save', async function(next){
+    if(this.isNew) {
+        const lastUser = await this.constructor.findOne().sort({ createdAt: -1});
+        const lastRegnum = lastUser ? parseInt(lastUser.registrationNumber.split('-')[1], 10) : 0;
+    this.registrationNumber = `E-${lastRegnum + 1}`;
+    }
+    next();
+})
+
+
 
 userSchema.pre('save', async function(next){
     if(!this.isModified('password')){
