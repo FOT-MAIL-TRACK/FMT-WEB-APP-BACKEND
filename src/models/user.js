@@ -67,14 +67,14 @@ const userSchema = new mongoose.Schema({
 
 
 //presave hook to generate a unique registration number
-userSchema.pre('save', async function(next){
-    if(this.isNew) {
-        const lastUser = await this.constructor.findOne().sort({ createdAt: -1});
-        const lastRegnum = lastUser ? parseInt(lastUser.registrationNumber.split('-')[1], 10) : 0;
-    this.registrationNumber = `E-${lastRegnum + 1}`;
+userSchema.pre('save', async function(next) {
+    if (this.isNew) {
+        const lastUser = await this.constructor.findOne().sort({ createdAt: -1 });
+        const lastRegnum = lastUser && lastUser.registrationNumber ? parseInt(lastUser.registrationNumber.split('-')[1], 10) : 0;
+        this.registrationNumber = `E-${lastRegnum + 1}`;
     }
     next();
-})
+});
 
 
 
