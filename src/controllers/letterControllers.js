@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const User = require('../models/user');
 const Letter = require('../models/letter')
 const QRCode = require('qrcode');
 
@@ -6,20 +7,33 @@ const QRCode = require('qrcode');
 //create a new letter
 exports.createLetter = async (req,res) => {
     try{
-        const { title, content, sender, receiver, authorities } = req.body;
+        const {  sender, receiver } = req.body;
         // Generate QR code data
-        const qrCode = await QRCode.toDataURL(JSON.stringify({title,content,sender,receiver,authorities}))
+        const qrCode = await QRCode.toDataURL(JSON.stringify({sender,receiver}));
+
+        const currentHolder = await User.findOne({ registrationNumber: sender.registrationNumber });
+        if (!currentHolder) {
+            return res.status(404).json({ message: 'Current holder (sender) not found' });
+        }
 
         const newLetter = new Letter({
-            title,
-            content,
-            sender,
-            receiver,
-            authorities,
-            currentHolder: sender,
+            sender: {
+                registrationNumber: sender.registrationNumber,
+                address: sender.address
+            },
+            receiver: {
+                name: receiver.name,
+                registrationNumber: receiver.registrationNumber,
+                receiverRole: receiver.receiverRole,// Final receiver's role
+                authorities: receiver.authorities, // Array of authority objects
+                faculty: receiver.faculty,
+                department: receiver.department,
+                 
+            },
+            currentHolder: currentHolder._id,
             qrCode,
             trackingLog: [{
-                holder: sender,
+                holder: currentHolder._id,
                 status: 'Pending'
             }]
         })
@@ -32,15 +46,20 @@ exports.createLetter = async (req,res) => {
 }
 
 //get letters
-exports.getLetters = async (res,req) => {
-    try{
-        const letters = await Letter.find();
-        res.status(200).json(letters);
+exports.getLetterById = async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        const letter = await Letter.findById(id).populate('currentHolder trackingLog.holder');
+        if (!letter) {
+            return res.status(404).json({ message: 'Letter not found' });
+        }
+
+        res.status(200).json(letter);
+    } catch (error) {
+        res.status(400).json({ message: error.message });
     }
-    catch(err){
-        res.status(500).json({ message: err.message});
-    }
-}
+};
 
 //update letter status
 

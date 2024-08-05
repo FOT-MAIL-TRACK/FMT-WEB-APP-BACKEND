@@ -1,29 +1,52 @@
 const mongoose = require('mongoose');
 
 const letterSchema = new mongoose.Schema({
-    title: {
-        type: String,
-        required: true,
-        trim: true
-    },
-    content: {
-        type: String,
-        required: true
-    },
     sender: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
+       registrationNumber: {
+        type: String,
+        unique: true,
         required: true
+       },
+       address: {
+        type: String,
+        required: true
+       }
     },
     receiver: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
-        required: true
+        name: {
+         type: String,
+         required : true
+        },
+        registrationNumber: {
+            type: String,
+            required: true
+        },
+        receiverRole: {
+            type: String,
+            required: "true",
+            enum: ['Lecturer','Dean','Department Head','PostalDepartmentMA','FacultyMA','DepartmentMA','Admin','Technical Officer', 'Demonstrator'] 
+        },
+        authorities:[{ 
+            registrationNumber: {
+                type: String,
+                required: true
+            },
+            role: {
+                type: String,
+                required: "true",
+                enum: ['Lecturer','Dean','Department Head','PostalDepartmentMA','FacultyMA','DepartmentMA','Admin','Technical Officer', 'Demonstrator'] 
+            },
+        }],
+        faculty: {
+            type: String,
+            required: true
+        },
+        department : {
+            type : String,
+            required : true
+        }
     },
-    authorities:[{ 
-        type: String, 
-        required: true 
-    }],
+    
     status: {
         type: String,
         enum: ['Pending', 'Approved', 'Rejected', 'In Progress', 'Completed'],
@@ -50,9 +73,10 @@ const letterSchema = new mongoose.Schema({
         {
             holder: {
                 type: mongoose.Schema.Types.ObjectId,
-                ref: 'User'
+                ref: 'User',
+                required: true
             },
-            timestamp: {
+            date: {
                 type: Date,
                 default: Date.now
             },
@@ -63,6 +87,8 @@ const letterSchema = new mongoose.Schema({
             }
         }
     ]
+}, {
+    timestamps: true,
 })
 
 const Letter = mongoose.model('Letter', letterSchema);
