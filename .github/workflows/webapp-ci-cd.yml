@@ -1,0 +1,44 @@
+name: Web App CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout the code
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Step 2: Set up Node.js environment
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '14'
+
+      # Step 3: Install dependencies
+      - name: Install dependencies
+        run: |
+          cd web-app
+          npm install
+
+      # Step 4: Run tests
+      - name: Run tests
+        run: |
+          cd web-app
+          npm test
+
+      # Step 5: Build the web app
+      - name: Build web app
+        run: |
+          cd web-app
+          npm run build
+
+   
