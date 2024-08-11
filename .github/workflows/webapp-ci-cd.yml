@@ -25,20 +25,18 @@ jobs:
 
       # Step 3: Install dependencies
       - name: Install dependencies
-        run: |
-          cd web-app
-          npm install
+        run: npm install
 
       # Step 4: Run tests
       - name: Run tests
-        run: |
-          cd web-app
-          npm test
+        run: npm test
 
       # Step 5: Build the web app
       - name: Build web app
-        run: |
-          cd web-app
-          npm run build
+        run: npm run build
 
-   
+      # Optional: Step 6: Deploy to Firebase (or any other platform)
+      # - name: Deploy to Firebase
+      #   env:
+      #     FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+      #   run: firebase deploy --only hosting
