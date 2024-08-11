@@ -12,13 +12,15 @@ pipeline {
             steps {
                 // Checkout the code from the GitHub repository
                 git branch: 'main', url: 'https://github.com/FOT-MAIL-TRACK/FMT-WEB-APP-BACKEND.git'
+                // If using credentials for a private repository, uncomment the following line and provide the credentials ID:
+                // git credentialsId: 'your-credentials-id', branch: 'main', url: 'https://github.com/FOT-MAIL-TRACK/FMT-WEB-APP-BACKEND.git'
             }
         }
 
         stage('Install Dependencies') {
             steps {
-                // Install dependencies using npm
-                sh 'npm install'
+                // Install dependencies using npm (Assuming Node.js is installed)
+                bat 'npm install'
             }
         }
 
@@ -37,7 +39,7 @@ pipeline {
                 script {
                     def image = docker.image("${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}")
                     image.inside {
-                        sh 'npm test'
+                        bat 'npm test'
                     }
                 }
             }
@@ -47,7 +49,8 @@ pipeline {
             steps {
                 // Use Docker Compose to deploy the application
                 script {
-                    sh "docker-compose -f ${DOCKER_COMPOSE_FILE} up -d"
+                    // On Windows, Docker Compose does not use nohup, so this should work without issues
+                    bat "docker-compose -f ${DOCKER_COMPOSE_FILE} up -d"
                 }
             }
         }
@@ -57,7 +60,7 @@ pipeline {
         always {
             // Clean up Docker images and containers if necessary
             script {
-                sh 'docker system prune -f'
+                bat 'docker system prune -f'
             }
         }
     }
