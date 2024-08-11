@@ -13,30 +13,19 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Step 1: Checkout the code
-      - name: Checkout code
-        uses: actions/checkout@v3
+    - name: Checkout code
+      uses: actions/checkout@v2
 
-      # Step 2: Set up Node.js environment
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '14'
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '16'
 
-      # Step 3: Install dependencies
-      - name: Install dependencies
-        run: npm install
+    - name: Install dependencies
+      run: npm install
 
-      # Step 4: Run tests
-      - name: Run tests
-        run: npm test
+    - name: Run tests
+      run: npm test  # Assuming you have tests configured
 
-      # Step 5: Build the web app
-      - name: Build web app
-        run: npm run build
-
-      # Optional: Step 6: Deploy to Firebase (or any other platform)
-      # - name: Deploy to Firebase
-      #   env:
-      #     FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
-      #   run: firebase deploy --only hosting
+    - name: Start the server
+      run: npm run start
