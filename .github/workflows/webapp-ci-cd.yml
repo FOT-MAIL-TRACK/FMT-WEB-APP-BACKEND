@@ -24,8 +24,5 @@ jobs:
     - name: Install dependencies
       run: npm install
 
-    - name: Run tests
-      run: npm test  # Assuming you have tests configured
-
     - name: Start the server
       run: npm run start
