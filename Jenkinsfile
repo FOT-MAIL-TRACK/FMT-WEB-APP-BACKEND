@@ -32,11 +32,7 @@ pipeline {
                 }
             }
         }
-        stage('Inspect Image') {
-            steps {
-                sh 'docker inspect fmt-web-app-backend:latest'
-            }
-        }
+
         stage('Test') {
             steps {
                 // Run tests inside the Docker container
