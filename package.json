@@ -5,6 +5,7 @@
   "scripts": {
     "start": "nodemon src/server.js",
     "dev": "nodemon src/server.js"
+    "test": "jest" // this line for testing
   },
   "keywords": [],
   "author": "",
