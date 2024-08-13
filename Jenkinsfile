@@ -32,6 +32,13 @@ pipeline {
                 }
             }
         }
+        stage('Inspect') {
+            steps {
+                script {
+                    bat 'docker inspect -f "{{ . }}" "fmt-web-app-backend:latest"'
+                  }
+             }
+        }
 
         stage('Test') {
             steps {
