@@ -3,6 +3,7 @@ import logo from '../assets/fotmailtrack.jpeg';
 import './Signin.css'
 
 const Signin = () => {
+    return(
     <div className="signin-container">
         <div className="left-conatiner">
             <h1>
@@ -27,6 +28,7 @@ const Signin = () => {
                 <p>Don't have an account? <a href="/signup">Sign up</a></p>
         </div>
     </div>
+    )
 }
 
 export default Signin;
