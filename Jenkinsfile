@@ -5,6 +5,7 @@ pipeline {
         DOCKER_IMAGE_NAME = 'fmt-web-app-backend'
         DOCKER_IMAGE_TAG = 'latest'
         DOCKER_COMPOSE_FILE = 'docker-compose.yml'
+        PROJECT_DIR = 'C:\\path\\to\\your\\project' // Update this path to your local project directory
     }
 
     stages {
@@ -32,12 +33,14 @@ pipeline {
                 }
             }
         }
+
         stage('Inspect') {
             steps {
+                // Inspect the Docker image
                 script {
                     bat 'docker inspect -f "{{ . }}" "fmt-web-app-backend:latest"'
-                  }
-             }
+                }
+            }
         }
 
         stage('Test') {
@@ -54,10 +57,13 @@ pipeline {
 
         stage('Deploy') {
             steps {
-                // Use Docker Compose to deploy the application
-                script {
-                    // On Windows, Docker Compose does not use nohup, so this should work without issues
-                    bat "docker-compose -f ${DOCKER_COMPOSE_FILE} up -d"
+                // Change directory to the project folder
+                dir("${PROJECT_DIR}") {
+                    script {
+                        // On Windows, Docker Compose should work without issues
+                        bat "docker-compose down"
+                        bat "docker-compose up -d"
+                    }
                 }
             }
         }
@@ -72,3 +78,4 @@ pipeline {
         }
     }
 }
+
