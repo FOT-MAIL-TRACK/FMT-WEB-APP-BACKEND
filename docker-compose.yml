@@ -1,0 +1,7 @@
+version: '3'
+services:
+  web:
+    image: fmt-web-app-backend:latest
+    build: .
+    ports:
+      - "5000:5000"
