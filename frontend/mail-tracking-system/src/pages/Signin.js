@@ -2,6 +2,7 @@ import React from 'react';
 import logo from '../assets/fotmailtrack.jpeg';
 import './Signin.css'
 import NavBar from '../components/NavBar';
+import {Link} from 'react-router-dom';
 
 const Signin = () => {
   return (
@@ -29,7 +30,10 @@ const Signin = () => {
           <label><h1>Password</h1></label>
           <input type="password" placeholder="Enter your password" />
           
+          <Link to="/home">
           <button type="submit">Sign In</button>
+          </Link>
+          
         </form>
         <div className="center-text">
             <p>Don't have an account? <a href="/signup">Sign up</a></p>
