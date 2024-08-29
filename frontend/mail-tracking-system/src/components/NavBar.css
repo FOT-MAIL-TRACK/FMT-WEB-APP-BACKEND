@@ -1,8 +1,8 @@
 .navbar {
-    position: fixed;
+    position: relative;
     top: 0;
     /* left: 0; */
-    width: 100%;
+    width: auto;
     background-color: #a1232b; 
     padding: 10px 20px;
     color: #fff;
@@ -10,7 +10,7 @@
     z-index: 1000; 
     display: flex;
     align-items: center;
-    margin-top: 100px;
+    /* margin-top: 100px; */
   }
   
   .navbar-content {

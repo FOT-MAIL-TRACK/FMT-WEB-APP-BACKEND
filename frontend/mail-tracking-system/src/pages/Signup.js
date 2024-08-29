@@ -1,6 +1,7 @@
 import React from 'react';
 import NavBar from  '../components/NavBar';
 import './Signup.css';
+import {Link} from 'react-router-dom';
 
 const Signup= () => {
     return(
@@ -42,7 +43,11 @@ const Signup= () => {
                 </label>
                 
             </form>
+            <div className='signup-btn'>
+            <Link to ='/signin'>
             <button type="submit">Sign Up</button>
+            </Link>
+            </div>
             <div className="center-text">
             <p>Already have an account? <a href="/signin">Sign in</a></p>
             </div>

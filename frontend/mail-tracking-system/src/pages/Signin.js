@@ -30,9 +30,11 @@ const Signin = () => {
           <label><h1>Password</h1></label>
           <input type="password" placeholder="Enter your password" />
           
+          <div className='signin-btn'>
           <Link to="/home">
           <button type="submit">Sign In</button>
           </Link>
+          </div>
           
         </form>
         <div className="center-text">

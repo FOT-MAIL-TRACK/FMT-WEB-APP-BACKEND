@@ -80,9 +80,9 @@ body {
     border-radius: 5px;
   }
   
-  button{
+  .signin-btn button{
     display: block;
-    margin-left: auto;
+    margin-left: 150px;
     margin-right: auto;
     width: 50%; 
     padding: 12px 24px;
@@ -99,6 +99,8 @@ body {
   
   button:hover {
     background-color: #800d1c;
+    text-decoration: none;
+    cursor: pointer;
   }
   
   a {
@@ -106,9 +108,7 @@ body {
     text-decoration: none;
   }
   
-  a:hover {
-    text-decoration: underline;
-  }
+  
   
   .left-section p {
     text-align: center; /* Center-aligns the text */
@@ -136,4 +136,8 @@ body {
     height: auto;
     display: block;
     margin: 0 auto;
+}
+
+.center-text p{
+  color:black;
 }
