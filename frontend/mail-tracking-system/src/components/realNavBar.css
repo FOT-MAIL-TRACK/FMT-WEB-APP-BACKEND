@@ -1,0 +1,45 @@
+.realNavBar{
+    width:auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;  
+    background-color: #ffffff;
+    padding: 5px 2px;
+    position: relative;
+    top: 0; 
+}
+
+.logo{
+    height: 90px;
+    margin-left: 50px;
+    cursor: pointer;
+}
+
+.nav-links{
+    flex:1;
+    text-align: center;
+    /* margin-right: 350px; */
+}
+
+.nav-links a{
+    display: inline-block;
+    margin: 10px 80px;
+    color: #000000;
+    margin-right: 10px;
+    text-decoration: none;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.nav-links a:hover{
+    color: darkgoldenrod;
+}
+
+.signout{
+    margin-left: 500px;
+}
+
+.signout:hover{
+    color: #a1232b;
+}

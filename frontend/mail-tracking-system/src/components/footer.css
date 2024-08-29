@@ -1,0 +1,82 @@
+.footer {
+    background-color: #333;
+    color: white;
+    padding: 40px 50px;
+    margin-top: 40px;
+    text-align: center;
+    width: auto;
+  }
+  
+  .footer-content {
+    display: flex;
+    /* flex-direction: column; */
+    align-items: center;
+    justify-content:space-between;
+    
+  }
+
+  .footer-con{
+    display: inline-block;
+    margin-right:200px;
+  }
+  
+  .footer-logo img {
+    width: 100px; 
+    margin-bottom: 10px ;
+  }
+  .h2{
+    text-align: left;
+    margin-right:5px;
+    }
+  .footer-mailtrack-logo img{
+    width: 100px; 
+    margin-bottom: 10px;
+  }
+
+
+  .footer-details,
+  .contact-us {
+    color: white;
+    margin: 10px 0;
+  }
+  .contact-us a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+  }
+
+  
+
+  p{
+    color: white;
+  }
+  
+  .contact-us a:hover {
+    text-decoration: underline;
+  }
+  
+  .footer-bottom p {
+    margin-top: 10px;
+    margin-left: 20px;
+  }
+  
+  /* @media (min-width: 768px) {
+    .footer-content {
+      flex-direction: row;
+      justify-content: space-between;
+    }
+  
+    .footer-logo {
+      margin-right: 20px;
+    }
+  
+    .footer-details,
+    .contact-us {
+      margin: 0;
+    }
+  
+    .footer-bottom {
+      margin-top: 10px;
+    }
+  } */
+  
