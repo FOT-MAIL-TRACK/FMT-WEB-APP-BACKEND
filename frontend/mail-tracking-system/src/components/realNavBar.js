@@ -13,8 +13,6 @@ const RealNavBar= () => {
                     <Link to="/letters">Letters</Link>
                     <Link to="/track-logs">Track logs</Link>
                     <Link to="/signin"><div className='signout'>Signout</div></Link>
-                    
-
                 </div>
         </nav>
     )
