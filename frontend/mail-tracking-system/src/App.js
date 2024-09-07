@@ -6,6 +6,7 @@ import HomePage from './pages/homePage';
 import AboutPage from './pages/aboutPage';
 import LetterTypes from './pages/lettersTypes';
 import ExternalLetter from './pages/externalLetter';
+import InternalLetter from './pages/internalLetter';
 
 function App(){
     return (
@@ -17,6 +18,7 @@ function App(){
           <Route path='/about' element={<AboutPage/>}></Route>
           <Route path='/letters' element={<LetterTypes/>}></Route>
           <Route path='/externalletters' element={<ExternalLetter/>}></Route>
+          <Route path='/internalletters' element={<InternalLetter/>}></Route>
         </Routes>
       </Router>
     )
