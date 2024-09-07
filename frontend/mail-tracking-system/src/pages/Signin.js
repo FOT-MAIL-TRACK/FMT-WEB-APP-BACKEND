@@ -23,7 +23,7 @@ const Signin = () => {
       </div>
       <div className="right-section">
         <h1 className='h1-class'>Sign In</h1>
-        <p>Please Enter your account details to sign in to the system. </p>
+        <p className='p-class'>Please Enter your account details to sign in to the system. </p>
         <form>
           <label><h1 className='h1-class' >Email</h1></label>
           <input type="email" placeholder="Enter your campus email" />

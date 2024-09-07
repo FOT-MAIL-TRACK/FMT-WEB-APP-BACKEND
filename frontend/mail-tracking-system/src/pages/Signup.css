@@ -1,18 +1,18 @@
 .signup-container{
   display: flex;
-  justify-content: center;
-  padding: 40px;
+  /* justify-content: center; */
+  padding: 20px;
   background-color: #f9f9f9;  
 }
 .container{
   /* display: block;
   margin-left: auto;
   margin-right: auto; */
-  width: 40%;
+  width: 50%;
   height: 1200px;
   margin-top: 100px;
-  margin-left: 550px;
-  padding-left: 50px;
+  margin-left: 450px;
+  padding-left: 10px;
   background-color: #fff;
   border-radius: 5px;
   border: 2px solid #a1232b; /* Red border */
@@ -22,8 +22,13 @@
 h1 {
   font-size: 30px;
 }
-.signup{
+.signup-h1{
   padding-top: 20px;
+}
+.detail-p{
+  font-size: 1.4rem;
+  color: #000000;
+  margin-left: 300px;
 }
 p{
   font-size: 18px;
@@ -31,18 +36,19 @@ p{
 
 form{
   display: flex;
-  flex-direction: column;
+  /* flex-direction: column; */
   margin-top: 20px;
 }
 label {
   margin-bottom: 5px;
   font-weight: bold;
+  text-align: center;
 }
 
 input {
   margin-bottom: 20px;
   padding: 10px;
-  width: 89%;
+  width: 80%;
   font-size: 16px;
   border: 1px solid #ccc;
   border-radius: 5px;
@@ -51,7 +57,7 @@ input {
 select{
   margin-bottom: 20px;
   padding: 10px;
-  width: 89%;
+  width: 82.5%;
   font-size: 16px;
   border: 1px solid #ccc;
   border-radius: 5px;
@@ -60,7 +66,7 @@ select{
 
 .signup-btn button{
   display: block;
-  margin-left: 90px;
+  margin-left: 140px;
   margin-right: auto;
   width: 70%; 
   padding-left: 0px;

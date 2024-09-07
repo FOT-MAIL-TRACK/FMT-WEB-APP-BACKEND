@@ -15,12 +15,12 @@ const LetterTypes = () =>{
         </div>
         <div className='letter-content'>
             <div className='letter-left-section'>
-                <Link to = '/internaletters'>
+                <Link to = '/internalletters'>
                 <h2>Internal Letters</h2>
                 </Link>
             </div>
             <div className='letter-right-section'>
-                <Link to = '/externaletters'>
+                <Link to = '/externalletters'>
                 <h2>External Letters</h2>
                 </Link>
             </div>
