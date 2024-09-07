@@ -10,9 +10,9 @@ const Signup= () => {
     <div className="signup-conatiner">
         <div className="container">
             <div className='signup'>
-            <h1>Sign Up</h1>
+            <h1 className='signup-h1'>Sign Up</h1>
             </div>
-            <p>Please Enter details to create an account. </p>
+            <p className='detail-p'>Please Enter details to create an account. </p>
 
             <form>
                 <label>
