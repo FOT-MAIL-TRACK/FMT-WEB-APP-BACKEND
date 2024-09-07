@@ -1,8 +1,8 @@
 .navbar {
-    position: relative;
+    position:static;
     top: 0;
     /* left: 0; */
-    width: auto;
+    width: 100%;
     background-color: #a1232b; 
     padding: 10px 20px;
     color: #fff;

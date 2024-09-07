@@ -1,143 +1,145 @@
 body {
-    font-family: Arial, sans-serif;
-  }
-  
-  .signin-container {
-    display: flex;
-    justify-content: center;
-    padding: 40px;
-    background-color: #fff;
-    height: 100vh;
-    align-items: center;
-    box-sizing: border-box;
-  }
-  
-  .left-section {
-    margin-right: 20px;
-    width: 40%;
-
-    padding: 40px;
-    /* background-color: #fff; */
-    border-radius: 5px;
-    /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
-  }
-  
-  .right-section {
-    width: 30%;
-    height: 560px;
-    padding: 40px;
-    background-color: #fff;
-    margin-left: 100px;
-    margin-top: 40px;
-    border-radius: 5px;
-    border: 2px solid #a1232b; /* Red border */
-    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.5); /* Shadow */
-  }
-  
-  h1 {
-    font-size: 28px;
-    margin-bottom: 10px;
-  }
-
-  .logo-fmt{
-    height: 500px;
-    width: 500px;
-    margin-left: 50px;
-  }
-  
-  h2 {
-    font-size: 20px;
-    margin-bottom: 50px;
-  }
-  
-  p {
-    margin-bottom: 10px;
-    color: #555;
-    font-size: 18px;
-
-  }
-
-  .desc{
-    font-size: 18px;
-  }
-  
-  form {
-    display: flex;
-    flex-direction: column;
-    margin-top: 30px;
-  }
-  
-  label {
-    margin-bottom: 5px;
-    font-weight: bold;
-  }
-  
-  input {
-    margin-bottom: 20px;
-    padding: 10px;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-  }
-  
-  .signin-btn button{
-    display: block;
-    margin-left: 150px;
-    margin-right: auto;
-    width: 50%; 
-    padding: 12px 24px;
-    min-width: 150px;
-    margin-top: 20px;
-    background-color: #a1232b;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    text-align: center;
-    cursor: pointer;
-    font-size: 24px;
-}
-  
-  button:hover {
-    background-color: #800d1c;
-    text-decoration: none;
-    cursor: pointer;
-  }
-  
-  a {
-    color: #a1232b;
-    text-decoration: none;
-  }
-  
-  
-  
-  .left-section p {
-    text-align: center; /* Center-aligns the text */
-    margin-bottom: 20px;
-    color: #555;
-    border: 2px solid #a1232b; /* Red border for paragraph */
-    padding: 30px;
-    border-radius: 5px;
-    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.5); 
+  font-family: Arial, sans-serif;
 }
 
-  
-  .right-section .center-text {
-    text-align: center;
-    margin-top: 20px;
-  }
-  
-  .right-section a {
-    display: inline-block;
-    margin-top: 10px;
-  }
-  
-  .left-section img {
-    max-width: 80%; 
-    height: auto;
-    display: block;
-    margin: 0 auto;
+.signin-container {
+  display: flex;
+  justify-content: center;
+  padding: 30px;
+  background-color: #fff;
+  height: 800px;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.left-section {
+  margin-right: 20px;
+  width: 40%;
+
+  padding: 40px;
+  /* background-color: #fff; */
+  border-radius: 5px;
+  /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
+}
+
+.right-section {
+  width: 30%;
+  height: 600px;
+  padding: 40px;
+  background-color: #fff;
+  margin-left: 100px;
+  margin-top: 40px;
+  border-radius: 5px;
+  border: 2px solid #a1232b; /* Red border */
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.5); /* Shadow */
+}
+
+.h1-class {
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+  margin-right: 40px;
+}
+
+.logo-fmt{
+  height: 500px;
+  width: 500px;
+  margin-left: 50px;
+}
+
+h2 {
+  font-size: 20px;
+  margin-bottom: 50px;
+  margin-right: 40px;
+}
+
+p {
+  margin-bottom: 10px;
+  color: #555;
+  font-size: 18px;
+
+}
+
+.desc{
+  font-size: 18px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  margin-top: 30px;
+}
+
+label {
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+input {
+  margin-bottom: 20px;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.signin-btn button{
+  display: block;
+  margin-left: 180px;
+  margin-right: 40px;
+  width: 50%; 
+  padding: 12px 24px;
+  min-width: 150px;
+  margin-top: 20px;
+  background-color: #a1232b;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  text-align: center;
+  cursor: pointer;
+  font-size: 24px;
+}
+
+button:hover {
+  background-color: #800d1c;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+a {
+  color: #a1232b;
+  text-decoration: none;
+}
+
+
+
+.left-section p {
+  text-align: center; /* Center-aligns the text */
+  margin-bottom: 20px;
+  color: #555;
+  border: 2px solid #a1232b; /* Red border for paragraph */
+  padding: 30px;
+  border-radius: 5px;
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.5); 
+}
+
+
+.right-section .center-text {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.right-section a {
+  display: inline-block;
+  margin-top: 10px;
+}
+
+.left-section img {
+  max-width: 80%; 
+  height: auto;
+  display: block;
+  margin: 0 auto;
 }
 
 .center-text p{
-  color:black;
+color:black;
 }

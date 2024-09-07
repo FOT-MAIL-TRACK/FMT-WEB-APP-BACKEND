@@ -4,12 +4,13 @@ import NavBar from '../components/NavBar';
 import Footer from '../components/footer'
 import './homePage.css';
 import fotmailtracklogo from '../assets/fotmailtrack.jpeg';
+import {Link} from 'react-router-dom'; 
 
 const HomePage = () =>{
     return (
         <>
         <RealNavBar />
-        <div style={{ marginTop: '0px' }}>
+        <div style={{ marginTop: '100px' }}> 
         <NavBar/>
         </div>
        
@@ -29,7 +30,9 @@ const HomePage = () =>{
             </div>
 
             <div className='btn-insert'>
+                <Link to ="/letters">
                 <button class="Insert-Letters">Insert Letters</button>
+                </Link>
             </div>
             </div>
         </div>
