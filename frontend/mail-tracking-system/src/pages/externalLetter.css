@@ -35,7 +35,7 @@
 }
 
 .generate-btn button{
-    margin-left: 130px;
+    margin-left: 230px;
     display: block;
     margin-right: auto;
     width: 50%; 
@@ -62,12 +62,15 @@
 .form-letter input {
     margin-bottom: 20px;
     padding: 10px;
-    width: 80%;
+    width: 92%;
     font-size: 16px;
     border: 1px solid #ccc;
     border-radius: 5px;
   }
 
+.form-letter select{
+    width: 94%;
+}
 
 
 

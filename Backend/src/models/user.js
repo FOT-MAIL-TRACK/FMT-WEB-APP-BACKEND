@@ -32,26 +32,26 @@ const userSchema = new mongoose.Schema({
     role:{
         type: String,
         required: "true",
-        enum: ['Lecturer','Dean','Department Head','PostalDepartmentMA','FacultyMA','DepartmentMA','Admin','Technical Officer', 'Demonstrator']
-        //default: 'Lecturer'
+        enum: ['Lecturer','Dean','Department Head','PostalDepartmentMA','FacultyMA','DepartmentMA','Admin','Technical Officer', 'Demonstrator','Workaid']
+        // default: 'Lecturer'
     },
     faculty: {
         type: String,
-        enum: ['Faculty of Technology','Faculty of Human Sciences'],
+        enum: ['Faculty of Technology','Faculty of Management and Studies','Faculty of Engineering','FHS'],
         required: true
     },
-    department: {
-        type: String,
-        enum: ['Biosystems Technology',
-               'Information & Communication Technology',
-               'Civil and Environmental Technology',
-               'Materials and Mechanical Technology',
-               'Science for Technology'
-        ],
-        required: function(){
-            return this.faculty === 'Faculty of Technology';
-        }
-    },
+    // department: {
+    //     type: String,
+    //     enum: ['Biosystems Technology',
+    //            'Information & Communication Technology',
+    //            'Civil and Environmental Technology',
+    //            'Materials and Mechanical Technology',
+    //            'Science for Technology'
+    //     ],
+    //     required: function(){
+    //         return this.faculty === 'Faculty of Technology';
+    //     }
+    // },
     password: {
         type: String,
         required: true

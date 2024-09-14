@@ -2,7 +2,7 @@ const express = require('express');
 const dotenv = require('dotenv');
 const connectDB = require('./config/db');
 const bodyParser = require('body-parser');
-const cors = require('cors');
+const cors = require("cors");
 const letterRoutes = require('./routes/letterRoutes')
 const userRoutes = require('./routes/userRoutes')
 
@@ -10,12 +10,15 @@ dotenv.config();
 
 const app = express();
 
+app.use(express.json());
+
 // Connect to the database
 connectDB();
 
 //middleware
 app.use(cors());
-app.use(bodyParser.json());
+// app.use(bodyParser.json());
+
 
 //Routes
 app.use('/api/letters', letterRoutes)
