@@ -7,7 +7,7 @@ const NavBar = () => {
     <div className="navbar">
     <div className="navbar-content">
       <img src={usjlogo} alt="University Logo" className="navbar-logo" />
-      <h1 className="navbar-text">University of Sri Jayawardenepura</h1>
+      <h1 className="navbar-text">University of Sri Jayewardenepura</h1>
     </div>
   </div>
   );
