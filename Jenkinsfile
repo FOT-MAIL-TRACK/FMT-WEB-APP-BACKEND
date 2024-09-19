@@ -54,19 +54,6 @@ pipeline {
                 }
             }
         }
-
-        stage('Deploy') {
-            steps {
-                // Change directory to the project folder
-                dir("${PROJECT_DIR}") {
-                    script {
-                        // On Windows, Docker Compose should work without issues
-                        bat "docker-compose down"
-                        bat "docker-compose up -d"
-                    }
-                }
-            }
-        }
     }
 
     post {
