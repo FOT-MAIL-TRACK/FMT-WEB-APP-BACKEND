@@ -31,7 +31,7 @@ pipeline {
             steps {
                 // Build the Docker image
                 script {
-                    docker.build("${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}")
+                    docker.build("${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}",'backend')
                 }
             }
         }
