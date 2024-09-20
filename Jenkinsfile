@@ -5,7 +5,7 @@ pipeline {
         DOCKER_IMAGE_NAME = 'fmt-web-app-backend'
         DOCKER_IMAGE_TAG = 'latest'
         DOCKER_COMPOSE_FILE = 'docker-compose.yml'
-        PROJECT_DIR = 'C:\\path\\to\\your\\project' // Update this path to your local project directory
+       // PROJECT_DIR = 'C:\\path\\to\\your\\project' Update this path to your local project directory
     }
 
     stages {
