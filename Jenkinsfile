@@ -19,9 +19,11 @@ pipeline {
         }
 
         stage('Install Dependencies') {
-            steps {
-                // Install dependencies using npm (Assuming Node.js is installed)
-                bat 'npm install'
+            steps { 
+                 dir('backend') {  // Navigate to the 'backend' directory where package.json is located
+                    // Install dependencies using npm (Assuming Node.js is installed)
+                    bat 'npm install'
+                }
             }
         }
 
