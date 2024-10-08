@@ -5,6 +5,7 @@ import './Signup.css';
 import {Link, useNavigate} from 'react-router-dom';
 
 const Signup= () => {
+    const navigate = useNavigate();
     // const [formData,setformData] = useState({
     //     name: '',
     //     username:'',
@@ -21,18 +22,18 @@ const Signup= () => {
     const [faculty, setFaculty] = useState();
     const [password, setPassword] = useState();
 
-    const navigate = useNavigate();
+   
 
     // const handleChange = (e) => {
     //     setformData({...formData, [e.target.name]: e.target.value});
     // }
 
-    const handleSubmit =  (e) => {
+    const handleSubmit =  async (e) => {
         e.preventDefault();
-        const response = axios.post("http://localhost:5001/api/users/signup",{name,username,email,role,faculty,password})
+        const response = await axios.post("http://localhost:5001/api/users/signup",{name,username,email,role,faculty,password})
             try{
             if(response.status === 201){
-                    alert('User registered successfully');
+                    console.log('User registered successfully');
                     navigate('/signin');
                 }
             }

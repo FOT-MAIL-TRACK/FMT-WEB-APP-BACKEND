@@ -1,10 +1,37 @@
-import React from 'react';
+import React, {useState} from 'react';
 import logo from '../assets/fotmailtrack.jpeg';
 import './Signin.css'
 import NavBar from '../components/NavBar';
-import {Link} from 'react-router-dom';
+import { useNavigate} from 'react-router-dom';
+import axios from 'axios';
 
 const Signin = () => {
+
+  const navigate = useNavigate();
+
+  const [email, setEmail] = useState();
+  const [password, setPassword] = useState();
+  const [error, setError] = useState();
+
+  const handleSignin = async(e) => {
+    e.preventDefault();
+    try{
+      const response = await axios.post("http://localhost:5001/api/users/signin", {email, password})
+      if(  response.status === 200){
+        localStorage.setItem('token', response.data.token);
+        navigate('/home');
+      }
+      else{
+        setError(response.data.message)
+      }
+    }
+    catch (err){
+      setError('Login failed')
+    }
+  }
+  
+
+
   return (
     <>
 
@@ -24,17 +51,27 @@ const Signin = () => {
       <div className="right-section">
         <h1 className='h1-class'>Sign In</h1>
         <p className='p-class'>Please Enter your account details to sign in to the system. </p>
-        <form>
+        <form onSubmit={handleSignin}>
+
           <label><h1 className='h1-class' >Email</h1></label>
-          <input type="email" placeholder="Enter your campus email" />
+          <input 
+          type="email" 
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder="Enter your campus email" required/>
         
           <label><h1 className='h1-class'>Password</h1></label>
-          <input type="password" placeholder="Enter your password" />
+          <input 
+          type="password" 
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          placeholder="Enter your password" required/>
           
+          {error && <p>{error}</p>}
           <div className='signin-btn'>
-          <Link to="/home">
+          
           <button type="submit">Sign In</button>
-          </Link>
+          
           </div>
           
         </form>
