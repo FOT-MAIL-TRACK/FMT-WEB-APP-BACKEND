@@ -1,12 +1,12 @@
 .ex-lettercontainer{
     display: flex;
-    height: 1550px;
+    height: 1600px;
 }
 
 .container-ex{
     width: 50%;
     /* padding: 40px; */
-    height: 1450px;
+    height: 1500px;
     margin-top: 100px;
     margin-left: 450px;
     padding-left: 40px;
@@ -72,5 +72,7 @@
     width: 94%;
 }
 
-
+.uniqueid{
+    color: black;
+}
 
