@@ -7,6 +7,7 @@ import AboutPage from './pages/aboutPage';
 import LetterTypes from './pages/lettersTypes';
 import ExternalLetter from './pages/externalLetter';
 import InternalLetter from './pages/internalLetter';
+import ProfilePage from './pages/profilePage';
 
 function App(){
     return (
@@ -19,6 +20,7 @@ function App(){
           <Route path='/letters' element={<LetterTypes/>}></Route>
           <Route path='/externalletters' element={<ExternalLetter/>}></Route>
           <Route path='/internalletters' element={<InternalLetter/>}></Route>
+          <Route path='/profile-page' element={<ProfilePage/>}></Route>
         </Routes>
       </Router>
     )

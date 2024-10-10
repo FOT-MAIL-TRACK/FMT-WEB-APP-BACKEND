@@ -59,6 +59,9 @@
         registrationNumber: {
             type: String,
             unique: true,
+        },
+        profilePicture: {
+            type: String,
         }
         
 
