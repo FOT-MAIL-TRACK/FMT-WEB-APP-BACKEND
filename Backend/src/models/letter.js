@@ -8,9 +8,6 @@ const letterSchema = new mongoose.Schema({
         },
        registrationNumber: {
          type: String,
-         required: function(){
-            return this.isInternal;
-         },
          unique: true
        },
        address: {

@@ -52,7 +52,7 @@ exports.createInternalLetter = async (req,res) => {
                 faculty: receiver.faculty,
                 department: receiver.department
             },
-            isInternal, 
+            // isInternal :true, 
             currentHolder: currentHolder._id ,
             uniqueID: uniqueID ,
             trackingLog: [{
