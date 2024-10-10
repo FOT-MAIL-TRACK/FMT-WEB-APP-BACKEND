@@ -5,7 +5,7 @@ pipeline {
         DOCKER_IMAGE_NAME = 'fmt-web-app-backend'
         DOCKER_IMAGE_TAG = 'latest'
         DOCKER_COMPOSE_FILE = 'docker-compose.yml'
-        PROJECT_DIR = 'C:\\path\\to\\your\\project' // Update this path to your local project directory
+       // PROJECT_DIR = 'C:\\path\\to\\your\\project' Update this path to your local project directory
     }
 
     stages {
@@ -19,9 +19,11 @@ pipeline {
         }
 
         stage('Install Dependencies') {
-            steps {
-                // Install dependencies using npm (Assuming Node.js is installed)
-                bat 'npm install'
+            steps { 
+                 dir('backend') {  // Navigate to the 'backend' directory where package.json is located
+                    // Install dependencies using npm (Assuming Node.js is installed)
+                    bat 'npm install'
+                }
             }
         }
 
@@ -29,7 +31,7 @@ pipeline {
             steps {
                 // Build the Docker image
                 script {
-                    docker.build("${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}")
+                    docker.build("${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}",'Backend')
                 }
             }
         }
@@ -50,19 +52,6 @@ pipeline {
                     def image = docker.image("${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}")
                     image.inside {
                         bat 'npm test'
-                    }
-                }
-            }
-        }
-
-        stage('Deploy') {
-            steps {
-                // Change directory to the project folder
-                dir("${PROJECT_DIR}") {
-                    script {
-                        // On Windows, Docker Compose should work without issues
-                        bat "docker-compose down"
-                        bat "docker-compose up -d"
                     }
                 }
             }

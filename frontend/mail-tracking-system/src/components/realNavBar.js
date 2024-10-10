@@ -14,10 +14,6 @@ const RealNavBar= () => {
                     <Link to="/track-logs">Track logs</Link>
                     <Link to="/profile-page">Profile Page</Link>
                     <Link to="/signin">Signout</Link>
-
-                    
-                    
-
                 </div>
         </nav>
     )

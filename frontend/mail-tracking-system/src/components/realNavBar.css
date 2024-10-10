@@ -1,11 +1,11 @@
 .realNavBar{
-    width:100%;
+    width:auto;
     display: flex;
     align-items: center;
     justify-content: space-between;  
     background-color: #ffffff;
     padding: 5px 2px;
-    position: fixed;
+    position: relative;
     top: 0; 
 }
 
@@ -16,9 +16,9 @@
 }
 
 .nav-links{
-    flex: 1;
+    flex:1;
     text-align: center;
-    margin-right: 800px;
+    /* margin-right: 350px; */
 }
 
 .nav-links a{
@@ -36,8 +36,10 @@
     color: darkgoldenrod;
 }
 
+.signout{
+    margin-left: 500px;
+}
 
-
-.signoout:hover{
+.signout:hover{
     color: #a1232b;
 }
