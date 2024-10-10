@@ -2,19 +2,30 @@ const mongoose = require('mongoose');
 const User = require('../models/user');
 const Letter = require('../models/letter')
 
-// const QRCode = require('qrcode');
+//function uniqueID for for internal letters
+
+const generateInternalLetterID = (senderReg, receiverReg) => {
+    const timestap = Date.now();
+    const rawID = `${senderReg}-${receiverReg}-${timestap}`;
+    return Buffer.from(rawID).toString('base64');
+}
+
+const generateExternalLetterID = (senderName, senderAddress, receiverReg) => {
+    const timestap = Date.now();
+    const rawID = `${senderName}-${senderAddress}-${receiverReg}-${timestap}`;
+    return Buffer.from(rawID).toString('base64');
+}
 
 
-//create a new letter
-exports.createLetter = async (req,res) => {
+//create a new Internal letter
+exports.createInternalLetter = async (req,res) => {
     try{
-        const {  sender, receiver, isInternal } = req.body;
+        const {  sender, receiver } = req.body;
         // Generate QR code data
         // const qrCode = await QRCode.toDataURL(JSON.stringify({sender,receiver}));
 
-        const uniqueID = isInternal 
-         ? `${sender.registrationNumber}-${receiver.registrationNumber}-${Date.now()}` : 
-         `${sender.name}-${receiver.registrationNumber}-${Date.now()}`;
+        //create UniqueId for internalletter/parcel
+        const uniqueID = generateInternalLetterID(sender.registrationNumber ,receiver.registrationNumber);
 
         // if (isInternal) {
         //     uniqueId = `${sender.registrationNumber}-${receiver.registrationNumber}-${Date.now()}`;
@@ -22,8 +33,6 @@ exports.createLetter = async (req,res) => {
 
         const currentHolder = await User.findOne({ registrationNumber: receiver.registrationNumber });
 
-
-        
         if (!currentHolder) {
             return res.status(404).json({ message: 'Current holder (receiver) not found' });
           }
@@ -32,7 +41,7 @@ exports.createLetter = async (req,res) => {
         const newLetter = new Letter({
             sender: {
                 name : sender.name,
-                // registrationNumber: isInternal ? sender.registrationNumber : undefined,
+                registrationNumber: sender.registrationNumber,
                 address: sender.address
             },
             receiver: {
@@ -41,13 +50,12 @@ exports.createLetter = async (req,res) => {
                 receiverRole: receiver.receiverRole,// Final receiver's role
                 authorities: receiver.authorities, // Array of authority objects
                 faculty: receiver.faculty,
-                department: receiver.department,
-    
+                department: receiver.department
             },
             isInternal, 
-            currentHolder: isInternal ? currentHolder._id : null,
-            uniqueID: uniqueID || `${Date.now()}`,
-            trackingLog: isInternal [{
+            currentHolder: currentHolder._id ,
+            uniqueID: uniqueID ,
+            trackingLog: [{
                 holder: currentHolder._id,
                 status: 'Pending'
             }] 
@@ -59,6 +67,50 @@ exports.createLetter = async (req,res) => {
         res.status(500).json({ message: err.message });
     }
 }
+
+//create a new External letter
+exports.createExternalLetter = async (req,res) => {
+    try{
+        const {  sender, receiver } = req.body;
+        // Generate QR code data
+        // const qrCode = await QRCode.toDataURL(JSON.stringify({sender,receiver}));
+
+        //create UniqueId for internalletter/parcel
+        const uniqueID = generateExternalLetterID(sender.name, sender.address ,receiver.registrationNumber);
+
+        // if (isInternal) {
+        //     uniqueId = `${sender.registrationNumber}-${receiver.registrationNumber}-${Date.now()}`;
+        // }
+        if (!sender || !receiver) {
+            return res.status(400).json({ message: "Sender and receiver details are required." });
+        }
+
+        const newLetter = new Letter({
+            sender: {
+                name : sender.name,
+                address: sender.address
+            },
+            receiver: {
+                name: receiver.name,
+                registrationNumber: receiver.registrationNumber,
+                receiverRole: receiver.receiverRole,// Final receiver's role
+                authorities: receiver.authorities, // Array of authority objects
+                faculty: receiver.faculty,
+                department: receiver.department
+            },
+            isInternal: false, 
+            currentHolder: null ,
+            uniqueID: uniqueID, 
+            trackingLog: [] // External letters may not have tracking logs initially
+        });
+        const savedLetter = await newLetter.save();
+        res.status(201).json(savedLetter);
+    }
+    catch(err){
+        res.status(500).json({ message: err.message });
+    }
+}
+
 
 //get letters
 exports.getLetterById = async (req, res) => {
@@ -76,7 +128,7 @@ exports.getLetterById = async (req, res) => {
     }
 };
 
-//update letter status
+//update letter status (common for both internal and external letters)
 
 exports.updateLetterStatus = async (req,res) => {
 
