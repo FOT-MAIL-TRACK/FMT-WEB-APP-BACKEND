@@ -6,13 +6,13 @@ const letterSchema = new mongoose.Schema({
          type: String,
          required: true
         },
-    //    registrationNumber: {
-    //      type: String,
-    //      required: function(){
-    //         return this.isInternal;
-    //      },
-    //      unique: true
-    //    },
+       registrationNumber: {
+         type: String,
+         required: function(){
+            return this.isInternal;
+         },
+         unique: true
+       },
        address: {
          type: String,
          required: true
