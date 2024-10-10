@@ -1,5 +1,9 @@
 const User = require('../models/user');
 const jwt = require('jsonwebtoken');
+const cloudinary = require('../config/cloudinary');
+const multer = require('multer');
+const storage = multer.diskStorage({});
+const upload = multer({ storage });
 
 exports.signup = async (req, res) => {
     try{
@@ -40,3 +44,34 @@ exports.getUserDetails = async(req,res) => {
         res.status(400).json({message: error.message});
     }
 };                   
+
+exports.updateUserDetails = async (req,res) => {
+    try {
+        const updatedUser = await User.findByIdAndUpdate(req.params.id, req.body, { new: true });
+        res.json(updatedUser);
+      } catch (err) {
+        res.status(500).json({ message: 'Failed to update user' });
+      }
+}
+
+
+exports.uploadProfilePicture = [
+    upload.single('profilePicture'),
+    async (req, res) => {
+      try {
+        const result = await cloudinary.uploader.upload(req.file.path, {
+          folder: 'profile_pictures',
+        });
+  
+        const user = await User.findByIdAndUpdate(
+          req.user.userId,
+          { profilePicture: result.secure_url },
+          { new: true }
+        ).select('-password');
+  
+        res.json(user);
+      } catch (error) {
+        res.status(500).json({ message: error.message });
+      }
+    },
+  ];
