@@ -43,7 +43,7 @@ const ExternalLetter = () => {
             }
         }
         catch(error){
-            console.error('Error creating letter:', error);
+            console.error(error.response.data.message || 'Error creating letter:');
         }
     }
 
@@ -106,10 +106,16 @@ const ExternalLetter = () => {
                     onChange={(e)=> setDesignation(e.target.value)}
                     required>
                         <option value="" disabled selected>Choose Designation</option>
-                        <option value="lecturer">Lecturer</option>
-                        <option value="dean">dean</option>
-                        <option value="departmentMA">DepartmentMA</option>
-                        <option value="facultyMA">FacultyMA</option>
+                        <option value="Lecturer">Lecturer</option>
+                        <option value="Dean">dean</option>
+                        <option value="Department Head">dept head</option>
+                        <option value="PostalDepartment">postal dept</option>
+                        <option value="FacultyMA">FacultyMA</option>
+                        <option value="DepartmentMA">DepartmentMA</option>
+                        <option value="WorkAid">work aid</option>
+                        <option value="Admin">admin</option>
+                        <option value="Technical Officer">TO</option>
+                        <option value="Demonstrator">demo</option>
                     </select>
                 </label>
                 <label className='receiver-fac'>
@@ -154,7 +160,7 @@ const ExternalLetter = () => {
             {uniqueID && (
                 <div>
                     <h3>Generated Unique ID:</h3>
-                    <p>{uniqueID}</p>
+                    <p class='uniqueid'>{uniqueID}</p>
                 </div>
             )}
            
