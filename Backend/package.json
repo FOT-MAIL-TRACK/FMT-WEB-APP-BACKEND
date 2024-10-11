@@ -4,7 +4,7 @@
   "main": "src/server.js",
   "scripts": {
     "start": "node src/server.js",
-    "test": "jest",    // or your testing framework
+    "test": "jest", 
     "lint": "eslint .",
     "build": "npm run build",
     "dev": "nodemon src/server.js"
