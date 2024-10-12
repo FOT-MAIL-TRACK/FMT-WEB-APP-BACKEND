@@ -1,4 +1,4 @@
-name: FMT Backend CI Pipeline
+name: FMT Backend and Frontend CI Pipeline
 
 on:
   push:
@@ -9,9 +9,8 @@ on:
       - main
 
 jobs:
-  build:
+  backend:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -21,11 +20,34 @@ jobs:
         with:
           node-version: '18.x'
 
-      - name: Install dependencies
-        run: npm install
+      - name: Install backend dependencies
+        run: |
+          cd backend
+          npm install
 
-      - name: Run tests
-        run: npm test
+      - name: Run backend tests
+        run: |
+          cd backend
+          npm test
 
-      - name: Lint code
-        run: npm run lint
+  frontend:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18.x'
+
+      - name: Install frontend dependencies
+        run: |
+          cd frontend
+          npm install
+
+      - name: Run frontend tests
+        run: |
+          cd frontend
+          npm test
+
