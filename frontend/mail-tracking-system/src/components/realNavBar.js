@@ -17,6 +17,7 @@ const RealNavBar= () => {
                     <Link to="/profile-page">
                     <div className='profile'>Profile Page</div>
                     </Link>
+
                 </div>
         </nav>
     )
