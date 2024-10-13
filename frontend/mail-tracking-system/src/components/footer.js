@@ -17,8 +17,12 @@ const Footer = () => {
             <h2>University of Sri Jayewardenepura</h2>
         
         <div className="footer-details">
+        <a href="https://www.sjp.ac.lk/">
           <p>University of Sri Jayewardenepura</p>
+        </a>
+        <a href="https://tech.sjp.ac.lk/">
           <p>Faculty of Technology</p>
+        </a>
         </div>
         </div>
         <div className="footer-mailtrack-logo">

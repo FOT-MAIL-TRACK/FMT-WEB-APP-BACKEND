@@ -4,14 +4,33 @@ import './profilePage.css'
 import RealNavBar from '../components/realNavBar';
 import NavBar from '../components/NavBar';
 import Footer from '../components/footer'
-
+import {Container, Typography, Button  } from '@mui/material';
 
 
 const ProfilePage = () => {
 
-    const [user, setUser] = useState(null);
-    const [updatedEmail, setUpdatedEmail] = useState('');
-    const [profilePicture, setProfilePicture] = useState(null);
+  const [user, setUser] = useState(null);
+  const [updatedEmail, setUpdatedEmail] = useState('');
+  const [profilePicture, setProfilePicture] = useState(null);
+
+   // Fetch user profile on component mount
+
+  useEffect(() => {
+    const fetchUserProfile = async () => {
+        try {
+          const token = localStorage.getItem('token');
+          const response = await axios.get('http://localhost:5001/api/users/profile', {
+            headers: { Authorization: `Bearer ${token}` },
+          });
+          setUser(response.data);
+          setUpdatedEmail(response.data.email);
+        } catch (error) {
+          console.error('Error fetching user profile:', error);
+        }
+    }
+    fetchUserProfile();
+    }, []);
+  
 
     const handleUpdateProfile = async (e) => {
         e.preventDefault();
@@ -34,7 +53,8 @@ const ProfilePage = () => {
         }
       };
 
-      const handleProfilePictureUpload = async (e) => {
+
+    const handleProfilePictureUpload = async (e) => {
         e.preventDefault();
         if (!profilePicture) {
           alert('Please select a picture');
@@ -65,22 +85,6 @@ const ProfilePage = () => {
       
       
 
-    useEffect(() => {
-    const fetchUserProfile = async () => {
-        try {
-          const token = localStorage.getItem('token');
-          const response = await axios.get('http://localhost:5001/api/users/profile', {
-            headers: { Authorization: `Bearer ${token}` },
-          });
-          setUser(response.data);
-          setUpdatedEmail(response.data.email);
-        } catch (error) {
-          console.error('Error fetching user profile:', error);
-        }
-    }
-    fetchUserProfile();
-    }, []);
-
     return (
 
         <div className='profile-container'>
@@ -90,26 +94,34 @@ const ProfilePage = () => {
         <NavBar/>
         </div>
         </div>
-       
+
+        <Container>
+        <Typography variant="h4" gutterBottom align='center' marginTop= '40px'>
+          Edit Profile
+        </Typography>
         {user ? (
             <>
-                <h1>Profile Page</h1>
-                <img src={user.profilePicture} alt="Profile" width="150"/>
-                <p>Name: {user.name}</p>
-                <p>User name: {user.Username}</p>
-                <p>Email: {user.email}</p>
-                <p>Registration Number: {user.registrationNumber}</p>
-                <p>Role: {user.role}</p>
-                <p>Faculty: {user.faculty}</p>
-                <p>Department: {user.department}</p>
+            <img
+              src={user.profilePicture || '/default-profile.png'}
+              alt="Profile"
+              width="150"
+              style={{ borderRadius: '50%' }}
+            />
+            <Typography variant="h5">Name: {user.name}</Typography>
+            <Typography variant="h5">Username: {user.username}</Typography>
+            <Typography variant="h5">Email: {user.email}</Typography>
+            <Typography variant="h5">Role: {user.role}</Typography>
+            <Typography variant="h5">Faculty: {user.faculty}</Typography>
+            <Typography variant="h5">Department: {user.department}</Typography>
             </>
         ) : (
             <p>Loading...</p>
         )}
-        <h2>Update Information</h2>
-        <form onSubmit={handleUpdateProfile}>
-            <label><h3> Name: </h3>
-            </label>
+        {/* <Typography variant="h5" gutterBottom align='center' marginTop= '20px'>
+        Update Information
+        </Typography> */}
+    
+        {/* <form onSubmit={handleUpdateProfile}>
             <label> <h3>Email:</h3>
             <input
             type="email"
@@ -118,20 +130,29 @@ const ProfilePage = () => {
             />
             </label>
            
-            <button type="submit">Update Profile</button>
-        </form>
+            <Button type="submit" variant="contained" color="primary">
+                Update Profile
+            </Button>
+        </form> */}
 
-        <h2>Update Profile Picture</h2>
+        
         <form onSubmit={handleProfilePictureUpload}>
+            <Typography variant="h5" gutterBottom align='center' marginTop= '20px'>
+            Update Profile Picture
+            </Typography>
             <input
             type="file"
             accept="image/*"
             onChange={(e) => setProfilePicture(e.target.files[0])}
             />
-        <button type="submit">Upload Picture</button>
+            <Button type="submit" variant="contained" color="secondary" style={{ marginTop: '10px' }}>
+            Upload Picture
+            </Button>
         </form>
-        <Footer/>
 
+        </Container>
+        <div style={{ marginTop: '200px' }}></div>
+        <Footer/>
         </div>
 
        

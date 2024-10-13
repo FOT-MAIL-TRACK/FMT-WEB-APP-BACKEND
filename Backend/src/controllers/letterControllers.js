@@ -4,16 +4,16 @@ const Letter = require('../models/letter')
 
 //function uniqueID for for internal letters
 
-const generateInternalLetterID = (senderReg, receiverReg) => {
-    const timestap = Date.now();
-    const rawID = `${senderReg}-${receiverReg}-${timestap}`;
-    return Buffer.from(rawID).toString('base64');
+const generateInternalLetterID = () => {
+    const prefix = 'INT';
+    const uniquePart = Date.now().toString().slice(-4)+ '-' + Math.floor(Math.random() * 10000);
+    return `${prefix}-${uniquePart}`;
 }
 
-const generateExternalLetterID = (senderName, senderAddress, receiverReg) => {
-    const timestap = Date.now();
-    const rawID = `${senderName}-${senderAddress}-${receiverReg}-${timestap}`;
-    return Buffer.from(rawID).toString('base64');
+const generateExternalLetterID = () => {
+    const prefix = 'EXT'; 
+    const uniquePart = Date.now().toString().slice(-4)+ '-' + Math.floor(Math.random() * 10000);
+    return `${prefix}-${uniquePart}`;
 }
 
 
@@ -25,7 +25,7 @@ exports.createInternalLetter = async (req,res) => {
         // const qrCode = await QRCode.toDataURL(JSON.stringify({sender,receiver}));
 
         //create UniqueId for internalletter/parcel
-        const uniqueID = generateInternalLetterID(sender.registrationNumber ,receiver.registrationNumber);
+        const uniqueID = generateInternalLetterID();
 
         // if (isInternal) {
         //     uniqueId = `${sender.registrationNumber}-${receiver.registrationNumber}-${Date.now()}`;
@@ -76,7 +76,7 @@ exports.createExternalLetter = async (req,res) => {
         // const qrCode = await QRCode.toDataURL(JSON.stringify({sender,receiver}));
 
         //create UniqueId for internalletter/parcel
-        const uniqueID = generateExternalLetterID(sender.name, sender.address ,receiver.registrationNumber);
+        const uniqueID = generateExternalLetterID();
 
         // if (isInternal) {
         //     uniqueId = `${sender.registrationNumber}-${receiver.registrationNumber}-${Date.now()}`;
