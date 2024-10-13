@@ -4,6 +4,7 @@ import RealNavBar from '../components/realNavBar';
 import NavBar from '../components/NavBar';
 import Footer from '../components/footer';
 import axios from 'axios';
+import { Dialog, DialogTitle, DialogContent, DialogActions, Button, Typography } from '@mui/material';
 
 const InternalLetter = () => {
 
@@ -16,6 +17,7 @@ const InternalLetter = () => {
     const [recfaculty, setRecFaculty] = useState('');
     const [recdepartment, setRecDepartment] = useState('');
     const [uniqueID, setUniqueID] = useState(null);
+    const [open, setOpen] = useState(false);
 
     const handleSubmit = async (e) => {
     e.preventDefault();
@@ -39,12 +41,17 @@ const InternalLetter = () => {
             const response = await axios.post("http://localhost:5001/api/letters/create-internal-letter", letterData);
             setUniqueID(response.data.uniqueID);
             if (response.status === 201){
-            console.log('Internal-Letter Created:', response.data)
+                console.log('Internal-Letter Created:', response.data);
+                setOpen(true);
             }
         }
         catch (error){
             console.error(error.response.data.message);
         }
+    }
+
+    const handleClose = ()=> {
+        setOpen(false);
     }
  
     return(
@@ -133,17 +140,17 @@ const InternalLetter = () => {
                     onChange={(e)=> setRecFaculty(e.target.value)}
                     required>
                         <option value="" disabled selected>Choose Faculty</option>
-                        <option value="lecturer">FOT</option>
-                        <option value="dean">FMSC</option>
-                        <option value="departmentMA">FOE</option>
-                        <option value="facultyMA">FHSS</option>
-                        <option value="facultyMA">FAS</option>
-                        <option value="facultyMA">FAHS</option>
-                        <option value="facultyMA">FDS</option>
-                        <option value="facultyMA">FUAB</option>
-                        <option value="facultyMA">FOC</option>
-                        <option value="facultyMA">FMS</option>
-                        <option value="facultyMA">FGS</option>
+                        <option value="FOT">FOT</option>
+                        <option value="FMSC">FMSC</option>
+                        <option value="FOE">FOE</option>
+                        <option value="FHSS">FHSS</option>
+                        <option value="FAS">FAS</option>
+                        <option value="FAHS">FAHS</option>
+                        <option value="FDS">FDS</option>
+                        <option value="FUAB">FUAB</option>
+                        <option value="FOC">FOC</option>
+                        <option value="FMS">FMS</option>
+                        <option value="FGS">FGS</option>
                     </select>
                 </label>
                 <label className='receiver-dept'>
@@ -153,11 +160,11 @@ const InternalLetter = () => {
                     onChange={(e) => setRecDepartment(e.target.value)}
                     required>
                         <option value="" disabled selected>Choose Department</option>
-                        <option value="lecturer">ICT</option>
-                        <option value="dean">BST</option>
-                        <option value="departmentMA">MMT</option>
-                        <option value="facultyMA">SFT</option>
-                        <option value="facultyMA">CET</option>
+                        <option value="ICT">ICT</option>
+                        <option value="BST">BST</option>
+                        <option value="MMT">MMT</option>
+                        <option value="SFT">SFT</option>
+                        <option value="CET">CET</option>
                     </select>
                 </label>
                 <div className='generate-btn'>
@@ -166,10 +173,20 @@ const InternalLetter = () => {
             </form>
 
             {uniqueID && (
-                <div>
-                    <h3>Generated Unique ID:</h3>
-                    <p class='uniqueid'>{uniqueID}</p>
-                </div>
+                <Dialog open={open} onClose={handleClose} PaperProps={{ style: { padding: '20px', borderRadius: '12px' } }}>
+                        <DialogTitle sx={{ backgroundColor: '#a1232b', color: 'white' }}>
+                        Generated Unique ID:
+                        </DialogTitle>
+                        <DialogContent>
+                            <Typography variant="h4" color="secondary" align="center"  fontWeight="bold" marginTop="20px">{uniqueID}</Typography>
+                        </DialogContent>
+                        <DialogActions>
+                            <Button onClick={handleClose} color="Info"  backgroundColor="#a1232b" variant="contained" sx={{ borderRadius: '8px' }}>
+                            Close
+                            </Button>
+                        </DialogActions>
+                </Dialog>
+                
             )}
 
             </div>

@@ -25,12 +25,12 @@ h1{
 }
 
 .description{
-    margin-top:130px;
+    margin-top:100px;
     margin-right:150px;
     padding: 50px 50px;
     border-radius: 20px;
     background-color: rgb(255, 255, 255);
-    height: 130px;
+    height: 180px;
     box-shadow: 0 2px 3px #a1232b;
 }
 

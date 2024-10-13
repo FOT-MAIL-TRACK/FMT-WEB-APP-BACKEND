@@ -40,11 +40,13 @@ const letterSchema = new mongoose.Schema({
         }],
         faculty: {
             type: String,
-            required: true
+            required: true,
+            enum: ['FOT','FMSC','FOE','FHSS','FAS','FAHS','FDS','FUAB','FOC','FMS','FGS']
         },
         department : {
             type : String,
-            required : true
+            required : true,
+            enum: ['ICT','BST','MMT','SFT','CET']
         }
     },
     
