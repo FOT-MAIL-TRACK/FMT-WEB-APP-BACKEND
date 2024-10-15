@@ -8,6 +8,7 @@ import LetterTypes from './pages/lettersTypes';
 import ExternalLetter from './pages/externalLetter';
 import InternalLetter from './pages/internalLetter';
 import ProfilePage from './pages/profilePage';
+import TrackLogs from './pages/TrackLogs';
 
 function App(){
     return (
@@ -21,6 +22,7 @@ function App(){
           <Route path='/externalletters' element={<ExternalLetter/>}></Route>
           <Route path='/internalletters' element={<InternalLetter/>}></Route>
           <Route path='/profile-page' element={<ProfilePage/>}></Route>
+          <Route path='/track-logs' element={<TrackLogs/>}></Route>
         </Routes>
       </Router>
     )
