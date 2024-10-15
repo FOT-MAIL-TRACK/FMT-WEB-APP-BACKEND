@@ -117,12 +117,30 @@ exports.getLetterById = async (req, res) => {
     try {
         const { id } = req.params;
 
+        // Find letter by id and populate tracking log holders
         const letter = await Letter.findById(id).populate('currentHolder trackingLog.holder');
         if (!letter) {
             return res.status(404).json({ message: 'Letter not found' });
         }
 
-        res.status(200).json(letter);
+        // Extract relevant data for frontend
+        const letterData = {
+            uniqueId: letter.uniqueID,
+            sender: letter.sender,
+            senderDepartment: letter.senderDepartment,
+            receiver: letter.receiver,
+            receiverDepartment: letter.receiverDepartment,
+            trackingLog: letter.trackingLog.map(log => ({
+                holder: log?.holder?.name || 'Unknown Holder',  // or any identifier for holder
+                department: log?.holder?.department || 'Unknown Department',
+                status: log.status || 'Unknown Status',  // Delivered, In-progress, etc.
+                date: log.date || 'No Date Available'
+            })),
+            isDelivered: letter.isDelivered,
+            currentHolder: letter.currentHolder.name
+        };
+
+        res.status(200).json(letterData);
     } catch (error) {
         res.status(400).json({ message: error.message });
     }
@@ -155,3 +173,12 @@ exports.updateLetterStatus = async (req,res) => {
         res.status(400).json({ error: error.message });
     }
 }
+
+exports.getAllLetters = async (req, res) => {
+    try {
+        const letters = await Letter.find(); // Assuming Letter is your model
+        res.status(200).json({ letters });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};

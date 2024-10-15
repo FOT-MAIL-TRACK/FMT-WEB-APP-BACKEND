@@ -1,17 +1,17 @@
 import React from 'react';
 import RealNavBar from '../components/realNavBar';
 import NavBar from '../components/NavBar';
-import Footer from '../components/footer'
+import Footer from '../components/footer';
 import './homePage.css';
 import fotmailtracklogo from '../assets/fotmailtrack.jpeg';
 import {Link} from 'react-router-dom'; 
 
 const HomePage = () =>{
     return (
-        <>
+       <>
         <RealNavBar />
         <div style={{ marginTop: '100px' }}> 
-        <NavBar/>
+        <NavBar/> 
         </div>
        
         <div className='homePage'>
