@@ -37,7 +37,7 @@
         },
         faculty: {
             type: String,
-            enum: ['Faculty of Technology','Faculty of Management and Studies','Faculty of Engineering','FHS'],
+            enum: ['Faculty of Technology','Faculty of Management and Studies','Faculty of Engineering','FHS','Postal Department'],
             required: true
         },
         // department: {

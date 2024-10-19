@@ -114,8 +114,6 @@ const Signup= () => {
                     <select 
                         defaultValue="option1"
                         name="faculty"
-                        // value={formData.faculty}
-                        // onChange={handleChange}
                         onChange={(e) => setFaculty(e.target.value)}
                         required>
                         <option value="option1" >Choose Faculty</option>
@@ -123,6 +121,7 @@ const Signup= () => {
                         <option value="Faculty of Management and Studies">FMSC</option>
                         <option value="Faculty of Engineering">FOE</option>
                         <option value="FHS">FHS</option>
+                        <option value="Postal Department">Postal Department</option>
                     </select>
                 </label>
                 <label>
