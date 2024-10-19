@@ -18,6 +18,21 @@ const InternalLetter = () => {
     const [recdepartment, setRecDepartment] = useState('');
     const [uniqueID, setUniqueID] = useState(null);
     const [open, setOpen] = useState(false);
+    const [authorities, setAuthorities] = useState([{ name: '', role: '' }]);
+    const [departments, setDepartments] = useState([]);
+
+    const facultyDepartmentMap = {
+        FOT: ['ICT', 'BST', 'MMT', 'SFT', 'CET'],
+        FMSC: ['Department1', 'Department2'], 
+        FOE: ['Department3', 'Department4'], 
+    };
+
+    const handleFacultyChange = (e) => {
+        const selectedFaculty = e.target.value;
+        setRecFaculty(selectedFaculty);
+        setDepartments(facultyDepartmentMap[selectedFaculty] || []);
+    };
+
 
     const handleSubmit = async (e) => {
     e.preventDefault();
@@ -31,6 +46,7 @@ const InternalLetter = () => {
                 name : receiverName,
                 registrationNumber : receiverRegno,
                 receiverRole : designation,
+                authorities: authorities,
                 faculty: recfaculty,
                 department : recdepartment
             }
@@ -53,6 +69,22 @@ const InternalLetter = () => {
     const handleClose = ()=> {
         setOpen(false);
     }
+
+    const handleAuthorityChange = (index, field, value) => {
+        const newAuthorities = [...authorities];
+        newAuthorities[index][field] = value;
+        setAuthorities(newAuthorities);
+    };
+    
+    const addAuthority = () => {
+        setAuthorities([...authorities, { name: '', role: '' }]);
+    };
+    
+    const removeAuthority = (index) => {
+        const newAuthorities = authorities.filter((_, i) => i !== index);
+        setAuthorities(newAuthorities);
+    };
+    
  
     return(
         <>
@@ -133,11 +165,47 @@ const InternalLetter = () => {
                         <option value="Demonstrator">demo</option>
                     </select>
                 </label>
+                {authorities.map((authority, index) => (
+                    <div key={index} className='authority-section'>
+                    <label>
+                        <h2 className='label-h2'>Authority Name:</h2>
+                        <input 
+                        type="text" 
+                        placeholder="Enter authority name"
+                        value={authority.name}
+                        onChange={(e) => handleAuthorityChange(index, 'name', e.target.value)}
+                        required
+                        />
+                </label>
+                    <label>
+                        <h2 className='label-h2'>Authority Role:</h2>
+                        <select 
+                        value={authority.role}
+                        onChange={(e) => handleAuthorityChange(index, 'role', e.target.value)}
+                        required
+                        >
+                        <option value="" disabled>Select Authority Role</option>
+                        <option value="FacultyMA">FacultyMA</option>
+                        <option value="DepartmentMA">DepartmentMA</option>
+                        <option value="Department Head">Department Head</option>
+                        <option value="Lecturer">Lecturer</option>
+                    </select>
+                </label>
+                <div className='remove-btn'>
+                    <button type="button" onClick={() => removeAuthority(index)}>Remove</button>
+                </div>
+            </div>
+            ))}
+                <div className='add-btn'>
+                    <button type="button" onClick={addAuthority}>Add Another Authority</button>
+                </div>
+
                 <label className='receiver-fac'>
                     <h2>Faculty</h2>
                     <select 
                     value={recfaculty}
-                    onChange={(e)=> setRecFaculty(e.target.value)}
+                    //onChange={(e)=> setRecFaculty(e.target.value)}
+                    onChange={handleFacultyChange}
                     required>
                         <option value="" disabled selected>Choose Faculty</option>
                         <option value="FOT">FOT</option>
@@ -154,18 +222,17 @@ const InternalLetter = () => {
                     </select>
                 </label>
                 <label className='receiver-dept'>
-                    <h2>Department</h2>
-                    <select 
+                <h2>Department</h2>
+                <select 
                     value={recdepartment}
                     onChange={(e) => setRecDepartment(e.target.value)}
-                    required>
-                        <option value="" disabled selected>Choose Department</option>
-                        <option value="ICT">ICT</option>
-                        <option value="BST">BST</option>
-                        <option value="MMT">MMT</option>
-                        <option value="SFT">SFT</option>
-                        <option value="CET">CET</option>
-                    </select>
+                    required
+                >
+                    <option value="" disabled selected>Choose Department</option>
+                    {departments.map((dept, index) => (
+                        <option key={index} value={dept}>{dept}</option>
+                    ))}
+                </select>
                 </label>
                 <div className='generate-btn'>
                     <button type='submit'>Generate ID</button>

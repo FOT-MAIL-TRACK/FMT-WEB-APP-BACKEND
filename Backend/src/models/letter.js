@@ -33,6 +33,9 @@ const letterSchema = new mongoose.Schema({
             registrationNumber: {
                 type: String
             },
+            name: {
+                type: String
+            },
             role: {
                 type: String,
                 enum: ['Lecturer','Dean','Department Head','PostalDepartment','FacultyMA','DepartmentMA','WorkAid','Admin','Technical Officer', 'Demonstrator'] 
@@ -43,11 +46,12 @@ const letterSchema = new mongoose.Schema({
             required: true,
             enum: ['FOT','FMSC','FOE','FHSS','FAS','FAHS','FDS','FUAB','FOC','FMS','FGS']
         },
-        department : {
-            type : String,
-            required : true,
-            enum: ['ICT','BST','MMT','SFT','CET']
+        department: {
+            type: String,
+            required: true,
+            enum: ['ICT', 'BST', 'MMT', 'SFT', 'CET', 'Department1', 'Department2','Department3','Department4']
         }
+        
     },
     
     status: {
