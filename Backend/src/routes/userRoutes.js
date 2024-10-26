@@ -10,7 +10,7 @@ router.post('/signin',signin);
 
 router.get('/profile', authMiddleware, getUserDetails);
 
-router.put('/profile', authMiddleware, updateUserDetails)
+router.put('/users/:id', authMiddleware, updateUserDetails);
 
 // Upload profile picture
 router.post('/profile/upload', authMiddleware, uploadProfilePicture);

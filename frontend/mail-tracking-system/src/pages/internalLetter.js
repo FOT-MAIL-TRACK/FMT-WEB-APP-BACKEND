@@ -77,7 +77,7 @@ const InternalLetter = () => {
     };
     
     const addAuthority = () => {
-        setAuthorities([...authorities, { name: '', role: '' }]);
+        setAuthorities([...authorities, {registrationNumber: '', name: '',  role: '' }]);
     };
     
     const removeAuthority = (index) => {
@@ -168,6 +168,16 @@ const InternalLetter = () => {
                 {authorities.map((authority, index) => (
                     <div key={index} className='authority-section'>
                     <label>
+                        <h2 className='label-h2'>Authority Registration number:</h2>
+                        <input 
+                        type="text" 
+                        placeholder="Enter authority registration number"
+                        value={authority.registrationNumber}
+                        onChange={(e) => handleAuthorityChange(index, 'registrationNumber', e.target.value)}
+                        required
+                        />
+                    </label>
+                    <label>
                         <h2 className='label-h2'>Authority Name:</h2>
                         <input 
                         type="text" 
@@ -176,7 +186,7 @@ const InternalLetter = () => {
                         onChange={(e) => handleAuthorityChange(index, 'name', e.target.value)}
                         required
                         />
-                </label>
+                    </label>
                     <label>
                         <h2 className='label-h2'>Authority Role:</h2>
                         <select 
@@ -184,13 +194,13 @@ const InternalLetter = () => {
                         onChange={(e) => handleAuthorityChange(index, 'role', e.target.value)}
                         required
                         >
-                        <option value="" disabled>Select Authority Role</option>
-                        <option value="FacultyMA">FacultyMA</option>
-                        <option value="DepartmentMA">DepartmentMA</option>
-                        <option value="Department Head">Department Head</option>
-                        <option value="Lecturer">Lecturer</option>
-                    </select>
-                </label>
+                            <option value="" disabled>Select Authority Role</option>
+                            <option value="FacultyMA">FacultyMA</option>
+                            <option value="DepartmentMA">DepartmentMA</option>
+                            <option value="Department Head">Department Head</option>
+                            <option value="Lecturer">Lecturer</option>
+                        </select>
+                    </label>
                 <div className='remove-btn'>
                     <button type="button" onClick={() => removeAuthority(index)}>Remove</button>
                 </div>

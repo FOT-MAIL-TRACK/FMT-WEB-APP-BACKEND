@@ -16,9 +16,13 @@ const Signin = () => {
   const handleSignin = async(e) => {
     e.preventDefault();
     try{
+      
       const response = await axios.post("http://localhost:5001/api/users/signin", {email, password})
+      const userRegistrationNumber = response.data.user.registrationNumber;
+      console.log("Response Data:", response.data); 
       if(  response.status === 200){
         localStorage.setItem('token', response.data.token);
+        localStorage.setItem('registrationNumber', userRegistrationNumber);
         navigate('/home');
       }
       else{

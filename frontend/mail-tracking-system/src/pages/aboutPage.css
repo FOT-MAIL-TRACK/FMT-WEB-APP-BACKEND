@@ -17,7 +17,7 @@
     padding: 20px 20px;
     border-radius: 8px;
     max-width: 1000px;
-    height:140px;
+    height:260px;
     margin-bottom: 40px;
 }
 
@@ -29,5 +29,6 @@
 
 .p-class{
     font-size: 1.3rem;
+    padding-top: 5px;
     color: #333;
 }

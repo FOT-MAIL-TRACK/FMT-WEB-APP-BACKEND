@@ -77,7 +77,7 @@ const ExternalLetter = () => {
     };
     
     const addAuthority = () => {
-        setAuthorities([...authorities, { name: '', role: '' }]);
+        setAuthorities([...authorities, {registrationNumber: '', name: '',  role: ''  }]);
     };
     
     const removeAuthority = (index) => {
@@ -159,6 +159,16 @@ const ExternalLetter = () => {
                 </label>
                 {authorities.map((authority, index) => (
                     <div key={index} className='authority-section'>
+                    <label>
+                        <h2 className='label-h2'>Authority Registration number:</h2>
+                        <input 
+                        type="text" 
+                        placeholder="Enter authority registration number"
+                        value={authority.registrationNumber}
+                        onChange={(e) => handleAuthorityChange(index, 'registrationNumber', e.target.value)}
+                        required
+                        />
+                    </label>
                     <label>
                         <h2 className='label-h2'>Authority Name:</h2>
                         <input 

@@ -88,9 +88,9 @@
         next();
     });
 
-    userSchema.methods.comparePassword = function (candidatePassword) {
-        return bcrypt.compare(candidatePassword, this.password);
+    userSchema.methods.comparePassword = async function(password) {
+        return await bcrypt.compare(password, this.password); // Ensure you have bcrypt installed and used here
     };
-
+    
     const User = mongoose.model('User', userSchema);
     module.exports = User;
