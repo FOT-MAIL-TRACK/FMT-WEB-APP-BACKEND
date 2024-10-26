@@ -1,5 +1,5 @@
 const express = require('express');
-const { createInternalLetter,createExternalLetter, updateLetterStatus,getLetterById, getAllLetters} = require('../controllers/letterControllers')
+const { createInternalLetter,createExternalLetter, updateLetterStatus,getLetterById, getAllLetters ,getLetterbyRegno} = require('../controllers/letterControllers')
 const router = express.Router();
 
 // Routes for creating internal and external letters
@@ -13,6 +13,8 @@ router.put('/letters/:letterId', updateLetterStatus);
 router.get('/letters/:id', getLetterById);
 
 router.get('/letters', getAllLetters); // Add this line
+
+router.get('/user/:registrationNumber', getLetterbyRegno);
 
 
 module.exports = router;

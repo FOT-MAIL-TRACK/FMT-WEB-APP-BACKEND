@@ -4,6 +4,11 @@ const cloudinary = require('../config/cloudinary');
 const multer = require('multer');
 const storage = multer.diskStorage({});
 const upload = multer({ storage });
+const dotenv = require('dotenv');
+
+
+dotenv.config();
+
 
 exports.signup = async (req, res) => {
     try{
@@ -21,14 +26,25 @@ exports.signup = async (req, res) => {
 exports.signin = async (req,res) => {
     try {
         const { email, password } = req.body;
+
         const user = await User.findOne({email});
-        if (!user || !(await user.comparePassword(password))) {
-            return res.status(401).json({mwssage: 'Invalid email or password'});
+        if (!user) {
+          console.log('User not found'); // Log if user is not found
+          return res.status(401).json({ message: 'Invalid email or password' });
         }
-        const token = jwt.sign(
-          {userId: user._id, role: user.role},
-          process.env.JWT_SECRET, 
-          { expiresIn: '2h'});
+
+        const passwordMatch = await user.comparePassword(password);
+        if (!passwordMatch) {
+            console.log('Password mismatch'); 
+            return res.status(401).json({ message: 'Invalid email or password' });
+        }
+
+        const token = jwt.sign({ userId: user._id, role: user.role }, process.env.JWT_SECRET, {
+          expiresIn: '1h', 
+        });
+
+      console.log('Token generated:', token);
+      
 
         // res.json({ token, user: { id: user._id, name: user.name, username: user.username, email: user.email, role: user.role, faculty: user.faculty, department: user.department, registrationNumber: user.registrationNumber}});
 
@@ -45,6 +61,7 @@ exports.signin = async (req,res) => {
           }});
 
     }catch( error) {
+        console.error('Signin error:', error);
         res.status(400).json({message: error.message});
     }
 };
@@ -63,8 +80,18 @@ exports.getUserDetails = async(req,res) => {
 
 exports.updateUserDetails = async (req,res) => {
     try {
-        const updatedUser = await User.findByIdAndUpdate(req.params.id, req.body, { new: true });
+        const userId = req.user.userId;
+        const updatedUser = await User.findByIdAndUpdate(
+        userId, 
+        { email: req.body.email },
+        { new: true }
+      );
+      if (!updatedUser) {
+        return res.status(404).json({ message: 'User not found' });
+      }
+
         res.json(updatedUser);
+
       } catch (err) {
         res.status(500).json({ message: 'Failed to update user' });
       }

@@ -99,7 +99,7 @@ exports.createExternalLetter = async (req,res) => {
                 department: receiver.department
             },
             isInternal: false, 
-            currentHolder: null ,
+            currentHolder: null,
             uniqueID: uniqueID, 
             trackingLog: [] // External letters may not have tracking logs initially
         });
@@ -114,11 +114,13 @@ exports.createExternalLetter = async (req,res) => {
 
 //get letters
 exports.getLetterById = async (req, res) => {
+
+
     try {
         const { id } = req.params;
 
         // Find letter by id and populate tracking log holders
-        const letter = await Letter.findById(id).populate('currentHolder trackingLog.holder');
+        const letter = await Letter.findById(id).populate('currentHolder trackingLog.holder' , 'name');
         if (!letter) {
             return res.status(404).json({ message: 'Letter not found' });
         }
@@ -177,10 +179,25 @@ exports.updateLetterStatus = async (req,res) => {
 exports.getAllLetters = async (req, res) => {
     try {
         const letters = await Letter.find(); // Assuming Letter is your model
+
         res.status(200).json({ letters });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
 };
 
+exports.getLetterbyRegno = async (req, res) => {
+    const { registrationNumber } = req.params;
+    try {
+        const letters = await Letter.find({
+            $or: [
+                { 'sender.registrationNumber': registrationNumber }, // Sent by user
+                { 'receiver.registrationNumber': registrationNumber } // Received by user
+            ]
+        });
+        res.json(letters);
+    } catch (error) {
+        res.status(500).send('Error retrieving letters');
+    }
+}
 

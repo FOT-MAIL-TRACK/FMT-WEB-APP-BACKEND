@@ -86,6 +86,11 @@ const letterSchema = new mongoose.Schema({
                 ref: 'User',
                 required: true
             },
+            name: {
+                type: String,
+                ref: 'User',
+                required : true
+            },
             date: {
                 type: Date,
                 default: Date.now

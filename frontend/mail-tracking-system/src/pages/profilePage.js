@@ -4,7 +4,8 @@ import './profilePage.css'
 import RealNavBar from '../components/realNavBar';
 import NavBar from '../components/NavBar';
 import Footer from '../components/footer'
-import {Container, Typography, Button  } from '@mui/material';
+import {Container, Typography, Button , Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material';
+import userimg from '../assets/userimg.png'
 
 
 const ProfilePage = () => {
@@ -12,47 +13,62 @@ const ProfilePage = () => {
   const [user, setUser] = useState(null);
   const [updatedEmail, setUpdatedEmail] = useState('');
   const [profilePicture, setProfilePicture] = useState(null);
+  const [openDialog, setOpenDialog] = useState(false);
 
    // Fetch user profile on component mount
 
-  useEffect(() => {
+   useEffect(() => {
     const fetchUserProfile = async () => {
-        try {
-          const token = localStorage.getItem('token');
-          const response = await axios.get('http://localhost:5001/api/users/profile', {
-            headers: { Authorization: `Bearer ${token}` },
-          });
-          setUser(response.data);
-          setUpdatedEmail(response.data.email);
-        } catch (error) {
-          console.error('Error fetching user profile:', error);
+      try {
+        const token = localStorage.getItem('token');
+        if (!token) {
+          console.error('No token found. Redirect to login.');
+          return;
         }
-    }
+        const response = await axios.get('http://localhost:5001/api/users/profile', {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        if (response.data) {
+          setUser(response.data);
+          setUpdatedEmail(response.data.email || 'No email provided');
+        } else {
+          console.error('No data found in response.');
+        }
+      } catch (error) {
+        console.error('Error fetching user profile:', error);
+      }
+    };
+  
     fetchUserProfile();
-    }, []);
+  }, []);  
+  
   
 
     const handleUpdateProfile = async (e) => {
         e.preventDefault();
         try {
+          const userId = localStorage.getItem('userId');
           const token = localStorage.getItem('token');
+
           const response = await axios.put(
-            'http://localhost:5001/api/users/profile',
-            {
-              email: updatedEmail,
-            },
-            {
-              headers: { Authorization: `Bearer ${token}` },
-            }
+            `http://localhost:5001/api/users/users/${userId}`,
+            { email: updatedEmail },
+            { headers: { Authorization: `Bearer ${token}` }}
           );
+
+          console.log('Updated user:', response.data);
           setUser(response.data);
-          alert('Profile updated successfully');
+          setOpenDialog(true);
+
         } catch (error) {
           console.error('Error updating profile:', error);
           alert('Failed to update profile');
         }
       };
 
+    const handleCloseDialog = () => {
+      setOpenDialog(false);
+    }
 
     const handleProfilePictureUpload = async (e) => {
         e.preventDefault();
@@ -88,41 +104,46 @@ const ProfilePage = () => {
     return (
 
         <div className='profile-container'>
-        <div className='navbar'>
+        
         <RealNavBar />
         <div style={{ marginTop: '100px' }}> 
         <NavBar/>
-        </div>
         </div>
 
         <Container>
         <Typography variant="h4" gutterBottom align='center' marginTop= '40px'>
           Edit Profile
         </Typography>
+        
         {user ? (
             <>
+            <div style={{ marginTop: '60px' }}> 
+            </div>
             <img
-              src={user.profilePicture || '/default-profile.png'}
+              src={(userimg) || user.profilePicture }
               alt="Profile"
-              width="150"
+              width="250"
               style={{ borderRadius: '50%' }}
             />
-            <Typography variant="h5">Name: {user.name}</Typography>
-            <Typography variant="h5">Username: {user.username}</Typography>
-            <Typography variant="h5">Email: {user.email}</Typography>
-            <Typography variant="h5">Role: {user.role}</Typography>
-            <Typography variant="h5">Faculty: {user.faculty}</Typography>
-            <Typography variant="h5">Department: {user.department}</Typography>
-            </>
-        ) : (
-            <p>Loading...</p>
-        )}
-        {/* <Typography variant="h5" gutterBottom align='center' marginTop= '20px'>
+            <div style={{ marginTop: '60px' }}> 
+            </div>
+            <Typography variant="h5" marginLeft={30}>Name: {user.name}</Typography>
+            <Typography variant="h5" marginLeft={30}>Username: {user.username}</Typography>
+            <Typography variant="h5" marginLeft={30}>Email: {user.email}</Typography>
+            <Typography variant="h5" marginLeft={30}>Role: {user.role}</Typography>
+            <Typography variant="h5" marginLeft={30}>Faculty: {user.faculty}</Typography>
+            <Typography variant="h5" marginLeft={30}>Registration Number: {user.registrationNumber}</Typography> 
+
+        <div style={{ marginTop: '60px' }}> 
+        </div>   
+        <Typography variant="h4" gutterBottom align='center' marginTop= '20px'>
         Update Information
-        </Typography> */}
+        </Typography> 
     
-        {/* <form onSubmit={handleUpdateProfile}>
-            <label> <h3>Email:</h3>
+        <form onSubmit={handleUpdateProfile}>
+            <label> <Typography variant="h6" marginLeft={30}>Email:{user.email}</Typography>
+            <div style={{ marginTop: '20px' }}> 
+            </div>
             <input
             type="email"
             value={updatedEmail}
@@ -133,11 +154,32 @@ const ProfilePage = () => {
             <Button type="submit" variant="contained" color="primary">
                 Update Profile
             </Button>
-        </form> */}
+        </form>
+
+          <Dialog
+            open={openDialog}
+            onClose={handleCloseDialog}
+          >
+            <DialogTitle color='#a1232b' align='center'>Profile Updated</DialogTitle>
+            <DialogContent>
+              <Typography color='black'>
+              Profile updated successfully!
+              </Typography>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={handleCloseDialog} color="default">
+              Close
+              </Button>
+            </DialogActions>
+          </Dialog>
+        </>
+        ) : (
+            <p>Loading...</p>
+        )}
 
         
         <form onSubmit={handleProfilePictureUpload}>
-            <Typography variant="h5" gutterBottom align='center' marginTop= '20px'>
+            <Typography variant="h4" gutterBottom align='center' marginTop= '20px'>
             Update Profile Picture
             </Typography>
             <input
@@ -154,9 +196,6 @@ const ProfilePage = () => {
         <div style={{ marginTop: '200px' }}></div>
         <Footer/>
         </div>
-
-       
-    
     )
 }
 
