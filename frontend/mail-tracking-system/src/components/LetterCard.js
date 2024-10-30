@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
+import { Card, CardContent, Typography, Grid, IconButton } from '@mui/material';
 import { CheckCircle, RadioButtonUnchecked } from '@mui/icons-material';
 import './LetterCard.css'; 
-import PaginationComponent from './PaginationComponent';
 
 
 const LetterCard = ({ letter }) => {
@@ -12,31 +12,88 @@ const LetterCard = ({ letter }) => {
         return <p>Loading...</p>; // Handle loading state
     }
 
-    const uniqueId = letter?.uniqueId || 'No ID Available';
+    // const uniqueId = letter?.uniqueId || 'No ID Available';
 
     const handlePageChange = (newPage) => {
         setCurrentPage(newPage);
     };
 
     return(
-        <div className="letter-card">
-            <h3>Letter Unique ID: {uniqueId}</h3>
-            <p>Sender: {letter.sender?.name || 'No Sender Info'} ({letter.senderDepartment || 'No Department'})</p>
-            <p>Receiver: {letter.receiver?.name || 'No Receiver Info'} ({letter.receiverDepartment || 'No Department'})</p>
-            <div className="progress">
-                <CheckCircle />
-                <span>{letter.sender?.name || 'No Sender Info'}</span>
-                <CheckCircle />
-                {letter.isDelivered ? <CheckCircle /> : <RadioButtonUnchecked />}
-                <span>{letter.receiver?.name || 'No Receiver Info'}</span>
-            </div>
-            <p>{letter.isDelivered ? "Letter reached receiver" : "Letter still not reached receiver"}</p>
-            <PaginationComponent 
+        <Card sx={{ maxWidth: 900, padding: '10px',margin: '40px auto', boxShadow: '0px 4px 10px rgba(161, 35, 43, 0.5)' ,  borderRadius: 4}}>
+            <CardContent>
+                <Typography variant="h6" gutterBottom>
+                    Letter Unique ID: <span style={{ color: '#a1232b', fontWeight: 'bolder' }}>{letter.uniqueID || 'No ID Available'}</span>
+                </Typography>
+                <Typography variant="body1" color='black' gutterBottom>
+                Sender: <span style={{ color: '#a1232b', fontWeight: 'bolder' }}>{letter.sender?.name || 'No Sender Info'} ({letter.sender.department || 'No Department'})</span>
+                </Typography>
+                <Typography variant="body1" color='black' gutterBottom>
+                Receiver: <span style={{ color: '#a1232b', fontWeight: 'bolder' }}>{letter.receiver?.name || 'No Receiver Info'} ({letter.receiver.faculty || 'No Faculty'}) ({letter.receiver.department || 'No Department'})</span>
+                </Typography>
+                <Typography variant='body1' color='black' gutterBottom>
+                Authorities: 
+                <span style={{ color: '#a1232b', fontWeight: 'bolder' }}>
+                {letter.receiver?.authorities?.length ? (
+                    letter.receiver.authorities.map((auth, index) => (
+                        <span key={auth._id || index}>{auth.name} ({auth.role}) </span>
+                        ))
+                    ) : "No authorities"}
+                </span>
+                </Typography>
+                <Grid container alignItems="center" spacing={0.5}>
+                    <Grid item>
+                        <IconButton color="primary">
+                            <CheckCircle />
+                        </IconButton>
+                    </Grid>
+                    <Grid item>
+                        <Typography variant="body1" color='black'>
+                            {letter.sender?.name || 'No Sender Info'}
+                        </Typography>
+                    </Grid>
+                    <Grid item>
+                        {letter.isDelivered ? (
+                        <IconButton color="success">
+                            <CheckCircle />
+                         </IconButton> ): (
+                         <IconButton color="default">
+                            <RadioButtonUnchecked />
+                         </IconButton>)}
+                    </Grid>
+                    <Grid item>
+                        <Typography variant="body1" color='black'>
+                            {letter.receiver?.authorities?.length?  (
+                                letter.receiver?.authorities.map((auth , index) => (
+                                    <span key={auth._id || index}>{auth.name} </span>
+                                ))
+                            ) : "No authorities Info"}
+                        </Typography>
+                    </Grid>
+                    <Grid item>
+                        {letter.isDelivered ? (
+                        <IconButton color="success">
+                            <CheckCircle />
+                         </IconButton> ): (
+                         <IconButton color="default">
+                            <RadioButtonUnchecked />
+                         </IconButton>)}
+                    </Grid>
+                    <Grid item>
+                        <Typography variant="body1" color='black'>
+                            {letter.receiver?.name || 'No Receiver Info'}
+                        </Typography>
+                    </Grid>
+                </Grid>
+                <Typography variant="body1" color="text.primary" sx={{ marginTop: 2 }}>
+                    {letter.isDelivered ? "Letter reached receiver" : "Letter still not reached receiver"}
+                </Typography>
+            {/* <PaginationComponent 
                 totalPages={totalPages} 
                 currentPage={currentPage} 
                 setCurrentPage={setCurrentPage} 
-            />
-        </div>
+            /> */}
+            </CardContent>
+        </Card>
     )
 }
 

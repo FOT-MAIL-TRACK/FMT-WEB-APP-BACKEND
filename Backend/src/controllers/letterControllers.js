@@ -35,7 +35,7 @@ exports.createInternalLetter = async (req,res) => {
 
         if (!currentHolder) {
             return res.status(404).json({ message: 'Current holder (receiver) not found' });
-          }
+        }
           
 
         const newLetter = new Letter({
@@ -88,7 +88,9 @@ exports.createExternalLetter = async (req,res) => {
         const newLetter = new Letter({
             sender: {
                 name : sender.name,
-                address: sender.address
+                address: sender.address,
+                faculty: sender.faculty,
+                department: sender.department
             },
             receiver: {
                 name: receiver.name,
@@ -120,7 +122,7 @@ exports.getLetterById = async (req, res) => {
         const { id } = req.params;
 
         // Find letter by id and populate tracking log holders
-        const letter = await Letter.findById(id).populate('currentHolder trackingLog.holder' , 'name');
+        const letter = await Letter.findById(id).populate('currentHolder trackingLog.holder' , 'name', '');
         if (!letter) {
             return res.status(404).json({ message: 'Letter not found' });
         }
@@ -132,6 +134,7 @@ exports.getLetterById = async (req, res) => {
             senderDepartment: letter.senderDepartment,
             receiver: letter.receiver,
             receiverDepartment: letter.receiverDepartment,
+            authorities: letter.authorities,
             trackingLog: letter.trackingLog.map(log => ({
                 holder: log?.holder?.name || 'Unknown Holder',  // or any identifier for holder
                 department: log?.holder?.department || 'Unknown Department',
@@ -194,7 +197,8 @@ exports.getLetterbyRegno = async (req, res) => {
                 { 'sender.registrationNumber': registrationNumber }, // Sent by user
                 { 'receiver.registrationNumber': registrationNumber } // Received by user
             ]
-        });
+        })
+        .sort(sortBy === 'date' ? { createdAt: -1 } : {});
         res.json(letters);
     } catch (error) {
         res.status(500).send('Error retrieving letters');

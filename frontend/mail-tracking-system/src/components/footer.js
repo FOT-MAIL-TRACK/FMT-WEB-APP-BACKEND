@@ -17,10 +17,10 @@ const Footer = () => {
             <h2>University of Sri Jayewardenepura</h2>
         
         <div className="footer-details">
-        <a href="https://www.sjp.ac.lk/">
+        <a href="https://www.sjp.ac.lk/" target="_blank" rel="noopener noreferrer">
           <p>University of Sri Jayewardenepura</p>
         </a>
-        <a href="https://tech.sjp.ac.lk/">
+        <a href="https://tech.sjp.ac.lk/" target="_blank" rel="noopener noreferrer">
           <p>Faculty of Technology</p>
         </a>
         </div>
