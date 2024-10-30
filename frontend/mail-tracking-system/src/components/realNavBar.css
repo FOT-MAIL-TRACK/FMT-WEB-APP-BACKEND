@@ -18,7 +18,7 @@
 .nav-links{
     flex: 1;
     text-align: center;
-    margin-right: 750px;
+    margin-right: 400px;
 }
 
 .nav-links a{
@@ -48,3 +48,56 @@
     position:absolute;
     right:50px;
 }
+
+
+@media (max-width: 1437px) {
+    .nav-links {
+        flex-direction: column; /* Stacks links vertically */
+        align-items: flex-start; /* Centers the links */
+        position: absolute;
+        top: 50px; /* Adjust this if your logo is taller */
+        left: 1000px;
+        right: 0;
+        background-color: #ffffff; /* Add background for better visibility */
+        display: none; /* Initially hide the stacked links */
+        z-index: 1000;
+        width: 300px;
+        box-shadow: 0 2px 5px rgba(161, 35, 43, 0.5);
+    }
+
+    .nav-links.active {
+        display: flex; /* Show links when activated */
+    }
+
+    .nav-links a {
+        margin: 10px 0; /* Adjust spacing for stacked links */
+        padding: 10px 20px;
+        width: 300px;
+        text-align: left;
+        border-bottom: 1px solid #e0e0e0;
+    }
+
+    /* Optional: Add styles for a hamburger menu */
+    .hamburger {
+        display: block; /* Show hamburger on smaller screens */
+        cursor: pointer;
+        margin-right: 20px;
+    }
+}
+
+@media (min-width: 1438px) {
+    .nav-links {
+        display: flex; /* Ensure nav links are in row on larger screens */
+    }
+
+    .hamburger {
+        display: none; /* Hide hamburger on larger screens */
+    }
+}
+
+
+.hamburger-icon {
+    width: 40px; /* Adjust the size as needed */
+    height: auto; /* Maintain aspect ratio */
+}
+

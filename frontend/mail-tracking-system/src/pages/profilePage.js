@@ -127,12 +127,12 @@ const ProfilePage = () => {
             />
             <div style={{ marginTop: '60px' }}> 
             </div>
-            <Typography variant="h5" marginLeft={30}>Name: {user.name}</Typography>
-            <Typography variant="h5" marginLeft={30}>Username: {user.username}</Typography>
-            <Typography variant="h5" marginLeft={30}>Email: {user.email}</Typography>
-            <Typography variant="h5" marginLeft={30}>Role: {user.role}</Typography>
-            <Typography variant="h5" marginLeft={30}>Faculty: {user.faculty}</Typography>
-            <Typography variant="h5" marginLeft={30}>Registration Number: {user.registrationNumber}</Typography> 
+            <Typography variant="h5" marginLeft={50}>Name: {user.name}</Typography>
+            <Typography variant="h5" marginLeft={50}>Username: {user.username}</Typography>
+            <Typography variant="h5" marginLeft={50}>Email: {user.email}</Typography>
+            <Typography variant="h5" marginLeft={50}>Role: {user.role}</Typography>
+            <Typography variant="h5" marginLeft={50}>Faculty: {user.faculty}</Typography>
+            <Typography variant="h5" marginLeft={50}>Registration Number: {user.registrationNumber}</Typography> 
 
         <div style={{ marginTop: '60px' }}> 
         </div>   

@@ -1,7 +1,18 @@
 import React from 'react';
-import { Button } from '@mui/material';
+import { createTheme, ThemeProvider, Button } from '@mui/material';
 
 const PaginationComponent = ({ currentPage, setCurrentPage, totalPages }) => {
+
+
+    const theme = createTheme({
+        palette: {
+          customRed: {
+            main: '#a1232b', // Define the custom color’s main value
+            contrastText: '#fff', // Text color when using the button
+          },
+        },
+      });
+
     const handlePrevious = () => {
         if (currentPage > 1) {
             setCurrentPage(currentPage - 1);
@@ -24,14 +35,16 @@ const PaginationComponent = ({ currentPage, setCurrentPage, totalPages }) => {
             >
                 Previous Page
             </Button>
+         <ThemeProvider theme={theme}>
             <Button 
                 onClick={handleNext} 
                 disabled={currentPage === totalPages}
                 variant="contained"
-                color="primary"
+                color="customRed"
             >
                 Next Page
             </Button>
+            </ThemeProvider>
         </div>
     );
 };
