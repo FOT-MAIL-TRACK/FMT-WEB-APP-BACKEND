@@ -61,10 +61,16 @@ const letterSchema = new mongoose.Schema({
     },
     currentHolder: {
         type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
-    required: function() {
-        return this.isInternal;
+        ref: 'User',
+        required: function() {
+            return this.isInternal;
     }
+    },
+    currentHolderRegistrationNumber: {
+        type: String,
+        required: function() {
+            return this.isInternal;
+        }
     },
     uniqueID: {
         type: String,
@@ -88,7 +94,6 @@ const letterSchema = new mongoose.Schema({
             },
             name: {
                 type: String,
-                ref: 'User',
                 required : true
             },
             date: {

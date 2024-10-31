@@ -31,7 +31,7 @@ exports.createInternalLetter = async (req,res) => {
         //     uniqueId = `${sender.registrationNumber}-${receiver.registrationNumber}-${Date.now()}`;
         // }
 
-        const currentHolder = await User.findOne({ registrationNumber: receiver.registrationNumber });
+        const currentHolder = await User.findOne({ registrationNumber: sender.registrationNumber });
 
         if (!currentHolder) {
             return res.status(404).json({ message: 'Current holder (receiver) not found' });
@@ -53,10 +53,12 @@ exports.createInternalLetter = async (req,res) => {
                 department: receiver.department
             },
             // isInternal :true, 
-            currentHolder: currentHolder._id ,
+            currentHolder: currentHolder._id,
+            currentHolderRegistrationNumber : currentHolder.registrationNumber,
             uniqueID: uniqueID ,
             trackingLog: [{
                 holder: currentHolder._id,
+                name: currentHolder.name,
                 status: 'Pending'
             }] 
         });
@@ -122,7 +124,7 @@ exports.getLetterById = async (req, res) => {
         const { id } = req.params;
 
         // Find letter by id and populate tracking log holders
-        const letter = await Letter.findById(id).populate('currentHolder trackingLog.holder' , 'name', '');
+        const letter = await Letter.findById(id).populate('currentHolder trackingLog.holder' , 'name');
         if (!letter) {
             return res.status(404).json({ message: 'Letter not found' });
         }
@@ -142,7 +144,8 @@ exports.getLetterById = async (req, res) => {
                 date: log.date || 'No Date Available'
             })),
             isDelivered: letter.isDelivered,
-            currentHolder: letter.currentHolder.name
+            currentHolder: letter.currentHolder.name,
+            currentHolderRegistrationNumber: letter.currentHolderRegistrationNumber
         };
 
         res.status(200).json(letterData);
