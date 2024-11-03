@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const cors = require('cors');
+// const cors = require('cors');
 const dotenv = require('dotenv');
 
 dotenv.config();

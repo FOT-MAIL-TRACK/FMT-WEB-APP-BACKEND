@@ -40,7 +40,7 @@ exports.signin = async (req,res) => {
         }
 
         const token = jwt.sign({ userId: user._id, role: user.role }, process.env.JWT_SECRET, {
-          expiresIn: '1h', 
+          expiresIn: '5h', 
         });
 
       console.log('Token generated:', token);
@@ -98,23 +98,38 @@ exports.updateUserDetails = async (req,res) => {
 }
 
 
-exports.uploadProfilePicture = [
-    upload.single('profilePicture'),
-    async (req, res) => {
-      try {
-        const result = await cloudinary.uploader.upload(req.file.path, {
-          folder: 'profile_pictures',
-        });
+// exports.uploadProfilePicture = [
+//     upload.single('profilePicture'),
+//     async (req, res) => {
+//       try {
+//         const result = await cloudinary.uploader.upload(req.file.path, {
+//           folder: 'profile_pictures',
+//         });
   
-        const user = await User.findByIdAndUpdate(
-          req.user.userId,
-          { profilePicture: result.secure_url },
-          { new: true }
-        ).select('-password');
+//         const user = await User.findByIdAndUpdate(
+//           req.user.userId,
+//           { profilePicture: result.secure_url },
+//           { new: true }
+//         ).select('-password');
   
-        res.json(user);
-      } catch (error) {
-        res.status(500).json({ message: error.message });
+//         res.json(user);
+//       } catch (error) {
+//         res.status(500).json({ message: error.message });
+//       }
+//     },
+//   ];
+
+    exports.uploadProfilePicture = async (req,res) => {
+      const { imageUrl } = req.body;
+      const userId = req.user.userId;
+
+      try{
+        const newImage = new Image({ imageUrl });
+        await newImage.save();
+        res.status(201).json({ message: 'Error saving image Url.'})
       }
-    },
-  ];
+      catch(error){
+        console.error('Error saving image URL:', error);
+        res.status(500).json({ message: 'Error saving image URL.' });
+      }
+    }
