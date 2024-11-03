@@ -194,16 +194,21 @@ exports.getAllLetters = async (req, res) => {
 
 exports.getLetterbyRegno = async (req, res) => {
     const { registrationNumber } = req.params;
+    const { sortBy } = req.query; 
     try {
+        const sortCriteria = sortBy === 'date' ? { createdAt: -1} : {};
         const letters = await Letter.find({
             $or: [
                 { 'sender.registrationNumber': registrationNumber }, // Sent by user
-                { 'receiver.registrationNumber': registrationNumber } // Received by user
+                { 'receiver.registrationNumber': registrationNumber }, // Received by user
+                { 'receiver.authorities.registrationNumber': registrationNumber }
             ]
         })
-        .sort(sortBy === 'date' ? { createdAt: -1 } : {});
+        .sort(sortCriteria);
+
         res.json(letters);
     } catch (error) {
+        console.error("Error retrieving letters:", error);
         res.status(500).send('Error retrieving letters');
     }
 }

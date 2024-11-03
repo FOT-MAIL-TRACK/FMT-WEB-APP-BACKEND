@@ -18,7 +18,7 @@ const SignOutDialog = () => {
     const handleSignout = () => {
         localStorage.removeItem('token');
         setOpen(false);
-        navigate('/signin');
+        navigate('/');
     }
 
     return (
