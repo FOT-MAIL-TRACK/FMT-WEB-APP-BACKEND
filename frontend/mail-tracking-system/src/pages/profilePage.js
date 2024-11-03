@@ -6,6 +6,7 @@ import NavBar from '../components/NavBar';
 import Footer from '../components/footer'
 import {Container, Typography, Button , Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material';
 import userimg from '../assets/userimg.png'
+import CloudinaryUploadWidget from '../components/Cloudaniry';
 
 
 const ProfilePage = () => {
@@ -70,34 +71,34 @@ const ProfilePage = () => {
       setOpenDialog(false);
     }
 
-    const handleProfilePictureUpload = async (e) => {
-        e.preventDefault();
-        if (!profilePicture) {
-          alert('Please select a picture');
-          return;
-        }
-        try {
-          const token = localStorage.getItem('token');
-          const formData = new FormData();
-          formData.append('profilePicture', profilePicture);
+    // const handleProfilePictureUpload = async (e) => {
+    //     e.preventDefault();
+    //     if (!profilePicture) {
+    //       alert('Please select a picture');
+    //       return;
+    //     }
+    //     try {
+    //       const token = localStorage.getItem('token');
+    //       const formData = new FormData();
+    //       formData.append('profilePicture', profilePicture);
       
-          const response = await axios.post(
-            'http://localhost:5001/api/users/profile/upload',
-            formData,
-            {
-              headers: {
-                Authorization: `Bearer ${token}`,
-                'Content-Type': 'multipart/form-data',
-              },
-            }
-          );
-          setUser(response.data);
-          alert('Profile picture updated successfully');
-        } catch (error) {
-          console.error('Error uploading profile picture:', error);
-          alert('Failed to upload profile picture');
-        }
-      };
+    //       const response = await axios.post(
+    //         'http://localhost:5001/api/users/profile/upload',
+    //         formData,
+    //         {
+    //           headers: {
+    //             Authorization: `Bearer ${token}`,
+    //             'Content-Type': 'multipart/form-data',
+    //           },
+    //         }
+    //       );
+    //       setUser(response.data);
+    //       alert('Profile picture updated successfully');
+    //     } catch (error) {
+    //       console.error('Error uploading profile picture:', error);
+    //       alert('Failed to upload profile picture');
+    //     }
+    //   };
       
       
 
@@ -178,19 +179,20 @@ const ProfilePage = () => {
         )}
 
         
-        <form onSubmit={handleProfilePictureUpload}>
+        <div>
             <Typography variant="h4" gutterBottom align='center' marginTop= '20px'>
             Update Profile Picture
             </Typography>
-            <input
+            {/* <input
             type="file"
             accept="image/*"
             onChange={(e) => setProfilePicture(e.target.files[0])}
             />
             <Button type="submit" variant="contained" color="secondary" style={{ marginTop: '10px' }}>
             Upload Picture
-            </Button>
-        </form>
+            </Button> */}
+            <CloudinaryUploadWidget/>
+        </div>
 
         </Container>
         <div style={{ marginTop: '200px' }}></div>

@@ -60,8 +60,9 @@
             type: String,
             unique: true,
         },
-        profilePicture: {
+        imageUrl: {
             type: String,
+            required: true
         }
         
 
