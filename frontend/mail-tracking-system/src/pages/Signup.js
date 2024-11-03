@@ -34,7 +34,7 @@ const Signup= () => {
             try{
             if(response.status === 201){
                     console.log('User registered successfully');
-                    navigate('/signin');
+                    navigate('/');
                 }
             }
             catch (error){
@@ -140,7 +140,7 @@ const Signup= () => {
             </div> 
             </form> 
             <div className="center-text">
-            <p>Already have an account? <Link to="/signin">Sign in</Link></p>
+            <p>Already have an account? <Link to="/">Sign in</Link></p>
             </div>
         </div>
 

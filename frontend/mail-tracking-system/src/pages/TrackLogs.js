@@ -24,7 +24,7 @@ const TrackLogs = ()=> {
     useEffect(() => {
         if (!registrationNumber || registrationNumber === 'null' || registrationNumber === 'undefined') {
             console.error("No registration number found. Please log in.");
-            navigate('/signin'); 
+            navigate('/'); 
             return;
         }
         // API call to fetch tracking logs
@@ -41,16 +41,17 @@ const TrackLogs = ()=> {
                 return filters.date ? createdAt.toDateString() === filters.date.toDateString() : true;
             });
             console.log("Fetched Data:", data);
-            setLetters(data); 
+            // setLetters(data); 
             setLetters(filteredLetters);
         }
         catch (error) {
-            console.error("Error fetching letters:", error);
+            console.error("Error fetching letters:", error.message || error);
+            setLetters([]); 
           }
         }
         fetchLetters();
     },[registrationNumber, navigate, filters]);
-
+    console.log(letters)
 
     return(
         <>

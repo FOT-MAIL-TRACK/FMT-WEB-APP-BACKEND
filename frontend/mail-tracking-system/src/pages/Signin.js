@@ -30,7 +30,7 @@ const Signin = () => {
       }
     }
     catch (err){
-      setError('Login failed')
+      setError(err.response?.data?.message || 'Login failed. Please check your credentials.');
     }
   }
   
@@ -71,7 +71,8 @@ const Signin = () => {
           onChange={(e) => setPassword(e.target.value)}
           placeholder="Enter your password" required/>
           
-          {error && <p>{error}</p>}
+          {error && <p className="error-message">{error}</p>}
+
           <div className='signin-btn'>
           
           <button type="submit">Sign In</button>

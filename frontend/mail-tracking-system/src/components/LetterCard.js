@@ -6,7 +6,20 @@ import './LetterCard.css';
 
 const LetterCard = ({ letter }) => {
     const [currentPage, setCurrentPage] = useState(1);
-    const totalPages = 4;
+    const totalPages = 6;
+
+    console.log(letter)
+    if (letter.trackingLog && letter.trackingLog.length > 0) {
+        console.log(letter.trackingLog[0]); // Log the first element
+        if (letter.trackingLog[0].status !== undefined) {
+            console.log(letter.trackingLog[0].status); // Log the status if it exists
+        } else {
+            console.log("Status is undefined");
+        }
+    } else {
+        console.log("trackingLog is empty or undefined");
+    }
+    
 
     if (!letter) {
         return <p>Loading...</p>; // Handle loading state
@@ -42,7 +55,7 @@ const LetterCard = ({ letter }) => {
                 </Typography>
                 <Grid container alignItems="center" spacing={0.5}>
                     <Grid item>
-                        <IconButton color="primary">
+                        <IconButton color="success">
                             <CheckCircle />
                         </IconButton>
                     </Grid>
@@ -51,30 +64,37 @@ const LetterCard = ({ letter }) => {
                             {letter.sender?.name || 'No Sender Info'}
                         </Typography>
                     </Grid>
-                    <Grid item>
-                        {letter.isDelivered ? (
+                    
+                    {letter.receiver?.authorities?.length?  (
+                                letter.receiver?.authorities.map((auth , index) => (
+                                    <>
+                                    <Grid item>
                         <IconButton color="success">
-                            <CheckCircle />
-                         </IconButton> ): (
-                         <IconButton color="default">
-                            <RadioButtonUnchecked />
-                         </IconButton>)}
+                            {letter.trackingLog[0].status !== undefined &&  letter.trackingLog[0].status === "Completed" ? (
+                                    <CheckCircle />
+                                
+                            ) : (
+                                <RadioButtonUnchecked />
+                            )}
+                            
+                         </IconButton> 
                     </Grid>
                     <Grid item>
                         <Typography variant="body1" color='black'>
-                            {letter.receiver?.authorities?.length?  (
-                                letter.receiver?.authorities.map((auth , index) => (
+                            
                                     <span key={auth._id || index}>{auth.name} </span>
+                                    </Typography>
+                    </Grid>
+                    </>
                                 ))
                             ) : "No authorities Info"}
-                        </Typography>
-                    </Grid>
+                        
                     <Grid item>
                         {letter.isDelivered ? (
                         <IconButton color="success">
                             <CheckCircle />
                          </IconButton> ): (
-                         <IconButton color="default">
+                         <IconButton color="success">
                             <RadioButtonUnchecked />
                          </IconButton>)}
                     </Grid>
