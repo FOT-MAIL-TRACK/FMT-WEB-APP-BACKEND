@@ -58,11 +58,11 @@ const CloudinaryUploadWidget = () => {
             variant="contained" 
             style={{
                  marginTop: '10px',
-                 width : '300px',
+                 width : '400px',
                  height: '50px',
                  backgroundColor: '#a1232b',
                  borderRadius: '5px',
-                 marginLeft: '420px'
+                 marginLeft: '370px'
                   }}>
             Upload Image    
             </Button>

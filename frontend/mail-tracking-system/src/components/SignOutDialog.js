@@ -25,7 +25,7 @@ const SignOutDialog = () => {
         <>
             <Button color='Info'
             onClick={handleClickOpen}
-            sx={{ fontWeight: 'bold', fontSize: '19px', marginLeft: '80px',textTransform: 'none'}}>
+            sx={{ fontWeight: 'bold', fontSize: '19px', marginLeft: '80px',textTransform: 'none', padding: '30px auto'}}>
                 Signout
             </Button>
             <Dialog open={open} onClose={handleClose} padding='20px'>
