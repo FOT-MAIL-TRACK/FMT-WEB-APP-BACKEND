@@ -8,17 +8,17 @@ const LetterCard = ({ letter }) => {
     const [currentPage, setCurrentPage] = useState(1);
     const totalPages = 6;
 
-    console.log(letter)
-    if (letter.trackingLog && letter.trackingLog.length > 0) {
-        console.log(letter.trackingLog[0]); // Log the first element
-        if (letter.trackingLog[0].status !== undefined) {
-            console.log(letter.trackingLog[0].status); // Log the status if it exists
-        } else {
-            console.log("Status is undefined");
-        }
-    } else {
-        console.log("trackingLog is empty or undefined");
-    }
+    // console.log(letter)
+    // if (letter.trackingLog && letter.trackingLog.length > 0) {
+    //     console.log(letter.trackingLog[0]); // Log the first element
+    //     if (letter.trackingLog[0].status !== undefined) {
+    //         console.log(letter.trackingLog[0].status); // Log the status if it exists
+    //     } else {
+    //         console.log("Status is undefined");
+    //     }
+    // } else {
+    //     console.log("trackingLog is empty or undefined");
+    // }
     
 
     if (!letter) {
@@ -44,7 +44,7 @@ const LetterCard = ({ letter }) => {
                 Receiver: <span style={{ color: '#a1232b', fontWeight: 'bolder' }}>{letter.receiver?.name || 'No Receiver Info'} ({letter.receiver.faculty || 'No Faculty'}) ({letter.receiver.department || 'No Department'})</span>
                 </Typography>
                 <Typography variant='body1' color='black' gutterBottom>
-                Authorities: 
+                Authorities:
                 <span style={{ color: '#a1232b', fontWeight: 'bolder' }}>
                 {letter.receiver?.authorities?.length ? (
                     letter.receiver.authorities.map((auth, index) => (
@@ -65,12 +65,12 @@ const LetterCard = ({ letter }) => {
                         </Typography>
                     </Grid>
                     
-                    {letter.receiver?.authorities?.length?  (
+                    {letter.receiver?.authorities?.length ?  (
                                 letter.receiver?.authorities.map((auth , index) => (
                                     <>
                                     <Grid item>
                         <IconButton color="success">
-                            {letter.trackingLog[0].status !== undefined &&  letter.trackingLog[0].status === "Completed" ? (
+                            {letter.status !== undefined &&  letter.status === "In Progress" ? (
                                     <CheckCircle />
                                 
                             ) : (
@@ -87,16 +87,19 @@ const LetterCard = ({ letter }) => {
                     </Grid>
                     </>
                                 ))
-                            ) : "No authorities Info"}
+                            ) : ""}
                         
                     <Grid item>
-                        {letter.isDelivered ? (
+                        
                         <IconButton color="success">
-                            <CheckCircle />
-                         </IconButton> ): (
-                         <IconButton color="success">
-                            <RadioButtonUnchecked />
-                         </IconButton>)}
+                        {letter.status !== undefined &&  letter.status === "Completed" ? (
+                                    <CheckCircle />
+                                
+                            ) : (
+                                <RadioButtonUnchecked />
+                            )}
+                         </IconButton>
+                         
                     </Grid>
                     <Grid item>
                         <Typography variant="body1" color='black'>
@@ -104,8 +107,8 @@ const LetterCard = ({ letter }) => {
                         </Typography>
                     </Grid>
                 </Grid>
-                <Typography variant="body1" color="text.primary" sx={{ marginTop: 2 }}>
-                    {letter.isDelivered ? "Letter reached receiver" : "Letter still not reached receiver"}
+                <Typography variant="h6" color="#a1232b" sx={{ marginTop: 2 }}>
+                    {letter.status !== undefined && letter.status === "Completed" ? "Letter reached receiver" : "Letter still not reached receiver"}
                 </Typography>
             {/* <PaginationComponent 
                 totalPages={totalPages} 

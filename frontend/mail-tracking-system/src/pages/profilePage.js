@@ -178,6 +178,8 @@ const ProfilePage = () => {
             <p>Loading...</p>
         )}
 
+        <div style={{ marginTop: '80px' }}> 
+        </div>
         
         <div>
             <Typography variant="h4" gutterBottom align='center' marginTop= '20px'>
