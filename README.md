@@ -1,6 +1,7 @@
 # FOT Mail Tracking System
 
 ## Overview
+
 The **Faculty of Technology (FOT) Mail Tracking System** is a web-based solution designed to streamline the tracking and management of mail within the Faculty of Technology. This system replaces the manual tracking process, enhancing transparency, accountability, and security.
 
 ## Features
