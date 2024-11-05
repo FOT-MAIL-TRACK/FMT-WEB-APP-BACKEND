@@ -16,10 +16,10 @@ Tech Stack
   - Database: MongoDB
 
 Installation
-  Clone the repository: git clone [https://github.com/FOT-MAIL-TRACK/FMT-WEB-APP-BACKEND.git]
-  Install dependencies: npm install
-  Configure environment variables in .env.
-  Start the application:
-  Frontend: npm run start (in frontend folder)
-  Backend: npm run start (in backend folder)
+  - Clone the repository: git clone [https://github.com/FOT-MAIL-TRACK/FMT-WEB-APP-BACKEND.git]
+  - Install dependencies: npm install
+  - Configure environment variables in .env.
+  - Start the application:
+    - Frontend: npm run start (in frontend folder)
+    - Backend: npm run start (in backend folder)
 
