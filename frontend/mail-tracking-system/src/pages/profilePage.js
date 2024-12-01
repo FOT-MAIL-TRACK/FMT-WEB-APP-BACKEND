@@ -4,7 +4,7 @@ import './profilePage.css'
 import RealNavBar from '../components/realNavBar';
 import NavBar from '../components/NavBar';
 import Footer from '../components/footer'
-import {Container, Typography, Button , Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material';
+import {Container, Typography, Button , Dialog, DialogActions, DialogContent, DialogTitle, Card, CardContent, CardMedia, Grid  } from '@mui/material';
 import userimg from '../assets/userimg.png'
 import CloudinaryUploadWidget from '../components/Cloudaniry';
 
@@ -120,26 +120,52 @@ const ProfilePage = () => {
             <>
             <div style={{ marginTop: '60px' }}> 
             </div>
-            <img
-              src={(userimg) || user.profilePicture }
-              alt="Profile"
-              width="250"
-              style={{ borderRadius: '50%' }}
-            />
-            <div style={{ marginTop: '60px' }}> 
-            </div>
-            <Typography variant="h5" marginLeft={50}>Name: {user.name}</Typography>
-            <Typography variant="h5" marginLeft={50}>Username: {user.username}</Typography>
-            <Typography variant="h5" marginLeft={50}>Email: {user.email}</Typography>
-            <Typography variant="h5" marginLeft={50}>Role: {user.role}</Typography>
-            <Typography variant="h5" marginLeft={50}>Faculty: {user.faculty}</Typography>
-            <Typography variant="h5" marginLeft={50}>Registration Number: {user.registrationNumber}</Typography> 
-
-        <div style={{ marginTop: '60px' }}> 
-        </div>   
-        <Typography variant="h4" gutterBottom align='center' marginTop= '20px'>
-        Update Information
-        </Typography> 
+            <Card sx={{ maxWidth: 900, margin: '40px auto', boxShadow: '0px 4px 10px rgba(161, 35, 43, 0.5)', borderRadius: 4 ,display: 'flex', 
+                        flexDirection: 'column', 
+                        alignItems: 'center'}}>
+            <CardMedia
+                component="img"
+                height="200"
+                image={user.profilePicture || userimg}
+                alt="Profile"
+                sx={{ 
+                      width: 'auto', 
+                      height: 150, 
+                      objectFit: 'contain', 
+                      borderRadius: '50%', 
+                      marginTop: 2,
+                      maxWidth: '100%' 
+                    }}
+              />
+            
+            <CardContent>
+            <Grid container spacing={2} direction="column" marginTop="20px">
+            <Grid item>
+            <Typography variant="h5" align='center' >Name: {user.name}</Typography>
+            </Grid>
+            <Grid item>
+            <Typography variant="h5" align='center'>Username: {user.username}</Typography>
+            </Grid>
+                  <Grid item>
+                    <Typography variant="h6" align='center'>Email: {user.email}</Typography>
+                  </Grid>
+                  <Grid item>
+                    <Typography variant="h6" align='center'>Role: {user.role}</Typography>
+                  </Grid>
+                  <Grid item>
+                    <Typography variant="h6" align='center'>Faculty: {user.faculty}</Typography>
+                  </Grid>
+                  <Grid item>
+                    <Typography variant="h6" align='center'>Registration Number: {user.registrationNumber}</Typography>
+                  </Grid>
+                </Grid>
+            </CardContent>
+            </Card>
+          <div style={{ marginTop: '60px' }}> 
+          </div>   
+          <Typography variant="h4" gutterBottom align='center' marginTop= '20px'>
+            Update Information
+          </Typography> 
     
         <form onSubmit={handleUpdateProfile}>
             <label> <Typography variant="h6" marginLeft={30}>Email:{user.email}</Typography>
