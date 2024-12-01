@@ -1,12 +1,11 @@
 import React, {useState} from 'react';
-import { Card, CardContent, Typography, Grid, IconButton } from '@mui/material';
+import {createTheme, ThemeProvider,Card, CardContent, Typography, Grid, IconButton } from '@mui/material';
 import { CheckCircle, RadioButtonUnchecked } from '@mui/icons-material';
 import './LetterCard.css'; 
 
 
 const LetterCard = ({ letter }) => {
-    const [currentPage, setCurrentPage] = useState(1);
-    const totalPages = 6;
+    
 
     // console.log(letter)
     // if (letter.trackingLog && letter.trackingLog.length > 0) {
@@ -19,6 +18,7 @@ const LetterCard = ({ letter }) => {
     // } else {
     //     console.log("trackingLog is empty or undefined");
     // }
+
     
 
     if (!letter) {
@@ -27,13 +27,22 @@ const LetterCard = ({ letter }) => {
 
     // const uniqueId = letter?.uniqueId || 'No ID Available';
 
-    const handlePageChange = (newPage) => {
-        setCurrentPage(newPage);
-    };
+    // const handlePageChange = (newPage) => {
+    //     setCurrentPage(newPage);
+    // };
+
+    const theme = createTheme({
+        palette: {
+            customRed: {
+                main: '#a1232b', // Define the custom color’s main value
+                contrastText: '#fff', // Text color when using the button
+            },
+        },
+    });
 
     return(
-        <Card sx={{ maxWidth: 900, padding: '10px',margin: '40px auto', boxShadow: '0px 4px 10px rgba(161, 35, 43, 0.5)' ,  borderRadius: 4}}>
-            <CardContent>
+        
+            <Card sx={{ maxWidth: 900, padding: '10px', margin: '40px auto', boxShadow: '0px 4px 10px rgba(161, 35, 43, 0.5)', borderRadius: 4 }}>            <CardContent>
                 <Typography variant="h6" gutterBottom>
                     Letter Unique ID: <span style={{ color: '#a1232b', fontWeight: 'bolder' }}>{letter.uniqueID || 'No ID Available'}</span>
                 </Typography>
@@ -55,12 +64,18 @@ const LetterCard = ({ letter }) => {
                 </Typography>
                 <Grid container alignItems="center" spacing={0.5}>
                     <Grid item>
-                        <IconButton color="success">
-                            <CheckCircle />
+                        <IconButton 
+                            color="success"
+                            sx={{
+                                fontSize: "2rem",
+                                padding: '10px',
+                            }}
+                        >
+                            <CheckCircle sx={{ fontSize: '2rem', color: '#4caf50' }}/>
                         </IconButton>
                     </Grid>
                     <Grid item>
-                        <Typography variant="body1" color='black'>
+                        <Typography variant="body1" color='black' sx={{fontSize: '1.1rem'}}>
                             {letter.sender?.name || 'No Sender Info'}
                         </Typography>
                     </Grid>
@@ -69,18 +84,25 @@ const LetterCard = ({ letter }) => {
                                 letter.receiver?.authorities.map((auth , index) => (
                                     <>
                                     <Grid item>
-                        <IconButton color="success">
+                        <IconButton 
+                            color="success"
+                            sx={{
+                                fontSize: "2rem",
+                                padding: '10px',
+                            }}
+                        
+                        >
                             {letter.status !== undefined &&  letter.status === "In Progress" ? (
-                                    <CheckCircle />
+                                    <CheckCircle sx={{ fontSize: '2rem', color: '#4caf50' }} />
                                 
                             ) : (
-                                <RadioButtonUnchecked />
+                                <RadioButtonUnchecked sx={{ fontSize: '2rem', color: '#f44336' }} />
                             )}
                             
                          </IconButton> 
                     </Grid>
                     <Grid item>
-                        <Typography variant="body1" color='black'>
+                        <Typography variant="body1" color='black' sx={{fontSize: '1.1rem'}} >
                             
                                     <span key={auth._id || index}>{auth.name} </span>
                                     </Typography>
@@ -91,32 +113,41 @@ const LetterCard = ({ letter }) => {
                         
                     <Grid item>
                         
-                        <IconButton color="success">
+                        <IconButton 
+                            color="success"
+                            sx={{
+                                fontSize: "2rem",
+                                padding: '10px',
+                            }}
+                        >
                         {letter.status !== undefined &&  letter.status === "Completed" ? (
-                                    <CheckCircle />
+                                    <CheckCircle sx={{ fontSize: '2rem', color: '#4caf50' }} />
                                 
                             ) : (
-                                <RadioButtonUnchecked />
+                                <RadioButtonUnchecked  sx={{ fontSize: '2rem', color: '#f44336' }} />
                             )}
                          </IconButton>
                          
                     </Grid>
                     <Grid item>
-                        <Typography variant="body1" color='black'>
+                        <Typography variant="body1" color='black' sx={{fontSize: '1.1rem'}}>
                             {letter.receiver?.name || 'No Receiver Info'}
                         </Typography>
                     </Grid>
                 </Grid>
-                <Typography variant="h6" color="#a1232b" sx={{ marginTop: 2 }}>
-                    {letter.status !== undefined && letter.status === "Completed" ? "Letter reached receiver" : "Letter still not reached receiver"}
+                <Typography 
+                    variant="h6" 
+                    color="#a1232b"
+                    sx={{  
+                        marginTop: 2,
+                        color: letter.status === "Completed" ? 'green' : '#a1232b',
+                     }}
+                >
+                    {letter.status !== undefined && letter.status === "Completed" ? "Letter reached Receiver" : "Letter still not reached Receiver"}
                 </Typography>
-            {/* <PaginationComponent 
-                totalPages={totalPages} 
-                currentPage={currentPage} 
-                setCurrentPage={setCurrentPage} 
-            /> */}
             </CardContent>
         </Card>
+       
     )
 }
 

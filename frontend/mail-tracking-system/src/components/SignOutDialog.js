@@ -28,8 +28,11 @@ const SignOutDialog = () => {
             sx={{ fontWeight: 'bold', fontSize: '19px', marginLeft: '80px',textTransform: 'none', padding: '30px auto'}}>
                 Signout
             </Button>
-            <Dialog open={open} onClose={handleClose} padding='20px'>
-            <DialogTitle align='center' padding='10px'>{"Confirm Signout"}</DialogTitle>
+            <Dialog 
+                open={open} 
+                onClose={handleClose} 
+                sx={{ width:"600px", marginLeft:"650px"}} >
+            <DialogTitle align='center' padding='20px'>{"Confirm Signout"}</DialogTitle>
             <DialogContent>
             <DialogContentText>
                 Are you sure you want to sign out?
