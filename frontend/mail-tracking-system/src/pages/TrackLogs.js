@@ -15,7 +15,7 @@ const TrackLogs = ()=> {
     const [filteredLetters, setFilteredLetters] = useState([]);
     const [currentPage, setCurrentPage]= useState(1);
     const [totalPages, setTotalPages] = useState(0);
-    const [filters, setFilters] = useState({ date: '', faculty: '', department: '', uniqueID: ''  }); // Default filters
+    const [filters, setFilters] = useState({ date: '', faculty: '', department: '', uniqueID: '' , status: '' }); // Default filters
     const registrationNumber = localStorage.getItem('registrationNumber');
     const navigate = useNavigate();
 
@@ -90,7 +90,11 @@ const TrackLogs = ()=> {
                     const matchesLetterType = filters.uniqueID
                         ? letter.uniqueID.startsWith(filters.uniqueID) 
                         : true;
-                    return matchesFaculty && matchesDepartment && matchesLetterType;
+
+                    const matchesLetterStatus = filters.status
+                        ? letter.status === filters.status
+                        : true;
+                    return matchesFaculty && matchesDepartment && matchesLetterType && matchesLetterStatus;
                 });
 
 

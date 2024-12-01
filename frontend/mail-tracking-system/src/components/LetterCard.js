@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {createTheme, ThemeProvider,Card, CardContent, Typography, Grid, IconButton } from '@mui/material';
-import { CheckCircle, RadioButtonUnchecked } from '@mui/icons-material';
+import { CheckCircle, RadioButtonUnchecked, ArrowDownward } from '@mui/icons-material';
 import './LetterCard.css'; 
 
 
@@ -46,22 +46,39 @@ const LetterCard = ({ letter }) => {
                 <Typography variant="h6" gutterBottom>
                     Letter Unique ID: <span style={{ color: '#a1232b', fontWeight: 'bolder' }}>{letter.uniqueID || 'No ID Available'}</span>
                 </Typography>
+
+                {/* Sender Section */}
                 <Typography variant="body1" color='black' gutterBottom>
-                Sender: <span style={{ color: '#a1232b', fontWeight: 'bolder' }}>{letter.sender?.name || 'No Sender Info'} ({letter.sender.department || 'No Department'})</span>
+                    Sender: <span style={{ color: '#a1232b', fontWeight: 'bolder' }}>{letter.sender?.name || 'No Sender Info'} ({letter.sender.department || 'No Department'})</span>
                 </Typography>
-                <Typography variant="body1" color='black' gutterBottom>
-                Receiver: <span style={{ color: '#a1232b', fontWeight: 'bolder' }}>{letter.receiver?.name || 'No Receiver Info'} ({letter.receiver.faculty || 'No Faculty'}) ({letter.receiver.department || 'No Department'})</span>
-                </Typography>
+
+                {/* Add Downward Arrow */}
+                <Grid container justifyContent="flex-start" alignItems="flex-start">
+                    <ArrowDownward sx={{ fontSize: '2rem', color: '#a1232b', paddingLeft: '90px', transform: 'scale(1.2)'}} />
+                </Grid>
+
+                {/* Authorities Section */}
                 <Typography variant='body1' color='black' gutterBottom>
-                Authorities:
-                <span style={{ color: '#a1232b', fontWeight: 'bolder' }}>
-                {letter.receiver?.authorities?.length ? (
-                    letter.receiver.authorities.map((auth, index) => (
-                        <span key={auth._id || index}>{auth.name} ({auth.role}) </span>
-                        ))
-                    ) : "No authorities"}
-                </span>
+                    Authorities:
+                    <span style={{ color: '#a1232b', fontWeight: 'bolder' }}>
+                        {letter.receiver?.authorities?.length ? (
+                            letter.receiver.authorities.map((auth, index) => (
+                                <span key={auth._id || index}>{auth.name} ({auth.role}) </span>
+                            ))
+                        ) : "No authorities"}
+                    </span>
                 </Typography>
+
+                {/* Add Downward Arrow */}
+                <Grid container justifyContent="flex-start" alignItems="flex-start">
+                    <ArrowDownward sx={{ fontSize: '2rem', color: '#a1232b', paddingLeft: '90px', transform: 'scale(1.2)'}} />
+                </Grid>
+
+                {/* Receiver Section */}
+                <Typography variant="body1" color='black' gutterBottom>
+                    Receiver: <span style={{ color: '#a1232b', fontWeight: 'bolder' }}>{letter.receiver?.name || 'No Receiver Info'} ({letter.receiver.faculty || 'No Faculty'}) ({letter.receiver.department || 'No Department'})</span>
+                </Typography>
+                
                 <Grid container alignItems="center" spacing={0.5}>
                     <Grid item>
                         <IconButton 

@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { createTheme, ThemeProvider, Button, MenuItem, Select, Box, TextField, InputLabel, FormControl } from '@mui/material';
+import { createTheme, ThemeProvider, Button, MenuItem, Select, Box, TextField, InputLabel, FormControl, IconButton } from '@mui/material';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { DatePicker } from '@mui/x-date-pickers';
+import { ArrowDropDown, CalendarToday, School, Description } from '@mui/icons-material';
 
 const FilterButtons = ({ setFilters }) => {
 
@@ -10,10 +11,11 @@ const FilterButtons = ({ setFilters }) => {
     const [selectedFaculty, setSelectedFaculty] = useState('');
     const [selectedDepartment, setSelectedDepartment] = useState('');
     const [selectedLetterType, setSelectedLetterType] = useState('');
+    const [selectedLetterStatus, setSelectedLetterStatus] = useState('');
 
     const facultieswithDepartments = {
         FOT: ['ICT', 'BST', 'MMT', 'SFT', 'CET'],
-        FMSC: ['Department1', 'Department2'],
+        FMSC: ['Accounting', 'Business_Administration'],
         FOE: ['Department3', 'Department4'],
         FHSS: ['Department5', 'Department6']
     };
@@ -49,12 +51,19 @@ const FilterButtons = ({ setFilters }) => {
         setFilters((prev) => ({ ...prev, uniqueID: selectedLetterType }));
     }
 
+    const handleLetterStatusChange = (e) => {
+        const selectedLetterStatus = e.target.value;
+        setSelectedLetterStatus(selectedLetterStatus);
+        setFilters((prev) => ({ ...prev, status: selectedLetterStatus}));
+    }
+
     const handleClearFilters = () => {
         setSelectedDate(null);
         setSelectedFaculty('');
         setSelectedDepartment('');
         setSelectedLetterType(''); 
-        setFilters({ date: null, faculty: '', department: '',uniqueID: ''  }); // Reset all filters
+        setSelectedLetterStatus('');
+        setFilters({ date: null, faculty: '', department: '',uniqueID: '' , status: ''  }); // Reset all filters
     };
 
     const theme = createTheme({
@@ -82,6 +91,9 @@ const FilterButtons = ({ setFilters }) => {
                         variant="contained" 
                         color="customRed"
                         onClick={() => setFilters((prev) => ({ ...prev, sortBy: 'date' }))}
+                        sx={{alignSelf: 'center',
+                          borderRadius: '12px',
+                          padding: '20px 20px',}}
                     >
                         By Date
                     </Button>
@@ -94,19 +106,32 @@ const FilterButtons = ({ setFilters }) => {
                         onChange={handleDateChange}
                         renderInput={(params) => <TextField {...params}
                         slots={{ textField: TextField }}
+                        sx={{
+                            borderRadius: '12px',
+                            '&:hover': {
+                                borderColor: '#ff4081',
+                            },
+                        }}
                          />}
                     />
                 </LocalizationProvider>
 
-                <FormControl variant="outlined" sx={{ minWidth: 150 }}>
-                <InputLabel htmlFor="faculty-select">Select Faculty</InputLabel>
+                <FormControl variant="outlined" sx={{ minWidth: 200 }}>
+                <InputLabel >Select Faculty</InputLabel>
                 <Select  
                     name="faculty" 
                     value={selectedFaculty}
                     onChange={handleFacultyChange}
                     variant="outlined"
+                    IconComponent={ArrowDropDown}
+                    sx={{
+                            borderRadius: '12px',
+                            '&:hover': {
+                                borderColor: '#a1232b',
+                            },
+                        }}
                     label="Select Faculty"
-                    // sx={{ minWidth: 150 }}
+                    
                 >
                     <MenuItem value="FOT">FOT</MenuItem>
                     <MenuItem value="FMSC">FMSC</MenuItem>
@@ -115,14 +140,20 @@ const FilterButtons = ({ setFilters }) => {
                 </Select>
                 </FormControl>
 
-                <FormControl variant="outlined" sx={{ minWidth: 150 }}>
-                <InputLabel htmlFor="faculty-select">Select Department</InputLabel>
+                <FormControl variant="outlined" sx={{ minWidth: 200 }}>
+                <InputLabel >Select Department</InputLabel>
                 <Select 
                     name="department" 
                     value={selectedDepartment}
                     onChange={handleDepartmentChange}
                     variant="outlined"
-                    sx={{ minWidth: 150 }}
+                    IconComponent={ArrowDropDown}
+                    sx={{
+                            borderRadius: '12px',
+                            '&:hover': {
+                                borderColor: '#a1232b',
+                            },
+                        }}
                     disabled={!selectedFaculty}
                 >
                     
@@ -136,18 +167,43 @@ const FilterButtons = ({ setFilters }) => {
                 </Select>
                 </FormControl>
                 
-                <FormControl variant="outlined" sx={{ minWidth: 150 }}>
+                <FormControl variant="outlined" sx={{ minWidth: 200 }}>
                 <InputLabel >Letter Type</InputLabel>
                 <Select
                     name="uniqueID"
                     value={selectedLetterType}
                     onChange={handleLetterTypeChange}
                     variant="outlined"
-                    sx={{ minWidth: 150}}
+                    IconComponent={Description}
+                    sx={{
+                            borderRadius: '12px',
+                            '&:hover': {
+                                borderColor: '#a1232b',
+                            },
+                        }}
                 >
                     <MenuItem value="EXT">External</MenuItem>
                     <MenuItem value="INT">Internal</MenuItem>
                 </Select>
+                </FormControl>
+
+                <FormControl variant="outlined" sx={{ minWidth: 200 }}>
+                    <InputLabel>Letter Status</InputLabel>
+                        <Select 
+                            name='status' 
+                            value={selectedLetterStatus} 
+                            onChange={handleLetterStatusChange} 
+                            variant='outlined'
+                            IconComponent={ArrowDropDown} 
+                            sx={{ borderRadius: '12px',
+                                '&:hover': {
+                                    borderColor: '#a1232b',
+                                }
+                             }}>
+                            <MenuItem value= "Pending" >Pending</MenuItem>
+                            <MenuItem value= "In Progress" >In Progress</MenuItem>
+                            <MenuItem value= "Completed" >Completed</MenuItem>
+                        </Select>
                 </FormControl>
 
                 <ThemeProvider theme={theme}>
@@ -155,8 +211,12 @@ const FilterButtons = ({ setFilters }) => {
                     variant="contained" 
                     color="customRed"
                     onClick={handleClearFilters}
-                    sx={{ alignSelf: 'center' }}
-                >
+                    sx={{ alignSelf: 'center',
+                          borderRadius: '12px',
+                          padding: '20px 20px',
+                           
+                        }}
+                    >
                     Clear Filters
                 </Button>
                 </ThemeProvider>
