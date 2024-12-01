@@ -23,7 +23,7 @@ const InternalLetter = () => {
 
     const facultyDepartmentMap = {
         FOT: ['ICT', 'BST', 'MMT', 'SFT', 'CET'],
-        FMSC: ['Department1', 'Department2'], 
+        FMSC: ['Accounting', 'Business_Administration'], 
         FOE: ['Department3', 'Department4'], 
     };
 
