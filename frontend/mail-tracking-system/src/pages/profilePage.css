@@ -9,11 +9,11 @@
     text-align: center;
   }
   
-  .profile-container img {
+  /* .profile-container img {
     display: block;
     margin: 0 auto;
     border-radius: 50%;
-  }
+  } */
   
   .profile-container form {
     display: flex;
