@@ -49,7 +49,7 @@ const letterSchema = new mongoose.Schema({
         department: {
             type: String,
             required: true,
-            enum: ['ICT', 'BST', 'MMT', 'SFT', 'CET', 'Department1', 'Department2','Department3','Department4']
+            enum: ['ICT', 'BST', 'MMT', 'SFT', 'CET', 'Department1', 'Department2','Department3','Department4','Department5','Department6']
         }
         
     },

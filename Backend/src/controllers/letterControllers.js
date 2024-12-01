@@ -124,7 +124,7 @@ exports.getLetterById = async (req, res) => {
         const { id } = req.params;
 
         // Find letter by id and populate tracking log holders
-        const letter = await Letter.findById(id).populate('currentHolder trackingLog.holder' , 'name');
+        const letter = await Letter.findById(id).populate('currentHolder trackingLog.holder' , 'name department registrationNumber');
         if (!letter) {
             return res.status(404).json({ message: 'Letter not found' });
         }
@@ -138,10 +138,10 @@ exports.getLetterById = async (req, res) => {
             receiverDepartment: letter.receiverDepartment,
             authorities: letter.authorities,
             trackingLog: letter.trackingLog.map(log => ({
-                holder: log?.holder?.name || 'Unknown Holder',  // or any identifier for holder
-                department: log?.holder?.department || 'Unknown Department',
-                status: log.status || 'Unknown Status',  // Delivered, In-progress, etc.
-                date: log.date || 'No Date Available'
+                // holder: log?.holder?.name || 'Unknown Holder', 
+                // department: log?.holder?.department || 'Unknown Department',
+                // status: log.status || 'Unknown Status',  
+                // date: log.date || 'No Date Available'
             })),
             isDelivered: letter.isDelivered,
             currentHolder: letter.currentHolder.name,
@@ -192,24 +192,70 @@ exports.getAllLetters = async (req, res) => {
     }
 };
 
+// exports.getLetterbyRegno = async (req, res) => {
+//     const { registrationNumber } = req.params;
+//     const { sortBy } = req.query; 
+//     try {
+//         const sortCriteria = sortBy === 'date' ? { createdAt: -1} : {};
+//         const letters = await Letter.find({
+//             $or: [
+//                 { 'sender.registrationNumber': registrationNumber }, // Sent by user
+//                 { 'receiver.registrationNumber': registrationNumber }, // Received by user
+//                 { 'receiver.authorities.registrationNumber': registrationNumber }
+//             ]
+//         })
+//         .sort(sortCriteria);
+
+//         res.json(letters);
+//     } catch (error) {
+//         console.error("Error retrieving letters:", error);
+//         res.status(500).send('Error retrieving letters');
+//     }
+// }
+
+
 exports.getLetterbyRegno = async (req, res) => {
     const { registrationNumber } = req.params;
-    const { sortBy } = req.query; 
+    const { sortBy, department, faculty, date, uniqueID } = req.query;
+
     try {
-        const sortCriteria = sortBy === 'date' ? { createdAt: -1} : {};
-        const letters = await Letter.find({
+        const query = {
             $or: [
-                { 'sender.registrationNumber': registrationNumber }, // Sent by user
-                { 'receiver.registrationNumber': registrationNumber }, // Received by user
+                { 'sender.registrationNumber': registrationNumber },
+                { 'receiver.registrationNumber': registrationNumber },
                 { 'receiver.authorities.registrationNumber': registrationNumber }
             ]
-        })
-        .sort(sortCriteria);
+        };
 
+        // Filter by department if provided
+        if (department) query['receiver.department'] = department;
+
+        // Filter by faculty if provided
+        if (faculty) query['receiver.faculty'] = faculty;
+
+        // Filter by letterType (using uniqueID prefix)
+        if (uniqueID) {
+            const regexPattern = `^${uniqueID}`;
+            query['uniqueID'] = new RegExp(regexPattern);
+        }
+
+        // Add date filter if provided
+        if (date) {
+            const selectedDate = new Date(date);
+            const startOfDay = new Date(selectedDate.setHours(0, 0, 0, 0));
+            const endOfDay = new Date(selectedDate.setHours(23, 59, 59, 999));
+            query.createdAt = { $gte: startOfDay, $lte: endOfDay };
+        }
+
+        console.log("Constructed Query:", JSON.stringify(query, null, 2));
+
+        const sortCriteria = sortBy === 'date' ? { createdAt: -1 } : {};
+        const letters = await Letter.find(query).sort(sortCriteria);
+
+        console.log("Filtered Letters:", letters);
         res.json(letters);
     } catch (error) {
         console.error("Error retrieving letters:", error);
         res.status(500).send('Error retrieving letters');
     }
-}
-
+};
