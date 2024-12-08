@@ -33,6 +33,32 @@ const InternalLetter = () => {
         setDepartments(facultyDepartmentMap[selectedFaculty] || []);
     };
 
+    const handleReceiverRegNoChange = async (e) => {
+        const registrationNumber = e.target.value;
+        setReceiverRegNo(registrationNumber);
+
+        try{
+            const response = await axios.get(`http://localhost:5001/api/users/users/${registrationNumber}`);
+            if(response.status === 200){
+                setReceiverName(response.data.name);
+                setDesignation(response.data.role);
+                setRecFaculty(response.data.faculty);
+                console.log("Receiver", response.data)
+            }else {
+                setReceiverName("");
+                setDesignation("");
+                setRecFaculty("");
+            }
+
+        }
+        catch(error){
+            console.error("Error fetching user data:", error);
+            setReceiverName("");
+            setDesignation("");
+            setRecFaculty("");
+        }
+    }
+
 
     const handleSubmit = async (e) => {
     e.preventDefault();
@@ -106,7 +132,7 @@ const InternalLetter = () => {
             className='form-letter'
             onSubmit={handleSubmit} >
                 <label className='sender-name'>
-                    <h2 className='label-h2'>Sender's name</h2>
+                    <h1 className='label-h2'>Sender's name</h1>
                     <input type="text" 
                     placeholder="Enter sender's name" 
                     value= {senderName}
@@ -129,28 +155,29 @@ const InternalLetter = () => {
                     onChange={(e)=> setSenderAddress(e.target.value)}
                     required />
                 </label>
-                <h2 >Receiver's information</h2>
-                <label className='receiver-name'>
-                    <h2 className='label-h2'>Receiver's name</h2>
-                    <input type="text" 
-                    placeholder="Enter receiver's name" 
-                    value={receiverName}
-                    onChange={(e) => setReceiverName(e.target.value)}
-                    required />
-                </label>
+                <h1 >Receiver's information</h1>
                 <label className='receiver-reg'>
                     <h2 className='label-h2'>Registration number</h2>
                     <input type="text" 
                     placeholder="Enter receiver's registration number"
                     value={receiverRegno}
-                    onChange={(e) => setReceiverRegNo(e.target.value)}
+                    onChange={handleReceiverRegNoChange}
+                    required />
+                </label>
+                <label className='receiver-name'>
+                    <h2 className='label-h2'>Receiver's name</h2>
+                    <input type="text" 
+                    placeholder="Enter receiver's name" 
+                    value={receiverName}
+                    readOnly
                     required />
                 </label>
                 <label className='receiver-designation'>
                     <h2 className='label-h2'>Designation</h2>
                     <select 
                     value={designation}
-                    onChange={(e) => setDesignation(e.target.value)}
+                    // onChange={(e) => setDesignation(e.target.value)}
+                    onChange={handleReceiverRegNoChange}
                     required>
                         <option value="" disabled selected>Choose Designation</option>
                         <option value="Lecturer">Lecturer</option>
@@ -215,7 +242,8 @@ const InternalLetter = () => {
                     <select 
                     value={recfaculty}
                     //onChange={(e)=> setRecFaculty(e.target.value)}
-                    onChange={handleFacultyChange}
+                    // onChange={handleFacultyChange}
+                    onChange={handleReceiverRegNoChange}
                     required>
                         <option value="" disabled selected>Choose Faculty</option>
                         <option value="FOT">FOT</option>
