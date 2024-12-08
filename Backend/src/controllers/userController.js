@@ -76,7 +76,28 @@ exports.getUserDetails = async(req,res) => {
     }catch (error) {
         res.status(400).json({message: error.message});
     }
-};                   
+};       
+
+exports.getUserbyRegno = async (req,res) => {
+    
+  try{
+      const { registrationNumber } = req.params;
+      if (!registrationNumber) {
+          return res.status(400).json({ message: "Registration number is required." });
+      }
+
+      const user = await User.findOne({ registrationNumber });
+      if(!user) {
+          return res.status(404).json({ message: "User not found." })
+      }
+      
+      res.status(200).json({ name: user.name, role: user.role, faculty: user.faculty });
+      
+  }
+  catch(error){
+    res.status(500).json({ message: "Error fetching user details.", error });
+  }
+}
 
 exports.updateUserDetails = async (req,res) => {
     try {

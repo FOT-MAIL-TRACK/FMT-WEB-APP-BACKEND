@@ -23,15 +23,43 @@ const ExternalLetter = () => {
 
     const facultyDepartmentMap = {
         FOT: ['ICT', 'BST', 'MMT', 'SFT', 'CET'],
-        FMSC: ['Department1', 'Department2'], 
+        FMSC: ['Accounting', 'Business_Administration'], 
         FOE: ['Department3', 'Department4'], 
     };
 
     const handleFacultyChange = (e) => {
-        const selectedFaculty = e.target.value;
+        const selectedFaculty = (recfaculty);
         setRecFaculty(selectedFaculty);
         setDepartments(facultyDepartmentMap[selectedFaculty] || []);
     };
+
+    const handleReceiverRegNoChange = async (e) => {
+        const registrationNumber = e.target.value;
+        // const selectedFaculty = e.target.value;
+        setReceiverRegNo(registrationNumber);
+
+            try{
+                const response = await axios.get(`http://localhost:5001/api/users/users/${registrationNumber}`)
+                if (response.status === 200){
+                    setReceiverName(response.data.name);
+                    setDesignation(response.data.role);
+                    setRecFaculty(response.data.faculty);
+                    // setDepartments(facultyDepartmentMap[selectedFaculty] || []);
+                    console.log("Receiver", response.data)
+                }else {
+                    setReceiverName("");
+                    setDesignation("");
+                    setRecFaculty("");
+                }
+            }
+            catch(error){
+                console.error("Error fetching user data:", error);
+                setReceiverName("");
+                setDesignation("");
+                setRecFaculty("");
+            }
+        
+    }
     
 
     const handleSubmit = async (e) => {
@@ -99,7 +127,7 @@ const ExternalLetter = () => {
             <h2>Enter letter/parcel information</h2>
             </div>
             <div className='content-sender'>
-            <h2>Sender's information</h2>
+            <h1>Sender's information</h1>
             </div>
             
             <form 
@@ -121,28 +149,29 @@ const ExternalLetter = () => {
                     onChange={(e)=> setSenderAddress(e.target.value)}
                     required />
                 </label>
-                <h2 >Receiver's information</h2>
-                <label className='receiver-name'>
-                    <h2 className='label-h2'>Receiver's name</h2>
-                    <input type="text" 
-                    placeholder="Enter receiver's name" 
-                    value = {receiverName}
-                    onChange={(e)=> setReceiverName(e.target.value)}
-                    required />
-                </label>
+                <h1>Receiver's information</h1>
+                <div style={{ marginTop: '50px' }}>  </div>
                 <label className='receiver-reg'>
                     <h2 className='label-h2'>Registration number</h2>
                     <input type="text"
                     placeholder="Enter receiver's registration number" 
                     value= {receiverRegno}
-                    onChange={(e)=> setReceiverRegNo(e.target.value)}
+                    onChange={handleReceiverRegNoChange}
+                    required />
+                </label>
+                <label className='receiver-name'>
+                    <h2 className='label-h2'>Receiver's name</h2>
+                    <input type="text" 
+                    placeholder="Enter receiver's name" 
+                    value = {receiverName}
+                    readOnly
                     required />
                 </label>
                 <label className='receiver-designation'>
                     <h2 className='label-h2'>Designation</h2>
                     <select 
                     value = {designation}
-                    onChange={(e)=> setDesignation(e.target.value)}
+                    onChange={handleReceiverRegNoChange}
                     required>
                         <option value="" disabled selected>Choose Designation</option>
                         <option value="Lecturer">Lecturer</option>
@@ -175,7 +204,8 @@ const ExternalLetter = () => {
                         type="text" 
                         placeholder="Enter authority name"
                         value={authority.name}
-                        onChange={(e) => handleAuthorityChange(index, 'name', e.target.value)}
+                        // onChange={(e) => handleAuthorityChange(index, 'name', e.target.value)}
+                        onChange={handleReceiverRegNoChange}
                         required
                         />
                 </label>
@@ -208,7 +238,8 @@ const ExternalLetter = () => {
                     <select 
                     value = {recfaculty}
                     //onChange={(e)=> setRecFaculty(e.target.value)}
-                    onChange={handleFacultyChange}
+                    // onChange={handleFacultyChange}
+
                     required>
                          <option value="" disabled selected>Choose Faculty</option>
                         <option value="FOT">FOT</option>
