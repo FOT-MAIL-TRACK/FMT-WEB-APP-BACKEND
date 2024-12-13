@@ -13,9 +13,17 @@ dotenv.config();
 exports.signup = async (req, res) => {
     try{
         // const { name,username, email,role,faculty, department, password ,registrationNumber }= req.body;
-        const { name,username, email,role,faculty, password ,registrationNumber }= req.body;
+        const { name,username,email,role,faculty,department,password,registrationNumber }= req.body;
         // const user = new User({ name,username, email,role, faculty, department, password ,registrationNumber});
-        const user = new User({ name,username,email,role,faculty,password,registrationNumber});
+
+        if (['FacultyMA', 'Technical Officer', 'Admin', 'PostalDepartmentMA'].includes(role) && !department) {
+          // Optional: Check for department-specific validation only for roles that need it
+          if (role !== 'FacultyMA' && role !== 'Technical Officer') {
+              throw new Error('Department is required for this role');
+          }
+      }
+      
+        const user = new User({ name,username,email,role,faculty,department,password,registrationNumber});
         await user.save();
         res.status(201).json({message: 'User registered successfully'});
     } catch (error){
@@ -91,7 +99,7 @@ exports.getUserbyRegno = async (req,res) => {
           return res.status(404).json({ message: "User not found." })
       }
       
-      res.status(200).json({ name: user.name, role: user.role, faculty: user.faculty });
+      res.status(200).json({ name: user.name, role: user.role, faculty: user.faculty, department: user.department });
       
   }
   catch(error){

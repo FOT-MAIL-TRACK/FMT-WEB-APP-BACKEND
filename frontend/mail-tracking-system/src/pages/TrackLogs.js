@@ -81,10 +81,10 @@ const TrackLogs = ()=> {
                 // Apply filters
                 const filteredLetters = lettersForCurrentPage.filter((letter) => {
                     const matchesFaculty = filters.faculty
-                        ? letter.receiver?.faculty === filters.faculty
+                        ? letter.receiver?.faculty === filters.faculty || letter.sender?.faculty === filters.faculty
                         : true;
                     const matchesDepartment = filters.department
-                        ? letter.receiver?.department === filters.department
+                        ? letter.receiver?.department === filters.department || letter.sender?.department === filters.department
                         : true; 
 
                     const matchesLetterType = filters.uniqueID
