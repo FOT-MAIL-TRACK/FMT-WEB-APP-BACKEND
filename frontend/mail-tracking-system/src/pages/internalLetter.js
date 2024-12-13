@@ -4,13 +4,15 @@ import RealNavBar from '../components/realNavBar';
 import NavBar from '../components/NavBar';
 import Footer from '../components/footer';
 import axios from 'axios';
-import { Dialog, DialogTitle, DialogContent, DialogActions, Button, Typography } from '@mui/material';
+import { Dialog, DialogTitle, DialogContent, DialogActions, Button, Typography, fabClasses } from '@mui/material';
 
 const InternalLetter = () => {
 
     const [senderName, setSenderName] = useState('');
     const [senderRegno, setSenderRegNo] = useState('');
     const [senderAddress, setSenderAddress] = useState('');
+    const [senfaculty, setSenFaculty] = useState('');
+    const [sendepartment, setSenDepartment] = useState('');
     const [receiverName, setReceiverName] = useState('');
     const [receiverRegno, setReceiverRegNo] = useState('');
     const [designation, setDesignation] = useState('');
@@ -22,15 +24,48 @@ const InternalLetter = () => {
     const [departments, setDepartments] = useState([]);
 
     const facultyDepartmentMap = {
-        FOT: ['ICT', 'BST', 'MMT', 'SFT', 'CET'],
-        FMSC: ['Accounting', 'Business_Administration'], 
-        FOE: ['Department3', 'Department4'], 
+        "FOT": ['ICT', 'BST', 'MMT', 'SFT', 'CET'],
+        "FMSC": ['Accounting', 'Business Administration','Business Economics','Commerce','Decision Sciences','Entrepreneurship','Estate Management and Valuation','Finance','Human Resource Management','Information Technology','Marketing Management','Public Administration'], 
+        "FOE": ['Civil Engineering','Computer Engineering','Electrical and Electronic Engineering','Mechanical Engineering','Interdisciplinary Studies'],
+        "FHSS": ['Anthropology','Criminology and Criminal Justice','Economics','English and Linguistics','English Language Teaching','Geography','History and Archaeology','Information & Communication Technology','Languages, Cultural Studies and Performing Arts','Music and Creative Technology','Pali and Buddhist Studies','Philosophy and Psychology','Political Science','Sinhala and Mass Communication','Social Statistics','Sociology'],
+        "FAHS": ['Nursing and Midwifery','Pharmacy and Pharmaceutical Sciences','Medical Laboratory Sciences','Basic Sciences','Optometry'],
+        "FAS": ['Botany','Computer Science','Food Science and Technology','Physics','Sports Science','Zoology','Chemistry','Forestry and Environmental Sciences','Mathematics','Polymer Science','Statistics','Genetics and Molecular Biology Unit'],
+        "FMS": ['Anatomy','Biochemistry','Community Medicine','Family Medicine','Forensic Medicine','Immunology & Molecular Medicine','Medical Education','Medicine','Microbiology','Obstetrics & Gynaecology','Paediatrics','Parasitology','Pathology','Pharmacology','Physiology','Psychiatry','Surgery'],
+        "FDS": ['Basic Sciences','Community Dental Health','Comprehensive & Geriatric Dentistry','Oral Medicine & Periodontology','Oral Pathology','Oral Surgery','Paraclinical Sciences','Prosthodontics','Restorative Dentistry'],
+        "FUAB": ['Urban Bioresources','Aquatic Bioresources','Multidisciplinary Studies'],
+        "FOC": ['Information Systems Engineering and Informatics','Knowledge Engineering and Communication','Scientific Computing'],
+        "Postal Department" : [],
+        "General Administration": [],
     };
 
-    const handleFacultyChange = (e) => {
-        const selectedFaculty = e.target.value;
-        setRecFaculty(selectedFaculty);
-        setDepartments(facultyDepartmentMap[selectedFaculty] || []);
+    // const handleFacultyChange = (e) => {
+    //     const selectedFaculty = e.target.value;
+    //     setSenFaculty(selectedFaculty);
+    //     setDepartments(facultyDepartmentMap[selectedFaculty] || []);
+    // };
+
+    const handleSenderRegNoChange = async (e) => {
+        const registrationNumber = e.target.value;
+        setSenderRegNo(registrationNumber);
+        try{
+            const response = await axios.get(`http://localhost:5001/api/users/users/${registrationNumber}`);
+            if(response.status === 200){
+                setSenderName(response.data.name);
+                setSenFaculty(response.data.faculty);
+                setSenDepartment(response.data.department);
+            }
+            else{
+                setSenderName("");
+                setSenFaculty("");
+                setSenDepartment("");
+            }
+        }
+        catch (error){
+            console.error("Error fetching user data:", error);
+            setSenderName("");
+            setSenFaculty("");
+            setSenDepartment("");
+        }
     };
 
     const handleReceiverRegNoChange = async (e) => {
@@ -43,11 +78,13 @@ const InternalLetter = () => {
                 setReceiverName(response.data.name);
                 setDesignation(response.data.role);
                 setRecFaculty(response.data.faculty);
+                setRecDepartment(response.data.department);
                 console.log("Receiver", response.data)
             }else {
                 setReceiverName("");
                 setDesignation("");
                 setRecFaculty("");
+                setRecDepartment("");
             }
 
         }
@@ -56,6 +93,7 @@ const InternalLetter = () => {
             setReceiverName("");
             setDesignation("");
             setRecFaculty("");
+            setRecDepartment("");
         }
     }
 
@@ -66,7 +104,9 @@ const InternalLetter = () => {
             sender : {
                 name : senderName,
                 registrationNumber: senderRegno,
-                address : senderAddress
+                address : senderAddress,
+                faculty : senfaculty,
+                department : sendepartment
             },
             receiver : {
                 name : receiverName,
@@ -125,26 +165,28 @@ const InternalLetter = () => {
             <h2>Enter letter/parcel information</h2>
             </div>
             <div className='content-sender'>
-            <h2>Sender's information</h2>
+            <h1>Sender's information</h1>
             </div>
             
             <form 
             className='form-letter'
             onSubmit={handleSubmit} >
-                <label className='sender-name'>
-                    <h1 className='label-h2'>Sender's name</h1>
-                    <input type="text" 
-                    placeholder="Enter sender's name" 
-                    value= {senderName}
-                    onChange={(e) => setSenderName(e.target.value)}
-                    required />
-                </label>
                 <label className='sender-regno'>
                     <h2 className='label-h2'>Sender's registration number</h2>
                     <input type="text" 
                     placeholder="Enter sender's registration number" 
                     value={senderRegno}
-                    onChange={(e) => setSenderRegNo(e.target.value)}
+                    //onChange={(e) => setSenderRegNo(e.target.value)}
+                    onChange={handleSenderRegNoChange}
+                    required />
+                </label>
+                <label className='sender-name'>
+                    <h2 className='label-h2'>Sender's name</h2>
+                    <input type="text" 
+                    placeholder="Enter sender's name" 
+                    value= {senderName}
+                    // onChange={(e) => setSenderName(e.target.value)}
+                    readOnly
                     required />
                 </label>
                 <label className='sender-address'>
@@ -155,6 +197,40 @@ const InternalLetter = () => {
                     onChange={(e)=> setSenderAddress(e.target.value)}
                     required />
                 </label>
+                <label className='sender-faculty'>
+                    <h2 className='label-h2'>Sender's faculty</h2>
+                    <select
+                         value={senfaculty}
+                        //  onChange={(e) => setSenFaculty(e.target.value)}
+                        onChange={handleSenderRegNoChange}
+                    >
+                    <option value="" disabled selected>Choose Faculty</option>
+                        <option value="FOT">Faculty of Technology</option>
+                        <option value="FMSC">Faculty of Management Studies and Commerce</option>
+                        <option value="FOE">Faculty of Engineering</option>
+                        <option value="FHSS">Faculty of Humanities and Social Sciences</option>
+                        <option value="FAHS">Faculty of Applied Sciences</option>
+                        <option value="FAS">Faculty of Allied Health Sciences</option>
+                        <option value="FMS">Faculty of Medical Sciences</option>
+                        <option value="FDS">Faculty of Dental Sciences</option>
+                        <option value="FAUB">Faculty of Urban and Aquatic Bioresources</option>
+                        <option value="FOC">Faculty of Computing</option>
+                        <option value="Postal Department">Postal Department</option>
+                        <option value="General Administration">General Administration</option>
+                    </select>
+                </label>
+                <label className='sender-dept'>
+                <h2>Sender's department</h2>
+                <input 
+                    value={sendepartment}
+                    placeholder='department'
+                    // onChange={(e) => setSenDepartment(e.target.value)}
+                    readOnly
+                    required
+                />     
+                </label>
+                <div style={{ marginTop: '50px' }}> 
+                </div>
                 <h1 >Receiver's information</h1>
                 <label className='receiver-reg'>
                     <h2 className='label-h2'>Registration number</h2>
@@ -180,16 +256,16 @@ const InternalLetter = () => {
                     onChange={handleReceiverRegNoChange}
                     required>
                         <option value="" disabled selected>Choose Designation</option>
+                        <option value="Dean">Dean</option>
+                        <option value="Department Head">Department head</option>
                         <option value="Lecturer">Lecturer</option>
-                        <option value="Dean">dean</option>
-                        <option value="Department Head">dept head</option>
-                        <option value="PostalDepartment">postal dept</option>
-                        <option value="FacultyMA">FacultyMA</option>
-                        <option value="DepartmentMA">DepartmentMA</option>
-                        <option value="WorkAid">work aid</option>
-                        <option value="Admin">admin</option>
-                        <option value="Technical Officer">TO</option>
-                        <option value="Demonstrator">demo</option>
+                        <option value="PostalDepartmentMA">Postal department MA</option>
+                        <option value="FacultyMA">Faculty MA</option>
+                        <option value="DepartmentMA">Department MA</option>
+                        <option value="WorkAid">Work aid</option>
+                        <option value="Admin">Admin</option>
+                        <option value="Technical Officer">Technial Officer</option>
+                        <option value="Demonstrator">Demonstrator</option>
                     </select>
                 </label>
                 {authorities.map((authority, index) => (
@@ -221,11 +297,17 @@ const InternalLetter = () => {
                         onChange={(e) => handleAuthorityChange(index, 'role', e.target.value)}
                         required
                         >
-                            <option value="" disabled>Select Authority Role</option>
-                            <option value="FacultyMA">FacultyMA</option>
-                            <option value="DepartmentMA">DepartmentMA</option>
-                            <option value="Department Head">Department Head</option>
+                             <option value="" disabled selected>Choose Designation</option>
+                            <option value="Dean">Dean</option>
+                            <option value="Department Head">Department head</option>
                             <option value="Lecturer">Lecturer</option>
+                            <option value="PostalDepartmentMA">Postal department MA</option>
+                            <option value="FacultyMA">Faculty MA</option>
+                            <option value="DepartmentMA">Department MA</option>
+                            <option value="WorkAid">Work aid</option>
+                            <option value="Admin">Admin</option>
+                            <option value="Technical Officer">Technial Officer</option>
+                            <option value="Demonstrator">Demonstrator</option>
                         </select>
                     </label>
                 <div className='remove-btn'>
@@ -238,7 +320,7 @@ const InternalLetter = () => {
                 </div>
 
                 <label className='receiver-fac'>
-                    <h2>Faculty</h2>
+                    <h2>Receiver's faculty</h2>
                     <select 
                     value={recfaculty}
                     //onChange={(e)=> setRecFaculty(e.target.value)}
@@ -246,31 +328,29 @@ const InternalLetter = () => {
                     onChange={handleReceiverRegNoChange}
                     required>
                         <option value="" disabled selected>Choose Faculty</option>
-                        <option value="FOT">FOT</option>
-                        <option value="FMSC">FMSC</option>
-                        <option value="FOE">FOE</option>
-                        <option value="FHSS">FHSS</option>
-                        <option value="FAS">FAS</option>
-                        <option value="FAHS">FAHS</option>
-                        <option value="FDS">FDS</option>
-                        <option value="FUAB">FUAB</option>
-                        <option value="FOC">FOC</option>
-                        <option value="FMS">FMS</option>
-                        <option value="FGS">FGS</option>
+                        <option value="FOT">Faculty of Technology</option>
+                        <option value="FMSC">Faculty of Management Studies and Commerce</option>
+                        <option value="FOE">Faculty of Engineering</option>
+                        <option value="FHSS">Faculty of Humanities and Social Sciences</option>
+                        <option value="FAHS">Faculty of Applied Sciences</option>
+                        <option value="FAS">Faculty of Allied Health Sciences</option>
+                        <option value="FMS">Faculty of Medical Sciences</option>
+                        <option value="FDS">Faculty of Dental Sciences</option>
+                        <option value="FAUB">Faculty of Urban and Aquatic Bioresources</option>
+                        <option value="FOC">Faculty of Computing</option>
+                        <option value="Postal Department">Postal Department</option>
+                        <option value="General Administration">General Administration</option>
                     </select>
                 </label>
                 <label className='receiver-dept'>
-                <h2>Department</h2>
-                <select 
+                <h2>Receiver's department</h2>
+                <input 
                     value={recdepartment}
-                    onChange={(e) => setRecDepartment(e.target.value)}
+                    placeholder="departments"
+                    // onChange={(e) => setRecDepartment(e.target.value)}
+                    readOnly
                     required
-                >
-                    <option value="" disabled selected>Choose Department</option>
-                    {departments.map((dept, index) => (
-                        <option key={index} value={dept}>{dept}</option>
-                    ))}
-                </select>
+                />       
                 </label>
                 <div className='generate-btn'>
                     <button type='submit'>Generate ID</button>

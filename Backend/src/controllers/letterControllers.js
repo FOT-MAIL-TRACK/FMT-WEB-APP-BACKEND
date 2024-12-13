@@ -42,7 +42,9 @@ exports.createInternalLetter = async (req,res) => {
             sender: {
                 name : sender.name,
                 registrationNumber: sender.registrationNumber,
-                address: sender.address
+                address: sender.address,
+                faculty: sender.faculty,
+                department: sender.department
             },
             receiver: {
                 name: receiver.name,
@@ -91,8 +93,6 @@ exports.createExternalLetter = async (req,res) => {
             sender: {
                 name : sender.name,
                 address: sender.address,
-                faculty: sender.faculty,
-                department: sender.department
             },
             receiver: {
                 name: receiver.name,
@@ -228,10 +228,10 @@ exports.getLetterbyRegno = async (req, res) => {
         };
 
         // Filter by department if provided
-        if (department) query['receiver.department'] = department;
+        if (department) query['sender.department' || 'receiver.department'] = department;
 
         // Filter by faculty if provided
-        if (faculty) query['receiver.faculty'] = faculty;
+        if (faculty) query['sender.faculty' || 'receiver.faculty'] = faculty;
 
         // Filter by letterType (using uniqueID prefix)
         if (uniqueID) {

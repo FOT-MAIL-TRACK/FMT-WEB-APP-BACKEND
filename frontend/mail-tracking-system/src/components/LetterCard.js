@@ -49,7 +49,7 @@ const LetterCard = ({ letter }) => {
 
                 {/* Sender Section */}
                 <Typography variant="body1" color='black' gutterBottom>
-                    Sender: <span style={{ color: '#a1232b', fontWeight: 'bolder' }}>{letter.sender?.name || 'No Sender Info'} ({letter.sender.department || 'No Department'})</span>
+                    Sender: <span style={{ color: '#a1232b', fontWeight: 'bolder' }}>{letter.sender?.name || 'No Sender Info'}({letter.sender.faculty || 'No Faculty'}) ({letter.sender.department || 'No Department'})</span>
                 </Typography>
 
                 {/* Add Downward Arrow */}
