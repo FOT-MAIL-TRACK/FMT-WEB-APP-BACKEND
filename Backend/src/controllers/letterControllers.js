@@ -44,7 +44,7 @@ exports.createInternalLetter = async (req,res) => {
                 registrationNumber: sender.registrationNumber,
                 address: sender.address,
                 faculty: sender.faculty,
-                department: sender.department
+                department: sender.department,
             },
             receiver: {
                 name: receiver.name,
@@ -52,7 +52,7 @@ exports.createInternalLetter = async (req,res) => {
                 receiverRole: receiver.receiverRole,// Final receiver's role
                 authorities: receiver.authorities, // Array of authority objects
                 faculty: receiver.faculty,
-                department: receiver.department
+                department: receiver.department,
             },
             // isInternal :true, 
             currentHolder: currentHolder._id,
