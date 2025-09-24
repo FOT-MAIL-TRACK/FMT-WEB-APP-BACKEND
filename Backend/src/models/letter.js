@@ -14,15 +14,82 @@ const letterSchema = new mongoose.Schema({
          type: String,
          required: true
        },
-       faculty: {
+               faculty: {
             type: String,
-            required: true,
-            enum: ['FOT','FMSC','FOE','FHSS','FAHS','FAS','FMS','FDS','FUAB','FOC','Postal Department','General Administration']
+            enum: [
+                'Administration',
+                'FOT',
+                'FMSC',
+                'FMS',
+                'FAS',
+                'FHSS',
+                'FAHS',
+                'FGS',
+                'FOE',
+                'Dental',
+                'FUAB',
+                'FOC',
+                'Postal Department'
+            ],
+            required: true
         },
         department: {
             type: String,
-            required: true,
-            enum: ['no department','ICT', 'BST', 'MMT', 'SFT', 'CET', 'Accounting', 'Business Administration','Business Economics','Commerce','Decision Sciences','Entrepreneurship','Estate Management and Valuation','Finance','Human Resource Management','Information Technology','Marketing Management','Public Administration','Civil Engineering','Computer Engineering','Electrical and Electronic Engineering','Mechanical Engineering','Interdisciplinary Studies','Anthropology','Criminology and Criminal Justice','Economics','English and Linguistics','English Language Teaching','Geography','History and Archaeology','Information & Communication Technology','Languages, Cultural Studies and Performing Arts','Music and Creative Technology','Pali and Buddhist Studies','Philosophy and Psychology','Political Science','Sinhala and Mass Communication','Social Statistics','Sociology','Nursing and Midwifery','Pharmacy and Pharmaceutical Sciences','Medical Laboratory Sciences','Basic Sciences','Optometry','Botany','Computer Science','Food Science and Technology','Physics','Sports Science','Zoology','Chemistry','Forestry and Environmental Sciences','Mathematics','Polymer Science','Statistics','Genetics and Molecular Biology Unit','Anatomy','Biochemistry','Community Medicine','Family Medicine','Forensic Medicine','Immunology & Molecular Medicine','Medical Education','Medicine','Microbiology','Obstetrics & Gynaecology','Paediatrics','Parasitology','Pathology','Pharmacology','Physiology','Psychiatry','Surgery','Basic Sciences','Community Dental Health','Comprehensive & Geriatric Dentistry','Oral Medicine & Periodontology','Oral Pathology','Oral Surgery','Paraclinical Sciences','Prosthodontics','Restorative Dentistry','Urban Bioresources','Aquatic Bioresources','Multidisciplinary Studies','Information Systems Engineering and Informatics','Knowledge Engineering and Communication','Scientific Computing']
+            enum: [
+                // Administration
+                'Registrar / VC', 'Academic Establishment', 'Non Academic Establishment', 'Finance',
+                'ASAP / Exam', 'General Admin', 'Legal', 'Capital Works', 'EIS', 'Supply & Stores',
+                'AHEAD', 'Int. Audit', 'Gvt. Audit', 'Proctors', 'Staff Development',
+                'Student Welfare', 'Library', 'LIBD', 'IT Centre', 'Career Guidance',
+
+                // FOT - Technology Faculty
+                'Technology Faculty',
+
+                // FMSC
+                'Deans Office', 'Accounting', 'Decision Science', 'Finance', 'Commerce',
+                'Marketing Management', 'Business Administration', 'Business Economics',
+                'Estate Management', 'ITRC / Business Com / Legal Studies', 'Public Administration',
+                'HRM', 'Entrepreneurship', 'ICT - MGT', 'Business Linkage', 'MBA / MSC',
+
+                // FMS
+                'Deans Office', 'Pharmacology', 'Paediatrics', 'Family Medicine', 'Pathology', 'Micro Biology',
+                'Parasitology', 'Medicine', 'Bio Chemistry', 'Community Medicine',
+                'OB & GYN', 'Physiology', 'Immunology & Molecular Medicine',
+                'Psychology', 'Surgery', 'Medical Education', 'Anatomy',
+                'Nursing', 'Forensic Medicine',
+
+                // FAS
+                'Deans Office', 'Botany', 'Sports Science', 'Food', 'Statistics / Computer Science', 'Physics',
+                'Forestry', 'Mathematics', 'Physical Education', 'Zoology', 'Chemistry',
+                'Instrument / Polymer', 'Molecular Biology',
+
+                // FHSS
+                'Deans Office', 'Sinhala', 'Geography', 'Social Statistics', 'ICT', 'Pali Buddhist',
+                'Languages & Culture', 'Economics', 'Political Science', 'Philosophy / Psychology',
+                'History & Archaeology', 'Sociology & Anthropology', 'DELT', 'English',
+                'Criminology', 'Music', 'Art IT',
+
+                // FAHS
+                'Allied Health Sciences',
+
+                // FGS
+                'PhD',
+
+                // FOE
+                'Engineering Faculty',
+
+                // Dental
+                'Dental Faculty',
+
+                // FUAB
+                'Urban & Aquatic Faculty',
+
+                //FOC
+                'Computing Faculty',
+
+                //Postal Department
+                'Postal Department'
+            ]
         }
     },
     receiver: {
@@ -37,17 +104,84 @@ const letterSchema = new mongoose.Schema({
         receiverRole: {
             type: String,
             required: "true",
-            enum: ['Dean','Department Head','Lecturer','PostalDepartmentMA','FacultyMA','DepartmentMA','WorkAid','Admin','Technical Officer', 'Demonstrator'] 
+            enum: ['Dean','Department Head','Lecturer','PostalDepartmentMA','FacultyMA','DepartmentMA','WorkAid','Super Admin','Technical Officer', 'Demonstrator'] 
         },
         faculty: {
             type: String,
-            required: true,
-            enum: ['FOT','FMSC','FOE','FHSS','FAHS','FAS','FMS','FDS','FUAB','FOC','Postal Department','General Administration']
+            enum: [
+                'Administration',
+                'FOT',
+                'FMSC',
+                'FMS',
+                'FAS',
+                'FHSS',
+                'FAHS',
+                'FGS',
+                'FOE',
+                'Dental',
+                'FUAB',
+                'FOC',
+                'Postal Department'
+            ],
+            required: true
         },
         department: {
             type: String,
-            required: true,
-            enum: ['no department','ICT', 'BST', 'MMT', 'SFT', 'CET', 'Accounting', 'Business Administration','Business Economics','Commerce','Decision Sciences','Entrepreneurship','Estate Management and Valuation','Finance','Human Resource Management','Information Technology','Marketing Management','Public Administration','Civil Engineering','Computer Engineering','Electrical and Electronic Engineering','Mechanical Engineering','Interdisciplinary Studies','Anthropology','Criminology and Criminal Justice','Economics','English and Linguistics','English Language Teaching','Geography','History and Archaeology','Information & Communication Technology','Languages, Cultural Studies and Performing Arts','Music and Creative Technology','Pali and Buddhist Studies','Philosophy and Psychology','Political Science','Sinhala and Mass Communication','Social Statistics','Sociology','Nursing and Midwifery','Pharmacy and Pharmaceutical Sciences','Medical Laboratory Sciences','Basic Sciences','Optometry','Botany','Computer Science','Food Science and Technology','Physics','Sports Science','Zoology','Chemistry','Forestry and Environmental Sciences','Mathematics','Polymer Science','Statistics','Genetics and Molecular Biology Unit','Anatomy','Biochemistry','Community Medicine','Family Medicine','Forensic Medicine','Immunology & Molecular Medicine','Medical Education','Medicine','Microbiology','Obstetrics & Gynaecology','Paediatrics','Parasitology','Pathology','Pharmacology','Physiology','Psychiatry','Surgery','Basic Sciences','Community Dental Health','Comprehensive & Geriatric Dentistry','Oral Medicine & Periodontology','Oral Pathology','Oral Surgery','Paraclinical Sciences','Prosthodontics','Restorative Dentistry','Urban Bioresources','Aquatic Bioresources','Multidisciplinary Studies','Information Systems Engineering and Informatics','Knowledge Engineering and Communication','Scientific Computing']
+            enum: [
+                // Administration
+                'Registrar / VC', 'Academic Establishment', 'Non Academic Establishment', 'Finance',
+                'ASAP / Exam', 'General Admin', 'Legal', 'Capital Works', 'EIS', 'Supply & Stores',
+                'AHEAD', 'Int. Audit', 'Gvt. Audit', 'Proctors', 'Staff Development',
+                'Student Welfare', 'Library', 'LIBD', 'IT Centre', 'Career Guidance',
+
+                // FOT - Technology Faculty
+                'Technology Faculty',
+
+                // FMSC
+                'Deans Office', 'Accounting', 'Decision Science', 'Finance', 'Commerce',
+                'Marketing Management', 'Business Administration', 'Business Economics',
+                'Estate Management', 'ITRC / Business Com / Legal Studies', 'Public Administration',
+                'HRM', 'Entrepreneurship', 'ICT - MGT', 'Business Linkage', 'MBA / MSC',
+
+                // FMS
+                'Deans Office', 'Pharmacology', 'Paediatrics', 'Family Medicine', 'Pathology', 'Micro Biology',
+                'Parasitology', 'Medicine', 'Bio Chemistry', 'Community Medicine',
+                'OB & GYN', 'Physiology', 'Immunology & Molecular Medicine',
+                'Psychology', 'Surgery', 'Medical Education', 'Anatomy',
+                'Nursing', 'Forensic Medicine',
+
+                // FAS
+                'Deans Office', 'Botany', 'Sports Science', 'Food', 'Statistics / Computer Science', 'Physics',
+                'Forestry', 'Mathematics', 'Physical Education', 'Zoology', 'Chemistry',
+                'Instrument / Polymer', 'Molecular Biology',
+
+                // FHSS
+                'Deans Office', 'Sinhala', 'Geography', 'Social Statistics', 'ICT', 'Pali Buddhist',
+                'Languages & Culture', 'Economics', 'Political Science', 'Philosophy / Psychology',
+                'History & Archaeology', 'Sociology & Anthropology', 'DELT', 'English',
+                'Criminology', 'Music', 'Art IT',
+
+                // FAHS
+                'Allied Health Sciences',
+
+                // FGS
+                'PhD',
+
+                // FOE
+                'Engineering Faculty',
+
+                // Dental
+                'Dental Faculty',
+
+                // FUAB
+                'Urban & Aquatic Faculty',
+
+                //FOC
+                'Computing Faculty',
+
+                //Postal Department
+                'Postal Department'
+            ]
         },
         authorities:[{ 
             registrationNumber: {
@@ -58,7 +192,7 @@ const letterSchema = new mongoose.Schema({
             },
             role: {
                 type: String,
-                enum: ['Lecturer','Dean','Department Head','PostalDepartment','FacultyMA','DepartmentMA','WorkAid','Admin','Technical Officer', 'Demonstrator'] 
+                enum: ['Lecturer','Dean','Department Head','PostalDepartmentMA','FacultyMA','DepartmentMA','WorkAid','Super Admin','Technical Officer', 'Demonstrator'] 
             },
         }],
         

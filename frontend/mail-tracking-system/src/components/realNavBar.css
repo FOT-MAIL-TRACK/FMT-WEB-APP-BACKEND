@@ -1,103 +1,98 @@
-.realNavBar{
-    width:auto;
+/* Base Nav */
+.realNavBar {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #ffffff;
+  padding: 10px 40px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 2000;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.logo {
+  height: 60px;
+  cursor: pointer;
+  border-radius: 12px;
+}
+
+/* Desktop links */
+.nav-links.desktop-links {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+}
+
+.nav-links a {
+  color: #222;
+  text-decoration: none;
+  font-size: 17px;
+  font-weight: 500;
+  transition: color 0.3s ease;
+  white-space: nowrap;
+}
+
+.nav-links a:hover {
+  color: #a1232b;
+}
+
+.profile-link {
+  background: #a1232b;
+  color: #fff !important;
+  padding: 8px 16px;
+  border-radius: 8px;
+  transition: background 0.3s ease;
+}
+
+.profile-link:hover {
+  background: #861d24;
+}
+
+/* Hamburger icon */
+.hamburger {
+  display: none;
+  cursor: pointer;
+  z-index: 3000;
+}
+
+/* Mobile styles */
+.nav-links.mobile-links {
+  display: none; /* hidden by default */
+  position: fixed;
+  top: 0;
+  right: -100%;
+  height: 100vh;
+  width: 260px;
+  flex-direction: column;
+  background: #fff;
+  padding-top: 100px;
+  padding-left: 20px;
+  box-shadow: -2px 0 8px rgba(0,0,0,0.15);
+  transition: right 0.3s ease;
+  z-index: 2500;
+}
+
+.nav-links.mobile-links.active {
+  right: 0;
+}
+
+.nav-links.mobile-links a {
+  margin: 15px 0;
+  font-size: 18px;
+}
+
+/* Responsive: show hamburger below 992px */
+@media (max-width: 992px) {
+  .nav-links.desktop-links {
+    display: none;
+  }
+  .hamburger {
+    display: block;
+  }
+  .nav-links.mobile-links {
     display: flex;
-    align-items: center;
-    justify-content: space-between;  
-    background-color: #ffffff;
-    padding: 5px 2px;
-    position: relative;
-    top: 0; 
+  }
 }
-
-.logo{
-    height: 90px;
-    margin-left: 50px;
-    cursor: pointer;
-}
-
-.nav-links{
-    flex: 1;
-    text-align: center;
-    margin-right: 400px;
-}
-
-.nav-links a{
-    display: inline-block;
-    margin: 10px 80px;
-    color: #000000;
-    margin-right: 10px;
-    text-decoration: none;
-    font-size: 20px;
-    font-weight: bold;
-    cursor: pointer;
-}
-
-.nav-links a:hover{
-    color: darkgoldenrod;
-}
-
-.signout{
-    margin-left: 500px;
-}
-
-.signout:hover{
-    color: #a1232b;
-}
-
-.profile {
-    position:absolute;
-    right:50px;
-}
-
-
-@media (max-width: 1437px) {
-    .nav-links {
-        flex-direction: column; /* Stacks links vertically */
-        align-items: flex-start; /* Centers the links */
-        position: absolute;
-        top: 50px; /* Adjust this if your logo is taller */
-        left: 1000px;
-        right: 0;
-        background-color: #ffffff; /* Add background for better visibility */
-        display: none; /* Initially hide the stacked links */
-        z-index: 1000;
-        width: 300px;
-        box-shadow: 0 2px 5px rgba(161, 35, 43, 0.5);
-    }
-
-    .nav-links.active {
-        display: flex; /* Show links when activated */
-    }
-
-    .nav-links a {
-        margin: 10px 0; /* Adjust spacing for stacked links */
-        padding: 10px 20px;
-        width: 300px;
-        text-align: left;
-        border-bottom: 1px solid #e0e0e0;
-    }
-
-    /* Optional: Add styles for a hamburger menu */
-    .hamburger {
-        display: block; /* Show hamburger on smaller screens */
-        cursor: pointer;
-        margin-right: 20px;
-    }
-}
-
-@media (min-width: 1438px) {
-    .nav-links {
-        display: flex; /* Ensure nav links are in row on larger screens */
-    }
-
-    .hamburger {
-        display: none; /* Hide hamburger on larger screens */
-    }
-}
-
-
-.hamburger-icon {
-    width: 40px; /* Adjust the size as needed */
-    height: auto; /* Maintain aspect ratio */
-}
-

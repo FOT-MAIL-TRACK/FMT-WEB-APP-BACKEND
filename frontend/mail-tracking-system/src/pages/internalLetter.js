@@ -21,29 +21,7 @@ const InternalLetter = () => {
     const [uniqueID, setUniqueID] = useState(null);
     const [open, setOpen] = useState(false);
     const [authorities, setAuthorities] = useState([{ name: '', role: '' }]);
-    // const [departments, setDepartments] = useState([]);
-
-    // const facultyDepartmentMap = {
-    //     "FOT": ['ICT', 'BST', 'MMT', 'SFT', 'CET'],
-    //     "FMSC": ['Accounting', 'Business Administration','Business Economics','Commerce','Decision Sciences','Entrepreneurship','Estate Management and Valuation','Finance','Human Resource Management','Information Technology','Marketing Management','Public Administration'], 
-    //     "FOE": ['Civil Engineering','Computer Engineering','Electrical and Electronic Engineering','Mechanical Engineering','Interdisciplinary Studies'],
-    //     "FHSS": ['Anthropology','Criminology and Criminal Justice','Economics','English and Linguistics','English Language Teaching','Geography','History and Archaeology','Information & Communication Technology','Languages, Cultural Studies and Performing Arts','Music and Creative Technology','Pali and Buddhist Studies','Philosophy and Psychology','Political Science','Sinhala and Mass Communication','Social Statistics','Sociology'],
-    //     "FAHS": ['Nursing and Midwifery','Pharmacy and Pharmaceutical Sciences','Medical Laboratory Sciences','Basic Sciences','Optometry'],
-    //     "FAS": ['Botany','Computer Science','Food Science and Technology','Physics','Sports Science','Zoology','Chemistry','Forestry and Environmental Sciences','Mathematics','Polymer Science','Statistics','Genetics and Molecular Biology Unit'],
-    //     "FMS": ['Anatomy','Biochemistry','Community Medicine','Family Medicine','Forensic Medicine','Immunology & Molecular Medicine','Medical Education','Medicine','Microbiology','Obstetrics & Gynaecology','Paediatrics','Parasitology','Pathology','Pharmacology','Physiology','Psychiatry','Surgery'],
-    //     "FDS": ['Basic Sciences','Community Dental Health','Comprehensive & Geriatric Dentistry','Oral Medicine & Periodontology','Oral Pathology','Oral Surgery','Paraclinical Sciences','Prosthodontics','Restorative Dentistry'],
-    //     "FUAB": ['Urban Bioresources','Aquatic Bioresources','Multidisciplinary Studies'],
-    //     "FOC": ['Information Systems Engineering and Informatics','Knowledge Engineering and Communication','Scientific Computing'],
-    //     "Postal Department" : [],
-    //     "General Administration": [],
-    // };
-
-    // const handleFacultyChange = (e) => {
-    //     const selectedFaculty = e.target.value;
-    //     setSenFaculty(selectedFaculty);
-    //     setDepartments(facultyDepartmentMap[selectedFaculty] || []);
-    // };
-
+    
     const handleSenderRegNoChange = async (e) => {
         const registrationNumber = e.target.value;
         setSenderRegNo(registrationNumber);
@@ -205,23 +183,24 @@ const InternalLetter = () => {
                         onChange={handleSenderRegNoChange}
                         required
                     >
-                    <option value="" disabled selected>Choose Faculty</option>
+                        <option value="" disabled selected>Choose Faculty</option>
+                        <option value="Administration">General Administration</option>
                         <option value="FOT">Faculty of Technology</option>
                         <option value="FMSC">Faculty of Management Studies and Commerce</option>
-                        <option value="FOE">Faculty of Engineering</option>
+                        <option value="FMS">Faculty of Medical Sciences</option>
+                        <option value="FAS">Faculty of Allied Health Sciences</option>
                         <option value="FHSS">Faculty of Humanities and Social Sciences</option>
                         <option value="FAHS">Faculty of Applied Sciences</option>
-                        <option value="FAS">Faculty of Allied Health Sciences</option>
-                        <option value="FMS">Faculty of Medical Sciences</option>
-                        <option value="FDS">Faculty of Dental Sciences</option>
+                        <option value="FGS">Faculty of Graduate Sciences</option>
+                        <option value="FOE">Faculty of Engineering</option>
+                        <option value="Dental">Faculty of Dental Sciences</option>
                         <option value="FAUB">Faculty of Urban and Aquatic Bioresources</option>
                         <option value="FOC">Faculty of Computing</option>
                         <option value="Postal Department">Postal Department</option>
-                        <option value="General Administration">General Administration</option>
                     </select>
                 </label>
                 <label className='sender-dept'>
-                <h2>Sender's department</h2>
+                <h2 className='label-h2'>Sender's department</h2>
                 <input 
                     value={sendepartment}
                     placeholder='department'
@@ -230,8 +209,6 @@ const InternalLetter = () => {
                     required
                 />     
                 </label>
-                <div style={{ marginTop: '50px' }}> 
-                </div>
                 <h1 >Receiver's information</h1>
                 <label className='receiver-reg'>
                     <h2 className='label-h2'>Registration number</h2>
@@ -264,13 +241,13 @@ const InternalLetter = () => {
                         <option value="FacultyMA">Faculty MA</option>
                         <option value="DepartmentMA">Department MA</option>
                         <option value="WorkAid">Work aid</option>
-                        <option value="Admin">Admin</option>
+                        <option value="Super Admin">Admin</option>
                         <option value="Technical Officer">Technial Officer</option>
                         <option value="Demonstrator">Demonstrator</option>
                     </select>
                 </label>
                 <label className='receiver-fac'>
-                    <h2>Receiver's faculty</h2>
+                    <h2 className='label-h2'>Receiver's faculty</h2>
                     <select 
                     value={recfaculty}
                     //onChange={(e)=> setRecFaculty(e.target.value)}
@@ -278,22 +255,23 @@ const InternalLetter = () => {
                     onChange={handleReceiverRegNoChange}
                     required>
                         <option value="" disabled selected>Choose Faculty</option>
+                        <option value="Administration">General Administration</option>
                         <option value="FOT">Faculty of Technology</option>
                         <option value="FMSC">Faculty of Management Studies and Commerce</option>
-                        <option value="FOE">Faculty of Engineering</option>
+                        <option value="FMS">Faculty of Medical Sciences</option>
+                        <option value="FAS">Faculty of Allied Health Sciences</option>
                         <option value="FHSS">Faculty of Humanities and Social Sciences</option>
                         <option value="FAHS">Faculty of Applied Sciences</option>
-                        <option value="FAS">Faculty of Allied Health Sciences</option>
-                        <option value="FMS">Faculty of Medical Sciences</option>
-                        <option value="FDS">Faculty of Dental Sciences</option>
+                        <option value="FGS">Faculty of Graduate Sciences</option>
+                        <option value="FOE">Faculty of Engineering</option>
+                        <option value="Dental">Faculty of Dental Sciences</option>
                         <option value="FAUB">Faculty of Urban and Aquatic Bioresources</option>
                         <option value="FOC">Faculty of Computing</option>
                         <option value="Postal Department">Postal Department</option>
-                        <option value="General Administration">General Administration</option>
                     </select>
                 </label>
                 <label className='receiver-dept'>
-                <h2>Receiver's department</h2>
+                <h2 className='label-h2'>Receiver's department</h2>
                 <input 
                     value={recdepartment}
                     placeholder="departments"
@@ -302,7 +280,7 @@ const InternalLetter = () => {
                     required
                 />       
                 </label>
-                <div style={{ marginTop: '50px' }}> 
+                <div style={{ marginTop: '10px' }}> 
                 </div>
                 <h1>Authorities details</h1>
                 {authorities.map((authority, index) => (
@@ -342,7 +320,7 @@ const InternalLetter = () => {
                             <option value="FacultyMA">Faculty MA</option>
                             <option value="DepartmentMA">Department MA</option>
                             <option value="WorkAid">Work aid</option>
-                            <option value="Admin">Admin</option>
+                            <option value="Super Admin">Admin</option>
                             <option value="Technical Officer">Technial Officer</option>
                             <option value="Demonstrator">Demonstrator</option>
                         </select>

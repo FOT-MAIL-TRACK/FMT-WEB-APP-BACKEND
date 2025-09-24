@@ -1,155 +1,155 @@
+/* Global Reset */
 body {
-  font-family: Arial, sans-serif;
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f5f6fa;
+  color: #333;
 }
 
+/* Container */
 .signin-container {
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
-  padding: 30px;
-  background-color: #fff;
-  height: 800px;
   align-items: center;
+  min-height: 100vh;
+  padding: 40px 20px;
+  gap: 50px;
+}
+
+/* Left Section */
+.left-section {
+  flex: 1;
+  max-width: 450px;
+  text-align: center;
+}
+
+.left-section .logo {
+  max-width: 200px;
+  height: auto;
+  margin-bottom: 20px;
+}
+
+.left-section .desc {
+  background: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  font-size: 1rem;
+  color: #555;
+  line-height: 1.6;
+}
+
+/* Right Section */
+.right-section {
+  flex: 1;
+  max-width: 400px;
+  background: #fff;
+  padding: 40px 30px;
+  border-radius: 12px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+  border-left: 4px solid #a1232b;
+}
+
+.right-section .title {
+  font-size: 2rem;
+  margin-bottom: 10px;
+  color: #a1232b;
+  text-align: center;
+}
+
+.right-section .subtitle {
+  font-size: 1rem;
+  margin-bottom: 30px;
+  text-align: center;
+  color: #555;
+}
+
+/* Form */
+.signin-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.signin-form label {
+  display: flex;
+  flex-direction: column;
+  font-weight: 500;
+  font-size: 0.95rem;
+  color: #333;
+}
+
+.signin-form input {
+  padding: 14px 16px;
+  margin-top: 8px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  outline: none;
+  transition: 0.3s;
+  width: 100%; /* Make input full width of form container */
   box-sizing: border-box;
 }
 
-.left-section {
-  margin-right: 20px;
-  width: 40%;
-
-  padding: 40px;
-  /* background-color: #fff; */
-  border-radius: 10px;
-  /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
+.signin-form input:focus {
+  border-color: #a1232b;
+  box-shadow: 0 0 8px rgba(161, 35, 43, 0.2);
 }
 
-.right-section {
-  width: 30%;
-  height: 650px;
-  padding: 40px;
-  background-color: #fff;
-  margin-left: 100px;
-  margin-top: 40px;
-  border-radius: 8px;
-  border: 2px solid #a1232b; /* Red border */
-  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.5); /* Shadow */
-}
-
-.h1-class {
-  font-size: 2.5rem;
-  margin-bottom: 10px;
-  margin-right: 40px;
-}
-
-.logo-fmt{
-  height: 500px;
-  width: 500px;
-  margin-left: 80px;
-}
-
-h2 {
-  font-size: 20px;
-  margin-bottom: 50px;
-  margin-right: 40px;
-}
-
-.desc p {
-  margin-bottom: 10px;
-  color: #555;
-  font-size: 1.3rem;
-}
-
-.desc{
-  height: 200px;
-}
-
-form {
-  display: flex;
-  flex-direction: column;
-  margin-top: 30px;
-}
-
-label {
-  margin-bottom: 5px;
-  font-weight: bold;
-  /* width: 140px; */
-}
-
-input {
-  margin-bottom: 20px;
-  padding: 10px;
-  font-size: 16px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-}
-
-.signin-btn button{
-  display: block;
-  margin-left: 130px;
-  margin-right: 40px;
-  width: 50%; 
-  padding: 12px 24px;
-  min-width: 150px;
-  margin-top: 30px;
+/* Button */
+.signin-btn {
   background-color: #a1232b;
   color: #fff;
+  font-size: 1.1rem;
+  font-weight: 600;
+  padding: 12px;
+  border-radius: 8px;
   border: none;
-  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s;
+  width: 100%; /* Full width button */
+}
+
+.signin-btn:hover {
+  background-color: #861d24;
+}
+
+/* Error */
+.error-message {
+  color: #ff4d4f;
+  font-size: 0.9rem;
   text-align: center;
-  cursor: pointer;
-  font-size: 24px;
 }
 
-button:hover {
-  background-color: #800d1c;
-  text-decoration: none;
-  cursor: pointer;
-}
-
-a {
-  color: #a1232b;
-  text-decoration: none;
-}
-
-
-
-.left-section p {
-  text-align: center; /* Center-aligns the text */
-  margin-bottom: 20px;
-  color: #555;
-  border: 2px solid #a1232b; /* Red border for paragraph */
-  padding: 30px;
-  border-radius: 5px;
-  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.5); 
-}
-
-
-.right-section .center-text {
+/* Signup text */
+.signup-text {
   text-align: center;
   margin-top: 20px;
+  font-size: 0.95rem;
+  color: #000; /* Black text for "Don't have an account?" */
 }
 
-.right-section a {
-  display: inline-block;
-  margin-top: 10px;
-}
-
-.left-section img {
-  max-width: 80%; 
-  height: auto;
-  display: block;
-  margin: 0 auto;
-}
-
-.center-text p{
-color:black;
-}
-
-.p-class{
-  margin-left: 20px;
-}
-
-.error-message {
+.signup-text a {
   color: #a1232b;
-  font-size: 16px;
-  margin-top: 6px;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.signup-text a:hover {
+  text-decoration: underline;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .signin-container {
+    flex-direction: column;
+    padding: 20px;
+  }
+
+  .right-section, .left-section {
+    margin: 0 auto;
+    width: 100%;
+  }
 }

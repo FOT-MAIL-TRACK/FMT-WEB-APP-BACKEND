@@ -1,34 +1,88 @@
 .about-container {
-    margin-top: 100px;
-    padding: 20px;
-    text-align: center;
+  margin-top: 80px;
+  padding: 40px 20px;
+  text-align: center;
+  background-color: #f5f6fa;
+  min-height: calc(100vh - 200px);
+  font-family: 'Poppins', sans-serif;
 }
 
-.h2-class{
-    font-size: 2rem;
-    color: #000000;
-    margin-bottom: 30px; 
+.h2-class {
+  font-size: 2.5rem;
+  color: #000; /* Brand color */
+  font-weight: 600;
+  margin-bottom: 50px;
 }
 
-.about-section{
-    background-color: #fff;
-    box-shadow: 0 2px 4px #a1232b;
-    margin: 20px auto;
-    padding: 20px 20px;
-    border-radius: 8px;
-    max-width: 1000px;
-    height:260px;
-    margin-bottom: 40px;
+.about-section {
+  background-color: #fff;
+  box-shadow: 0 8px 20px rgba(161, 35, 43, 0.1); /* red-ish shadow */
+  margin: 20px auto;
+  padding: 30px 25px;
+  border-radius: 15px;
+  max-width: 900px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.about-section:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 30px rgba(161, 35, 43, 0.25); /* stronger red shadow on hover */
 }
 
 .h3-class {
-    font-size: 1.7rem;
-    color: #333;
-    margin-bottom: 10px;
+  font-size: 1.8rem;
+  color: #333;
+  margin-bottom: 15px;
+  font-weight: 500;
 }
 
-.p-class{
+.p-class {
+  font-size: 1.15rem;
+  color: #555;
+  line-height: 1.8;
+  text-align: justify;
+  margin: 0 auto;
+  max-width: 800px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .h2-class {
+    font-size: 2rem;
+  }
+
+  .about-section {
+    padding: 20px 15px;
+  }
+
+  .h3-class {
+    font-size: 1.5rem;
+  }
+
+  .p-class {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .about-container {
+    padding: 20px 15px;
+  }
+
+  .about-section {
+    padding: 15px 10px;
+    border-radius: 12px;
+  }
+
+  .h2-class {
+    font-size: 1.8rem;
+  }
+
+  .h3-class {
     font-size: 1.3rem;
-    padding-top: 5px;
-    color: #333;
+  }
+
+  .p-class {
+    font-size: 0.95rem;
+  }
 }

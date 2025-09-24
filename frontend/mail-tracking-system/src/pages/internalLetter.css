@@ -1,114 +1,147 @@
-.in-lettercontainer{
-    display: flex;
-    height: 2800px;
+.in-lettercontainer {
+  display: flex;
+  justify-content: center;
+  padding: 120px 20px 50px 20px;
+  background: #f5f5f5;
 }
 
-.container-ex{
-    width: 50%;
-    /* padding: 40px; */
-    height: 2700px;
-    margin-top: 100px;
-    margin-left: 450px;
-    padding-left: 40px;
-    background-color: #fff;
-    border-radius: 5px;
-    border: 2px solid #a1232b; /* Red border */
-    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.5); /* Shadow */
+.container-ex {
+  width: 100%;
+  max-width: 900px;
+  padding: 40px 30px;
+  background-color: #fff;
+  border-radius: 12px;
+  border: 1px solid #e0e0e0;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
 }
 
-
-.form-letter{
-    display: block;
+.content-ex h2 {
+  font-size: 2rem;
+  margin: 0;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 30px;
+  color: #a1232b;
 }
 
-.content-ex{
-    margin-top: 50px;
-    text-align: center;
-}
-
-.content-ex h2{
-    font-size: 1.6rem;
-}
-
-.label-h2{
-    display: block;
-}
-
-.generate-btn button{
-    margin-left: 230px;
-    display: block;
-    margin-right: auto;
-    width: 50%; 
-    padding-left: 0px;
-    padding: 15px 24px;
-    min-width:150px;
-    margin-top: 40px;
-    background-color: #a1232b;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    text-align: center;
-    cursor: pointer;
-    font-size: 24px;
+.form-letter {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
 .form-letter label {
-    margin-bottom: 5px;
-    font-weight: bold;
-    text-align: center;
+  display: flex;
+  flex-direction: column;
+  font-weight: 600;
+  font-size: 1rem;
+  color: #333;
+}
+
+.label-h2 {
+  margin-bottom: 8px;
+  font-size: 1.2rem;
+  margin: 0;
+  margin-bottom: 10px;
+}
+
+.form-letter input,
+.form-letter select {
+  width: 100%;       
+  box-sizing: border-box;
+  padding: 12px 15px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+.form-letter input:focus,
+.form-letter select:focus {
+  border-color: #a1232b;
+  box-shadow: 0 0 5px rgba(161, 35, 43, 0.3);
+}
+
+h1 {
+  font-size: 1.8rem;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  color: #222;
+  text-align: center;
+}
+
+.authority-section {
+  background: #48ff0063;
+  padding: 20px;
+  border-radius: 12px;
+  margin-bottom: 15px;
+  box-shadow: 0 4px 10px rgba(48, 161, 35, 0.1);
+}
+
+.generate-btn,
+.add-btn,
+.remove-btn {
+  display: flex;
+  justify-content: center; /* centers the button horizontally */
+  margin-top: 20px; /* spacing between sections */
+}
+
+.generate-btn button,
+.add-btn button,
+.remove-btn button {
+  width: 100%;
+  max-width: 250px;
+  padding: 12px 0;
+  border: none;
+  border-radius: 8px;
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+/* Individual button colors */
+.generate-btn button {
+  background-color: #a1232b;
+  color: #fff;
+  margin: 0;
+}
+
+.generate-btn button:hover {
+  background-color: #861d24;
+}
+
+.add-btn button {
+  background-color: #191fc6;
+  color: #fff;
+  margin: 0;
+}
+
+.add-btn button:hover {
+  background-color: #0f13a0;
+}
+
+.remove-btn button {
+  background-color: #ff4d4f;
+  color: #fff;
+  margin: 0;
+}
+
+.remove-btn button:hover {
+  background-color: #d9363e;
+}
+
+
+@media (max-width: 768px) {
+  .container-ex {
+    width: 95%;
+    padding: 20px;
   }
-  
 
-.form-letter input {
-    margin-bottom: 20px;
-    padding: 10px;
-    width: 92%;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+  .generate-btn button,
+  .add-btn button,
+  .remove-btn button {
+    max-width: 100%;
   }
-
-.form-letter select{
-    width: 94%;
-}
-
-.uniqueid{
-    color: black;
-}
-
-.remove-btn button{
-    margin-left: 320px;
-    display: block;
-    margin-right: auto;
-    width: 30%; 
-    padding-left: 0px;
-    padding: 8px 15px;
-    min-width:100px;
-    margin-top: 20px;
-    background-color: #a1232b;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    text-align: center;
-    cursor: pointer;
-    font-size: 20px;
-}
-
-.add-btn button{
-    margin-left: 320px;
-    display: block;
-    margin-right: auto;
-    width: 30%; 
-    padding-left: 0px;
-    padding: 8px 15px;
-    min-width:100px;
-    margin-top: 20px;
-    margin-bottom: 50px;
-    background-color: #191fc6;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    text-align: center;
-    cursor: pointer;
-    font-size: 20px;
 }

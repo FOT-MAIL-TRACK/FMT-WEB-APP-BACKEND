@@ -44,25 +44,9 @@
   background-color: #fef0f1;
 }
 
-/* Add optional icons above h2 */
 .letter-card::before {
-  content: '✉️'; /* Example icon, can use font-awesome or custom SVG */
+  content: "📂";
   font-size: 2.5rem;
   margin-bottom: 15px;
   display: block;
-}
-
-/* Responsive for smaller screens */
-@media (max-width: 768px) {
-  .letter-content {
-    flex-direction: column;
-    gap: 20px;
-    padding: 30px 10px;
-  }
-
-  .letter-card {
-    width: 90%;
-    min-height: 160px;
-    padding: 25px 15px;
-  }
 }

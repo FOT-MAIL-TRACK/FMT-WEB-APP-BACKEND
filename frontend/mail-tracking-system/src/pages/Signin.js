@@ -1,92 +1,81 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import logo from '../assets/fotmailtrack.jpeg';
-import './Signin.css'
+import './Signin.css';
 import NavBar from '../components/NavBar';
-import { useNavigate} from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 const Signin = () => {
-
   const navigate = useNavigate();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
 
-  const [email, setEmail] = useState();
-  const [password, setPassword] = useState();
-  const [error, setError] = useState();
-
-  const handleSignin = async(e) => {
+  const handleSignin = async (e) => {
     e.preventDefault();
-    try{
-      
-      const response = await axios.post("http://localhost:5001/api/users/signin", {email, password})
+    try {
+      const response = await axios.post("http://localhost:5001/api/users/signin", { email, password });
       const userRegistrationNumber = response.data.user.registrationNumber;
-      console.log("Response Data:", response.data); 
-      if(  response.status === 200){
+      console.log("Response Data:", response.data);
+      if (response.status === 200) {
         localStorage.setItem('token', response.data.token);
         localStorage.setItem('registrationNumber', userRegistrationNumber);
+
+        localStorage.setItem('userRole', response.data.user.role);
         navigate('/home');
+      } else {
+        setError(response.data.message);
       }
-      else{
-        setError(response.data.message)
-      }
-    }
-    catch (err){
+    } catch (err) {
       setError(err.response?.data?.message || 'Login failed. Please check your credentials.');
     }
-  }
-  
-
+  };
 
   return (
     <>
-
-    <NavBar/>
-    <div className="signin-container">
-     
-      <div className="left-section">
-        <h1>
-        <div className="logo-fmt">
-            <img src={logo} alt="logo" />
+      <NavBar />
+      <div className="signin-container">
+        <div className="left-section">
+          <img src={logo} alt="logo" className="logo" />
+          <p className="desc">
+            The Faculty of Technology Mail Tracking System streamlines the process of managing and tracking physical mail within the Faculty of Technology, University of Sri Jayewardenepura.
+          </p>
         </div>
-        </h1>
-        <div className="desc" >
-        <p>The Faculty of Technology Mail Tracking System aims to streamline and enhance the process of managing and tracking physical mail within the faculty of technology, University of Sri Jayawardenepura.</p>
-        </div>
-      </div>
-      <div className="right-section">
-        <h1 className='h1-class'>Sign In</h1>
-        <p className='p-class'>Please Enter your account details to sign in to the system. </p>
-        <form onSubmit={handleSignin}>
+        <div className="right-section">
+          <h2 className="title">Sign In</h2>
+          <p className="subtitle">Enter your account details to access the system</p>
+          <form onSubmit={handleSignin} className="signin-form">
+            <label>Email
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Enter your campus email"
+                required
+              />
+            </label>
 
-          <label><h1 className='h1-class' >Email</h1></label>
-          <input 
-          type="email" 
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          placeholder="Enter your campus email" required/>
-        
-          <label><h1 className='h1-class'>Password</h1></label>
-          <input 
-          type="password" 
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          placeholder="Enter your password" required/>
-          
-          {error && <p className="error-message">{error}</p>}
+            <label>Password
+              <input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="Enter your password"
+                required
+              />
+            </label>
 
-          <div className='signin-btn'>
-          
-          <button type="submit">Sign In</button>
-          
-          </div>
-          
-        </form>
-        <div className="center-text">
-            <p>Don't have an account? <a href="/signup">Sign up</a></p>
+            {error && <p className="error-message">{error}</p>}
+
+            <button type="submit" className="signin-btn">Sign In</button>
+          </form>
+          <p className="signup-text">
+            Don't have an account? <a href="/signup">Sign Up</a>
+          </p>
         </div>
       </div>
-    </div>
     </>
   );
-}
+};
 
 export default Signin;

@@ -44,7 +44,7 @@ exports.createInternalLetter = async (req,res) => {
                 registrationNumber: sender.registrationNumber,
                 address: sender.address,
                 faculty: sender.faculty,
-                department: sender.department,
+                department: sender.department || 'No department',
             },
             receiver: {
                 name: receiver.name,
@@ -52,17 +52,13 @@ exports.createInternalLetter = async (req,res) => {
                 receiverRole: receiver.receiverRole,// Final receiver's role
                 authorities: receiver.authorities, // Array of authority objects
                 faculty: receiver.faculty,
-                department: receiver.department,
+                department: receiver.department || 'No department',
             },
             // isInternal :true, 
             currentHolder: currentHolder._id,
             currentHolderRegistrationNumber : currentHolder.registrationNumber,
             uniqueID: uniqueID ,
-            trackingLog: [{
-                holder: currentHolder._id,
-                name: currentHolder.name,
-                status: 'Pending'
-            }] 
+            trackingLog: [] 
         });
         const savedLetter = await newLetter.save();
         res.status(201).json(savedLetter);
@@ -192,26 +188,6 @@ exports.getAllLetters = async (req, res) => {
     }
 };
 
-// exports.getLetterbyRegno = async (req, res) => {
-//     const { registrationNumber } = req.params;
-//     const { sortBy } = req.query; 
-//     try {
-//         const sortCriteria = sortBy === 'date' ? { createdAt: -1} : {};
-//         const letters = await Letter.find({
-//             $or: [
-//                 { 'sender.registrationNumber': registrationNumber }, // Sent by user
-//                 { 'receiver.registrationNumber': registrationNumber }, // Received by user
-//                 { 'receiver.authorities.registrationNumber': registrationNumber }
-//             ]
-//         })
-//         .sort(sortCriteria);
-
-//         res.json(letters);
-//     } catch (error) {
-//         console.error("Error retrieving letters:", error);
-//         res.status(500).send('Error retrieving letters');
-//     }
-// }
 
 
 exports.getLetterbyRegno = async (req, res) => {

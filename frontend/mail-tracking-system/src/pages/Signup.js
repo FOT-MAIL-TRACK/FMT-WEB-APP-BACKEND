@@ -1,213 +1,168 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
-import NavBar from  '../components/NavBar';
+import NavBar from '../components/NavBar';
 import './Signup.css';
-import {Link, useNavigate} from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
-const Signup= () => {
-    const navigate = useNavigate();
-    // const [formData,setformData] = useState({
-    //     name: '',
-    //     username:'',
-    //     email:'',
-    //     role:'',
-    //     faculty:'',
-    //     password:'',
-    // });
+const Signup = () => {
+  const navigate = useNavigate();
+  const [name, setName] = useState('');
+  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
+  const [role, setRole] = useState('');
+  const [faculty, setFaculty] = useState('');
+  const [department, setDepartment] = useState('');
+  const [departments, setDepartments] = useState([]);
+  const [password, setPassword] = useState('');
 
-    const [name, setName] = useState();
-    const [username, setUsername] = useState();
-    const [email, setEmail] = useState();
-    const [role, setRole] = useState();
-    const [faculty, setFaculty] = useState();
-    const [department, setDepartment] = useState('');
-    const [departments, setDepartments] = useState([]);
-    const [password, setPassword] = useState();
+  const facultyDepartmentMap = {
+      "Administration": [
+          "Registrar / VC", "Academic Establishment", "Non Academic Establishment", "Finance",
+          "ASAP / Exam", "General Admin", "Legal", "Capital Works", "EIS", "Supply & Stores",
+          "AHEAD", "Int. Audit", "Gvt. Audit", "Proctors", "Staff Development",
+          "Student Welfare", "Library", "LIBD", "IT Centre", "Career Guidance"
+      ],
+      "FOT": [
+          "Technology Faculty"
+      ],
+      "FMSC": [
+          "Deans Office", "Accounting", "Decision Science", "Finance", "Commerce",
+          "Marketing Management", "Business Administration", "Business Economics",
+          "Estate Management", "ITRC / Business Com / Legal Studies", "Public Administration",
+          "HRM", "Entrepreneurship", "ICT - MGT", "Business Linkage", "MBA / MSC"
+      ],
+      "FMS": [
+          "Deans Office", "Pharmacology", "Paediatrics", "Family Medicine", "Pathology", "Micro Biology",
+          "Parasitology", "Medicine", "Bio Chemistry", "Community Medicine",
+          "OB & GYN", "Physiology", "Immunology & Molecular Medicine",
+          "Psychology", "Surgery", "Medical Education", "Anatomy",
+          "Nursing", "Forensic Medicine"
+      ],
+      "FAS": [
+          "Deans Office", "Botany", "Sports Science", "Food", "Statistics / Computer Science", "Physics",
+          "Forestry", "Mathematics", "Physical Education", "Zoology", "Chemistry",
+          "Instrument / Polymer", "Molecular Biology"
+      ],
+      "FHSS": [
+          "Deans Office", "Sinhala", "Geography", "Social Statistics", "ICT", "Pali Buddhist",
+          "Languages & Culture", "Economics", "Political Science", "Philosophy / Psychology",
+          "History & Archaeology", "Sociology & Anthropology", "DELT", "English",
+          "Criminology", "Music", "Art IT"
+      ],
+      "FAHS": [
+          "Allied Health Sciences"
+      ],
+      "FGS": [
+          "PhD"
+      ],
+      "FOE": [
+          "Engineering Faculty"
+      ],
+      "Dental": [
+          "Dental Faculty"
+      ],
+      "FUAB": [
+          "Urban & Aquatic Faculty"
+      ],
+      "FOC": [
+          "Computing Faculty"
+      ],
+      "Postal Department": [
+          "Postal Department"
+      ]
+  };
 
-    const facultyDepartmentMap = {
-        "FOT": ['ICT', 'BST', 'MMT', 'SFT', 'CET'],
-        "FMSC": ['Accounting', 'Business Administration','Business Economics','Commerce','Decision Sciences','Entrepreneurship','Estate Management and Valuation','Finance','Human Resource Management','Information Technology','Marketing Management','Public Administration'], 
-        "FOE": ['Civil Engineering','Computer Engineering','Electrical and Electronic Engineering','Mechanical Engineering','Interdisciplinary Studies'],
-        "FHSS": ['Anthropology','Criminology and Criminal Justice','Economics','English and Linguistics','English Language Teaching','Geography','History and Archaeology','Information & Communication Technology','Languages, Cultural Studies and Performing Arts','Music and Creative Technology','Pali and Buddhist Studies','Philosophy and Psychology','Political Science','Sinhala and Mass Communication','Social Statistics','Sociology'],
-        "FAHS": ['Nursing and Midwifery','Pharmacy and Pharmaceutical Sciences','Medical Laboratory Sciences','Basic Sciences','Optometry'],
-        "FAS": ['Botany','Computer Science','Food Science and Technology','Physics','Sports Science','Zoology','Chemistry','Forestry and Environmental Sciences','Mathematics','Polymer Science','Statistics','Genetics and Molecular Biology Unit'],
-        "FMS": ['Anatomy','Biochemistry','Community Medicine','Family Medicine','Forensic Medicine','Immunology & Molecular Medicine','Medical Education','Medicine','Microbiology','Obstetrics & Gynaecology','Paediatrics','Parasitology','Pathology','Pharmacology','Physiology','Psychiatry','Surgery'],
-        "FDS": ['Basic Sciences','Community Dental Health','Comprehensive & Geriatric Dentistry','Oral Medicine & Periodontology','Oral Pathology','Oral Surgery','Paraclinical Sciences','Prosthodontics','Restorative Dentistry'],
-        "FUAB": ['Urban Bioresources','Aquatic Bioresources','Multidisciplinary Studies'],
-        "FOC": ['Information Systems Engineering and Informatics','Knowledge Engineering and Communication','Scientific Computing'],
-        "Postal Department" : [],
-        "General Administration": [],
+  const handleFacultyChange = (e) => {
+    const selectedFaculty = e.target.value;
+    setFaculty(selectedFaculty);
+    setDepartments(facultyDepartmentMap[selectedFaculty] || []);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const payload = {
+      name,
+      username,
+      email,
+      role,
+      faculty,
+      department: role === "FacultyMA" || role === "Technical Officer" ? null : department,
+      password,
     };
 
-
-    const handleFacultyChange = (e) => {
-        const selectedFaculty = e.target.value;
-        setFaculty(selectedFaculty);
-        setDepartments(facultyDepartmentMap[selectedFaculty] ||[]);
+    try {
+      const response = await axios.post("http://localhost:5001/api/users/signup", payload);
+      navigate('/');
+    } catch (error) {
+      alert(error.response?.data?.message || 'Error in registration');
     }
-   
+  };
 
-    // const handleChange = (e) => {
-    //     setformData({...formData, [e.target.name]: e.target.value});
-    // }
-
-    const handleSubmit =  async (e) => {
-        e.preventDefault();
-        const payload = {
-            name,
-            username,
-            email,
-            role,
-            faculty,
-            department: role === "FacultyMA" || role === "Technical Officer" ? null : department,
-            password,
-        };
-        
-        console.log('Payload being sent:', payload);
-        
-        try {
-            const response = await axios.post("http://localhost:5001/api/users/signup", payload);
-            console.log('User registered successfully:', response.data);
-            navigate('/');
-        } catch (error) {
-            console.error('Backend error response:', error.response);
-            alert(error.response?.data?.message || 'Error in registration');
-        }
-        
-}
-
-    return(
+  return (
     <>
-    <NavBar />
-    <div className="signup-conatiner">
-        <div className="container">
-            <div className='signup'>
-            <h1 className='signup-h1'>Sign Up</h1>
-            </div>
-            <p className='detail-p'>Please Enter details to create an account. </p>
+      <NavBar />
+      <div className="signin-container">
+        <div className="right-section">
+          <h2 className="title">Sign Up</h2>
+          <p className="subtitle">Enter your details to create an account</p>
+          <form onSubmit={handleSubmit} className="signin-form">
+            <label>Name
+              <input type="text" value={name} onChange={(e) => setName(e.target.value)} placeholder="Enter your name" required />
+            </label>
 
-            <form onSubmit={handleSubmit}>
-                <label>
-                    <h1>Name</h1>
-                    <input 
-                        type="text" 
-                        name="name"
-                        placeholder="Enter your name" 
-                        // value={formData.name}
-                        // onChange={handleChange}
-                        onChange={(e) => setName(e.target.value)}
-                        required />
-                </label>
-                <label>
-                    <h1>User Name</h1>
-                    <input 
-                        type="text" 
-                        name="username"
-                        placeholder="Ex: USJP_MAMadura" 
-                        // value={formData.username}
-                        // onChange={handleChange}
-                        onChange={(e) => setUsername(e.target.value)}
-                        required />
-                </label>
-                <label>
-                    <h1>Email</h1>
-                    <input 
-                        type="email" 
-                        name="email"
-                        placeholder="Enter your campus email" 
-                        // value={formData.email}
-                        // onChange={handleChange}
-                        onChange={(e) => setEmail(e.target.value)}
-                        required />
-                </label>
-                <label>
-                    <h1>Designation</h1>
-                    <select 
-                        defaultValue=""
-                        // value={formData.role}
-                        // onChange={handleChange}
-                        onChange={(e) => setRole(e.target.value)}
-                        required>
-                        <option value="" disabled selected>Choose Designation</option>
-                        <option value="Dean">Dean</option>
-                        <option value="Department Head">Department head</option>
-                        <option value="Lecturer">Lecturer</option>
-                        <option value="PostalDepartmentMA">Postal department MA</option>
-                        <option value="FacultyMA">Faculty MA</option>
-                        <option value="DepartmentMA">Department MA</option>
-                        <option value="WorkAid">Work aid</option>
-                        <option value="Admin">Admin</option>
-                        <option value="Technical Officer">Technial Officer</option>
-                        <option value="Demonstrator">Demonstrator</option>
-                        
-                    </select>
-                </label>
-                <label>
-                    <h1>Faculty</h1>
-                    <select 
-                        defaultValue="option1"
-                        name="faculty"
-                        //onChange={(e) => setFaculty(e.target.value)}
-                        onChange={handleFacultyChange}
-                        required>
-                        <option value="" disabled selected>Choose Faculty</option>
-                        {/* <option value="FOT">Faculty of Technology</option>
-                        <option value="FMSC">Faculty of Management Studies and Commerce</option>
-                        <option value="FOE">Faculty of Engineering</option>
-                        <option value="FHSS">Faculty of Humanities and Social Sciences</option>
-                        <option value="FAHS">Faculty of Applied Sciences</option>
-                        <option value="FAS">Faculty of Allied Health Sciences</option>
-                        <option value="FMS">Faculty of Medical Sciences</option>
-                        <option value="FDS">Faculty of Dental Sciences</option>
-                        <option value="FAUB">Faculty of Urban and Aquatic Bioresources</option>
-                        <option value="FOC">Faculty of Computing</option>
-                        <option value="Postal Department">Postal Department</option>
-                        <option value="General Administration">General Administration</option> */}
-                        {Object.keys(facultyDepartmentMap).map((facultyKey) => (
-                            <option key={facultyKey} value={facultyKey}>
-                                {facultyKey}
-                            </option>
-                        ))}
-                    </select>
-                </label>
-                <label>
-                    <h1>Department</h1>
-                    <select
-                        name='department'
-                        value={department}
-                        onChange={(e) => setDepartment(e.target.value)}
-                        disabled={role === "FacultyMA" || role === "Technical Officer"}
-                    >
-                        <option value="" disabled selected>Choose Department</option>
-                        { departments.map((dept, index) => (
-                            <option key={index} value={dept}>{dept}</option>
-                        ))
+            <label>User Name
+              <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} placeholder="Ex: USJP_MAMadura" required />
+            </label>
 
-                        }
-                    </select>
-                </label>
-                <label>
-                    <h1>Password</h1>
-                    <input 
-                        type="password"
-                        name="password" 
-                        placeholder="........" 
-                        onChange={(e) => setPassword(e.target.value)}
-                        required />
-                </label>       
-            <div className='signup-btn'>
-            <button type="submit" >Sign Up</button>
-            </div> 
-            </form> 
-            <div className="center-text">
-            <p>Already have an account? <Link to="/">Sign in</Link></p>
-            </div>
+            <label>Email
+              <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Enter your campus email" required />
+            </label>
+
+            <label>Designation
+              <select value={role} onChange={(e) => setRole(e.target.value)} required>
+                <option value="" disabled>Choose Designation</option>
+                <option value="Dean">Dean</option>
+                <option value="Department Head">Department Head</option>
+                <option value="Lecturer">Lecturer</option>
+                <option value="PostalDepartmentMA">Postal Department MA</option>
+                <option value="FacultyMA">Faculty MA</option>
+                <option value="DepartmentMA">Department MA</option>
+                <option value="WorkAid">Work Aid</option>
+                <option value="Super Admin">Admin</option>
+                <option value="Technical Officer">Technical Officer</option>
+                <option value="Demonstrator">Demonstrator</option>
+              </select>
+            </label>
+
+            <label>Faculty
+              <select value={faculty} onChange={handleFacultyChange} required>
+                <option value="" disabled>Choose Faculty</option>
+                {Object.keys(facultyDepartmentMap).map(f => (
+                  <option key={f} value={f}>{f}</option>
+                ))}
+              </select>
+            </label>
+
+            <label>Department
+              <select value={department} onChange={(e) => setDepartment(e.target.value)} disabled={role === "FacultyMA" || role === "Technical Officer"}>
+                <option value="" disabled>Choose Department</option>
+                {departments.map((d, i) => <option key={i} value={d}>{d}</option>)}
+              </select>
+            </label>
+
+            <label>Password
+              <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Enter password" required />
+            </label>
+
+            <button type="submit" className="signin-btn">Sign Up</button>
+          </form>
+          <p className="signup-text">
+            Already have an account? <Link to="/">Sign in</Link>
+          </p>
         </div>
-
-    </div>
+      </div>
     </>
-    )
-}
-
+  );
+};
 
 export default Signup;

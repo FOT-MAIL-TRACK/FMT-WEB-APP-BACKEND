@@ -5,19 +5,6 @@ import './LetterCard.css';
 
 
 const LetterCard = ({ letter }) => {
-    
-
-    // console.log(letter)
-    // if (letter.trackingLog && letter.trackingLog.length > 0) {
-    //     console.log(letter.trackingLog[0]); // Log the first element
-    //     if (letter.trackingLog[0].status !== undefined) {
-    //         console.log(letter.trackingLog[0].status); // Log the status if it exists
-    //     } else {
-    //         console.log("Status is undefined");
-    //     }
-    // } else {
-    //     console.log("trackingLog is empty or undefined");
-    // }
 
     
 
@@ -25,11 +12,6 @@ const LetterCard = ({ letter }) => {
         return <p>Loading...</p>; // Handle loading state
     }
 
-    // const uniqueId = letter?.uniqueId || 'No ID Available';
-
-    // const handlePageChange = (newPage) => {
-    //     setCurrentPage(newPage);
-    // };
 
     const theme = createTheme({
         palette: {

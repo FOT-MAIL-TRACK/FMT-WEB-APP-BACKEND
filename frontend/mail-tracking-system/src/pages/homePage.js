@@ -4,43 +4,47 @@ import NavBar from '../components/NavBar';
 import Footer from '../components/footer';
 import './homePage.css';
 import fotmailtracklogo from '../assets/fotmailtrack.jpeg';
-import {Link} from 'react-router-dom'; 
+import { Link } from 'react-router-dom';
 
-const HomePage = () =>{
-    return (
-       <>
-        <RealNavBar />
-        <div style={{ marginTop: '100px' }}> 
-        <NavBar/> 
-        </div>
-       
-        <div className='homePage'>
-            
-            <div className='content'>
-                <h1 >FOT-Mail-Track Web solution </h1>
-            <div className='middle-content'>
+const HomePage = () => {
+  const userRole = localStorage.getItem("userRole"); 
+  console.log("User Role from localStorage:", userRole);
 
+  return (
+    <>
+      <RealNavBar />
+      <div style={{ marginTop: '100px' }}>
+        <NavBar />
+      </div>
+
+      <div className='homePage'>
+        <div className='content'>
+          <h1>FOT-Mail-Track Web solution</h1>
+          <div className='middle-content'>
             <div className="content-img">
-                <img src={fotmailtracklogo} alt="fotmailtracklogo" className="fotmail-logo" />
+              <img src={fotmailtracklogo} alt="fotmailtracklogo" className="fotmail-logo" />
             </div>
 
-            <div class="description">
-                <p>The Faculty of Technology Mail Tracking System aims to streamline and enhance the process of managing and tracking physical mail within the faculty of technology, university of Sri Jayewardenepura. The web application will generate letters with unique QR codes using Crystal Reports, assign authorities for the mail to pass through, and manage the overall workflow.</p>
+            <div className="description">
+              <p>
+                The Faculty of Technology (FOT) Mail Tracking System is a web and mobile application that helps track and manage both internal and external letters. Each letter is assigned a unique ID, allowing users to see where it is in the process. The system improves transparency, accountability, and efficiency by letting senders, recipients, and mail handlers monitor the status of letters in real time.
+              </p>
             </div>
-            </div>
+          </div>
 
+          {(userRole === "Super Admin" || userRole === "PostalDepartmentMA") && (
             <div className='btn-insert'>
-                <Link to ="/letters">
-                <button class="Insert-Letters">Insert Letters</button>
-                </Link>
+              <Link to="/letters">
+                <button className="Insert-Letters">Insert Letters</button>
+              </Link>
             </div>
-            </div>
+          )}
         </div>
+      </div>
 
-        <Footer />
-        </>
-    ) 
-
-}
+      <Footer />
+    </>
+  );
+};
 
 export default HomePage;

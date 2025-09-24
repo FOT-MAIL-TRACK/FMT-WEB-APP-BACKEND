@@ -16,7 +16,7 @@ exports.signup = async (req, res) => {
         const { name,username,email,role,faculty,department,password,registrationNumber }= req.body;
         // const user = new User({ name,username, email,role, faculty, department, password ,registrationNumber});
 
-        if (['FacultyMA', 'Technical Officer', 'Admin', 'PostalDepartmentMA'].includes(role) && !department) {
+        if (['FacultyMA', 'Technical Officer', ].includes(role) && !department) {
           // Optional: Check for department-specific validation only for roles that need it
           if (role !== 'FacultyMA' && role !== 'Technical Officer') {
               throw new Error('Department is required for this role');
@@ -35,12 +35,16 @@ exports.signin = async (req,res) => {
     try {
         const { email, password } = req.body;
 
-        const user = await User.findOne({email});
+        const user = await User.findOne({
+          email: { $regex: `^${req.body.email.trim()}$`, $options: 'i' }
+        });
+
+        console.log('Signin email:', req.body.email);
         if (!user) {
-          console.log('User not found'); // Log if user is not found
+          console.log('User not found'); 
           return res.status(401).json({ message: 'Invalid email or password' });
         }
-
+        
         const passwordMatch = await user.comparePassword(password);
         if (!passwordMatch) {
             console.log('Password mismatch'); 
@@ -52,8 +56,7 @@ exports.signin = async (req,res) => {
         });
 
       console.log('Token generated:', token);
-      
-
+    
         // res.json({ token, user: { id: user._id, name: user.name, username: user.username, email: user.email, role: user.role, faculty: user.faculty, department: user.department, registrationNumber: user.registrationNumber}});
 
         res.json({ 
@@ -126,27 +129,6 @@ exports.updateUserDetails = async (req,res) => {
       }
 }
 
-
-// exports.uploadProfilePicture = [
-//     upload.single('profilePicture'),
-//     async (req, res) => {
-//       try {
-//         const result = await cloudinary.uploader.upload(req.file.path, {
-//           folder: 'profile_pictures',
-//         });
-  
-//         const user = await User.findByIdAndUpdate(
-//           req.user.userId,
-//           { profilePicture: result.secure_url },
-//           { new: true }
-//         ).select('-password');
-  
-//         res.json(user);
-//       } catch (error) {
-//         res.status(500).json({ message: error.message });
-//       }
-//     },
-//   ];
 
     exports.uploadProfilePicture = async (req,res) => {
       const { imageUrl } = req.body;

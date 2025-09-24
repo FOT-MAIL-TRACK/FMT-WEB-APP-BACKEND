@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import FilterButtons from './FilterButtons'; // Assuming the filter component is in the same folder
-// Optional, for notifications on success/error
 
 const LettersList = ({ registrationNumber, filters }) => {
     const [letters, setLetters] = useState([]);

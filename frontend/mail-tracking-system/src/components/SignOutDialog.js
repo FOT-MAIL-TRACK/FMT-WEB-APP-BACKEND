@@ -25,13 +25,25 @@ const SignOutDialog = () => {
         <>
             <Button color='Info'
             onClick={handleClickOpen}
-            sx={{ fontWeight: 'bold', fontSize: '19px', marginLeft: '80px',textTransform: 'none', padding: '30px auto'}}>
+            sx={{
+                color: "#000",
+                padding: "8px 16px",
+                borderRadius: "8px",
+                transition: "background 0.3s ease",
+                whiteSpace: "nowrap",
+                fontWeight: "bold",
+                fontSize: "16px",
+                "&:hover": {
+                backgroundColor: "#871c23", // slightly darker red for hover effect (like your link hover)
+                },
+            }}>
                 Signout
             </Button>
             <Dialog 
                 open={open} 
                 onClose={handleClose} 
-                sx={{ width:"600px", marginLeft:"650px"}} >
+                width="100px"
+                maxWidth="xs" >
             <DialogTitle align='center' padding='20px'>{"Confirm Signout"}</DialogTitle>
             <DialogContent>
             <DialogContentText>
@@ -39,7 +51,18 @@ const SignOutDialog = () => {
             </DialogContentText>
             </DialogContent>
             <DialogActions>
-                 <Button onClick={handleSignout} color="default"  backgroundColor="#a1232b" sx={{ fontWeight: 'bold', align: "center"}} autoFocus>
+                 <Button onClick={handleSignout} color="default"   sx={{
+                        backgroundColor: "#a1232b",
+                        color: "#fff",
+                        padding: "8px 16px",
+                        borderRadius: "8px",
+                        transition: "background 0.3s ease",
+                        whiteSpace: "nowrap",
+                        fontWeight: "bold",
+                        "&:hover": {
+                        backgroundColor: "#871c23", 
+                        },
+                    }} autoFocus>
                     Signout
                  </Button>
                  <Button onClick={handleClose} color="secondary" sx={{ fontWeight: 'bold'}}>

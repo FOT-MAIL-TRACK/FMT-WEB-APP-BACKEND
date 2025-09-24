@@ -23,39 +23,6 @@ const TrackLogs = ()=> {
     console.log("Stored registrationNumber:", registrationNumber);
 
 
-    // useEffect(() => {
-    //     if (!registrationNumber || registrationNumber === 'null' || registrationNumber === 'undefined') {
-    //         console.error("No registration number found. Please log in.");
-    //         navigate('/'); 
-    //         return;
-    //     }
-    //     API call to fetch tracking logs
-    //     const fetchLetters = async()=> {
-    //     try{
-    //         const response = await fetch(`http://localhost:5001/api/letters/letters/${id}`);
-    //         const response = await fetch(`http://localhost:5001/api/letters/user/${registrationNumber}`);
-    //         const data = await response.json();
-
-
-    //          Filter data based on selected date
-    //          const filteredLetters = data.filter(letter => {
-    //             const createdAt = new Date(letter.createdAt); // Assuming createdAt is available
-    //             return filters.date ? createdAt.toDateString() === filters.date.toDateString() : true;
-    //         });
-    //         console.log("Fetched Data:", data);
-    //         setLetters(data); 
-    //         setFilteredLetters(data);
-    //     }
-    //     catch (error) {
-    //         console.error("Error fetching letters:", error.message || error);
-    //         setLetters([]); 
-    //         setFilteredLetters([]);
-    //       }
-    //     };
-    //     fetchLetters();
-    // },[registrationNumber, navigate]);
-    // console.log(letters)
-
     useEffect(() => {
         if (!registrationNumber || registrationNumber === 'null' || registrationNumber === 'undefined') {
             console.error("No registration number found. Please log in.");
