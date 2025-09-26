@@ -29,9 +29,9 @@ const letterSchema = new mongoose.Schema({
                 'Dental',
                 'FUAB',
                 'FOC',
-                'Postal Department'
+                'Postal Department',
+                'None'
             ],
-            required: true
         },
         department: {
             type: String,
@@ -88,7 +88,9 @@ const letterSchema = new mongoose.Schema({
                 'Computing Faculty',
 
                 //Postal Department
-                'Postal Department'
+                'Postal Department',
+
+                'None'
             ]
         }
     },
@@ -121,7 +123,8 @@ const letterSchema = new mongoose.Schema({
                 'Dental',
                 'FUAB',
                 'FOC',
-                'Postal Department'
+                'Postal Department',
+                'None'
             ],
             required: true
         },
@@ -180,23 +183,21 @@ const letterSchema = new mongoose.Schema({
                 'Computing Faculty',
 
                 //Postal Department
-                'Postal Department'
+                'Postal Department',
+
+                'None'
             ]
         },
-        authorities:[{ 
-            registrationNumber: {
-                type: String
-            },
-            name: {
-                type: String
-            },
-            role: {
+        authorities: [
+            { 
+                registrationNumber: { type: String },
+                name: { type: String },
+                role: { 
                 type: String,
-                enum: ['Lecturer','Dean','Department Head','PostalDepartmentMA','FacultyMA','DepartmentMA','WorkAid','Super Admin','Technical Officer', 'Demonstrator'] 
-            },
-        }],
-        
-        
+                enum: ['Lecturer','Dean','Department Head','PostalDepartmentMA','FacultyMA','DepartmentMA','WorkAid','Super Admin','Technical Officer', 'Demonstrator']
+                }
+            }
+            ],
     },
     
     status: {

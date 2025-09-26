@@ -13,6 +13,11 @@ const RealNavBar = () => {
 
   const role = localStorage.getItem("userRole");
 
+  const trackLogsLink =
+  role === "Super Admin" || role === "PostalDepartmentMA"
+    ? "/admin-track-logs"
+    : "/track-logs";
+
 
   return (
     <nav className="realNavBar">
@@ -34,7 +39,7 @@ const RealNavBar = () => {
           <Link to="/letters">Letters</Link>
         </>
         )}
-        <Link to="/track-logs">Track Logs</Link>
+        <Link to={trackLogsLink} onClick={closeNav}>Track Logs</Link>
         
         <SignOutDialog />
         <Link to="/profile-page" className="profile-link">Profile</Link>
@@ -59,7 +64,7 @@ const RealNavBar = () => {
           <Link to="/letters" onClick={closeNav}>Letters</Link>
         </>
         )}
-        <Link to="/track-logs" onClick={closeNav}>Track Logs</Link>
+        <Link to={trackLogsLink} onClick={closeNav}>Track Logs</Link>
         
         <SignOutDialog />
         <Link to="/profile-page" className="profile-link" onClick={closeNav}>Profile</Link>

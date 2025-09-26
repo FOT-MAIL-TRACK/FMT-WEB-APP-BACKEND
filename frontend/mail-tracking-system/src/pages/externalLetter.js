@@ -72,14 +72,21 @@ const ExternalLetter = () => {
             
         };
     
-        try{
-            const response = await axios.post("http://localhost:5001/api/letters/create-external-letter", letterData);
+        try {
+            const token = localStorage.getItem("token");
+
+            const response = await axios.post(
+                "http://localhost:5001/api/letters/create-external-letter",
+                letterData,
+                { headers: { Authorization: `Bearer ${token}` } }
+            );
+
             setUniqueID(response.data.uniqueID);
-            if(response.status === 201){
-            console.log('External-Letter Created:', response.data);
-            setOpen(true);
+            if (response.status === 201) {
+                console.log("External-Letter Created:", response.data);
+                setOpen(true);
             }
-        }
+            }
         catch(error){
             console.error(error.response.data.message || 'Error creating letter:');
         }

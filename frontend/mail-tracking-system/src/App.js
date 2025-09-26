@@ -13,6 +13,8 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import AdminDashboard from './pages/AdminDashboard';
 import AdminUsersPage from "./pages/AdminUsersPage";
 import AdminLettersPage from "./pages/AdminLettersPage";
+import AdminTrackLogs from './pages/AdminTrackLogs';
+
 
 function App(){
     return (
@@ -72,6 +74,7 @@ function App(){
               </ProtectedRoute>
             }
           />
+          <Route path="/admin-track-logs" element={<AdminTrackLogs />} />
         </Routes>
       </Router>
     )

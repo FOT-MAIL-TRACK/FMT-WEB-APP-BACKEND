@@ -12,15 +12,16 @@ const InternalLetter = () => {
     const [senderRegno, setSenderRegNo] = useState('');
     const [senderAddress, setSenderAddress] = useState('');
     const [senfaculty, setSenFaculty] = useState('');
-    const [sendepartment, setSenDepartment] = useState('');
+    const [sendepartment, setSenDepartment] = useState("None");
     const [receiverName, setReceiverName] = useState('');
     const [receiverRegno, setReceiverRegNo] = useState('');
     const [designation, setDesignation] = useState('');
     const [recfaculty, setRecFaculty] = useState('');
-    const [recdepartment, setRecDepartment] = useState('');
+    const [recdepartment, setRecDepartment] = useState("None");
     const [uniqueID, setUniqueID] = useState(null);
     const [open, setOpen] = useState(false);
-    const [authorities, setAuthorities] = useState([{ name: '', role: '' }]);
+    const [authorities, setAuthorities] = useState([]);
+
     
     const handleSenderRegNoChange = async (e) => {
         const registrationNumber = e.target.value;
@@ -30,85 +31,101 @@ const InternalLetter = () => {
             if(response.status === 200){
                 setSenderName(response.data.name);
                 setSenFaculty(response.data.faculty);
-                setSenDepartment(response.data.department);
+                setSenDepartment(response.data.department || "None");
             }
             else{
                 setSenderName("");
                 setSenFaculty("");
-                setSenDepartment("");
+                setSenDepartment("None");
             }
         }
         catch (error){
             console.error("Error fetching user data:", error);
             setSenderName("");
             setSenFaculty("");
-            setSenDepartment("");
+            setSenDepartment("None");
         }
     };
 
     const handleReceiverRegNoChange = async (e) => {
-        const registrationNumber = e.target.value;
-        setReceiverRegNo(registrationNumber);
+    let registrationNumber = e.target.value.trim();   // remove whitespace and invisible chars
+    registrationNumber = registrationNumber.replace(/[\u2028\u2029]/g, ""); // remove hidden line/paragraph separators
+    setReceiverRegNo(registrationNumber);
 
-        try{
-            const response = await axios.get(`http://localhost:5001/api/users/users/${registrationNumber}`);
-            if(response.status === 200){
-                setReceiverName(response.data.name);
-                setDesignation(response.data.role);
-                setRecFaculty(response.data.faculty);
-                setRecDepartment(response.data.department);
-                console.log("Receiver", response.data)
-            }else {
-                setReceiverName("");
-                setDesignation("");
-                setRecFaculty("");
-                setRecDepartment("");
-            }
-
-        }
-        catch(error){
-            console.error("Error fetching user data:", error);
+    try {
+        const response = await axios.get(`http://localhost:5001/api/users/users/${registrationNumber}`);
+        if (response.status === 200) {
+            setReceiverName(response.data.name);
+            setDesignation(response.data.role);
+            setRecFaculty(response.data.faculty);
+            setRecDepartment(response.data.department || "None");
+            console.log("Receiver", response.data)
+        } else {
             setReceiverName("");
             setDesignation("");
             setRecFaculty("");
-            setRecDepartment("");
+            setRecDepartment("None");
         }
+    } catch (error) {
+        console.error("Error fetching user data:", error);
+        setReceiverName("");
+        setDesignation("");
+        setRecFaculty("");
+        setRecDepartment("None");
     }
+};
 
 
-    const handleSubmit = async (e) => {
-    e.preventDefault();
-        const letterData = {
-            sender : {
-                name : senderName,
-                registrationNumber: senderRegno,
-                address : senderAddress,
-                faculty : senfaculty,
-                department : sendepartment,
-            },
-            receiver : {
-                name : receiverName,
-                registrationNumber : receiverRegno,
-                receiverRole : designation,
-                authorities: authorities,
-                faculty: recfaculty,
-                department : recdepartment,
-            }
-        }
+const handleSubmit = async (e) => {
+  e.preventDefault();
 
+  const letterData = {
+    sender: {
+      name: senderName,
+      registrationNumber: senderRegno,
+      address: senderAddress,
+      faculty: senfaculty,
+      department: sendepartment || "None",
+    },
+    receiver: {
+      name: receiverName,
+      registrationNumber: receiverRegno,
+      receiverRole: designation,
+      faculty: recfaculty,
+      department: recdepartment || "None", 
+      authorities: authorities
+      .filter(a => a.role && a.name && a.registrationNumber)
+      .map(a => ({
+        ...a,
+        department: a.department || "None" 
+      })),
+    },
+  };
 
-        try{
-            const response = await axios.post("http://localhost:5001/api/letters/create-internal-letter", letterData);
-            setUniqueID(response.data.uniqueID);
-            if (response.status === 201){
-                console.log('Internal-Letter Created:', response.data);
-                setOpen(true);
-            }
-        }
-        catch (error){
-            console.error(error.response.data.message);
-        }
+  try {
+    const token = localStorage.getItem("token");  
+
+    const response = await axios.post(
+      "http://localhost:5001/api/letters/create-internal-letter",
+      letterData,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`, // ✅ send token
+        },
+      }
+    );
+
+    setUniqueID(response.data.uniqueID);
+
+    if (response.status === 201) {
+      console.log("Internal-Letter Created:", response.data);
+      setOpen(true);
     }
+  } catch (error) {
+    console.error("Error creating internal letter:", error.response?.data?.message || error.message);
+  }
+};
+
 
     const handleClose = ()=> {
         setOpen(false);
@@ -179,8 +196,8 @@ const InternalLetter = () => {
                     <h2 className='label-h2'>Sender's faculty</h2>
                     <select
                          value={senfaculty}
-                        //  onChange={(e) => setSenFaculty(e.target.value)}
-                        onChange={handleSenderRegNoChange}
+                        onChange={(e) => setSenFaculty(e.target.value)}
+                        // onChange={handleSenderRegNoChange}
                         required
                     >
                         <option value="" disabled selected>Choose Faculty</option>
@@ -204,7 +221,7 @@ const InternalLetter = () => {
                 <input 
                     value={sendepartment}
                     placeholder='department'
-                    // onChange={(e) => setSenDepartment(e.target.value)}
+                    onChange={(e) => setSenDepartment(e.target.value)}
                     readOnly
                     required
                 />     
@@ -292,7 +309,6 @@ const InternalLetter = () => {
                         placeholder="Enter authority registration number"
                         value={authority.registrationNumber}
                         onChange={(e) => handleAuthorityChange(index, 'registrationNumber', e.target.value)}
-                        required
                         />
                     </label>
                     <label>
@@ -302,7 +318,6 @@ const InternalLetter = () => {
                         placeholder="Enter authority name"
                         value={authority.name}
                         onChange={(e) => handleAuthorityChange(index, 'name', e.target.value)}
-                        required
                         />
                     </label>
                     <label>
@@ -310,7 +325,6 @@ const InternalLetter = () => {
                         <select 
                         value={authority.role}
                         onChange={(e) => handleAuthorityChange(index, 'role', e.target.value)}
-                        required
                         >
                              <option value="" disabled selected>Choose Designation</option>
                             <option value="Dean">Dean</option>

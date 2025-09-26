@@ -17,7 +17,7 @@ const LettersTable = ({ letters }) => (
     <TableBody>
       {letters.map(letter => {
         const uniqueColor = letter.uniqueID.startsWith('EXT') ? 'red' : letter.uniqueID.startsWith('INT') ? 'green' : 'grey';
-
+        return (  
         <TableRow key={letter._id}>
           <TableCell sx={{ color: uniqueColor, fontWeight: 'bold' }}>
               {letter.uniqueID}
@@ -35,6 +35,7 @@ const LettersTable = ({ letters }) => (
             ))}
           </TableCell>
         </TableRow>
+        );
       })}
     </TableBody>
   </Table>

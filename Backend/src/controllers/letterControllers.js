@@ -50,7 +50,7 @@ exports.createInternalLetter = async (req,res) => {
                 name: receiver.name,
                 registrationNumber: receiver.registrationNumber,
                 receiverRole: receiver.receiverRole,// Final receiver's role
-                authorities: receiver.authorities, // Array of authority objects
+                authorities: receiver.authorities?.length ? receiver.authorities : [], 
                 faculty: receiver.faculty,
                 department: receiver.department || 'No department',
             },
@@ -78,6 +78,8 @@ exports.createExternalLetter = async (req,res) => {
         //create UniqueId for internalletter/parcel
         const uniqueID = generateExternalLetterID();
 
+        const currentHolder = await User.findOne({ name: sender.name });
+
         // if (isInternal) {
         //     uniqueId = `${sender.registrationNumber}-${receiver.registrationNumber}-${Date.now()}`;
         // }
@@ -99,7 +101,7 @@ exports.createExternalLetter = async (req,res) => {
                 department: receiver.department
             },
             isInternal: false, 
-            currentHolder: null,
+            currentHolder: currentHolder.name,
             uniqueID: uniqueID, 
             trackingLog: [] // External letters may not have tracking logs initially
         });
